@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robert Kubiś - Personal Website</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #0a192f 0%, #0d1b2d 100%) fixed;
+            color: #e6f1ff;
+            background-size: 200% 200%;
+            animation: gradientBG 15s ease infinite;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0.8rem;
+            position: relative;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            box-shadow: 0 0 100px rgba(0, 0, 0, 0.05) inset;
+            pointer-events: none;
+        }
+
+        .header {
+            text-align: center;
+            padding: 0.7rem 0;
+            background: linear-gradient(135deg, #1a365d 0%, #2d4a8a 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            position: relative;
+            z-index: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .profile-image {
+            width: 187.5px;
+            height: 187.5px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            animation: borderRotate 4s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-image::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg,
+                    transparent 45%,
+                    rgba(255, 255, 255, 0.1) 48%,
+                    rgba(255, 255, 255, 0.2) 50%,
+                    rgba(255, 255, 255, 0.1) 52%,
+                    transparent 55%);
+            animation: shine 5s infinite;
+        }
+
+        @keyframes shine {
+            0% {
+                transform: translate(-30%, -30%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(30%, 30%) rotate(360deg);
+            }
+        }
+
+        .profile-info {
+            text-align: left;
+            flex: 1;
+        }
+
+        .profile-links {
+            display: flex;
+            justify-content: flex-start;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .profile-links a {
+            text-decoration: none;
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border-color: #0f0;
+        }
+
+        .profile-links a i {
+            font-size: 1.2rem;
+        }
+
+        .profile-links a::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.2),
+                    transparent);
+            transition: 0.5s;
+        }
+
+        .profile-links a:hover::after {
+            left: 100%;
+        }
+
+        h1 {
+            position: relative;
+            color: #e6f1ff;
+            text-shadow:
+                0.05em 0 0 rgba(255, 0, 0, 0.75),
+                -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
+                0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+            animation: glitch 500ms infinite;
+        }
+
+        @keyframes glitch {
+            0% {
+                text-shadow:
+                    0.05em 0 0 rgba(255, 0, 0, 0.75),
+                    -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
+                    0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+            }
+
+            14% {
+                text-shadow:
+                    0.05em 0 0 rgba(255, 0, 0, 0.75),
+                    -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
+                    0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+            }
+
+            15% {
+                text-shadow:
+                    -0.05em -0.025em 0 rgba(255, 0, 0, 0.75),
+                    0.025em 0.025em 0 rgba(0, 255, 0, 0.75),
+                    -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
+            }
+
+            49% {
+                text-shadow:
+                    -0.05em -0.025em 0 rgba(255, 0, 0, 0.75),
+                    0.025em 0.025em 0 rgba(0, 255, 0, 0.75),
+                    -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
+            }
+
+            50% {
+                text-shadow:
+                    0.025em 0.05em 0 rgba(255, 0, 0, 0.75),
+                    0.05em 0 0 rgba(0, 255, 0, 0.75),
+                    0 -0.05em 0 rgba(0, 0, 255, 0.75);
+            }
+
+            99% {
+                text-shadow:
+                    0.025em 0.05em 0 rgba(255, 0, 0, 0.75),
+                    0.05em 0 0 rgba(0, 255, 0, 0.75),
+                    0 -0.05em 0 rgba(0, 0, 255, 0.75);
+            }
+
+            100% {
+                text-shadow:
+                    -0.025em 0 0 rgba(255, 0, 0, 0.75),
+                    -0.025em -0.025em 0 rgba(0, 255, 0, 0.75),
+                    -0.025em -0.05em 0 rgba(0, 0, 255, 0.75);
+            }
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 40%;
+            height: 3px;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.8), transparent);
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            position: relative;
+            display: inline-block;
+        }
+
+        .terminal-info {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #98c379;
+            background: #1e1e1e;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            opacity: 0;
+            animation: fadeIn 0.3s ease-out forwards;
+            position: relative;
+            max-width: 100%;
+            overflow: hidden;
+            border: 1px solid #2a2a2a;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease-out;
+            z-index: 1;
+        }
+
+        .terminal-info::before {
+            content: '[robert@devops] $';
+            color: #0f0;
+            margin-right: 8px;
+            opacity: 0;
+            white-space: nowrap;
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        .terminal-text {
+            position: relative;
+            width: fit-content;
+            font-size: 1rem;
+            padding-right: 15px;
+            color: #fff;
+        }
+
+        .terminal-text::after {
+            content: '█';
+            position: absolute;
+            right: 0;
+            top: 0;
+            animation: blink 1s step-end infinite;
+            color: #0f0;
+        }
+
+        .terminal-info::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(transparent 50%,
+                    rgba(0, 0, 0, 0.05) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+
+        @keyframes typewriter {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+        .terminal-text {
+            overflow: hidden;
+            white-space: nowrap;
+            animation:
+                fadeIn 0.1s ease-out forwards,
+                typewriter 2s steps(50, end) 0.3s forwards;
+            width: 0;
+        }
+
+        @keyframes blink {
+
+            from,
+            to {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 0.8rem;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards;
+            animation-delay: 1.2s;
+        }
+
+        .skill-category {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #e6f1ff;
+            padding: 1.2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .skill-category:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px) translateX(2px);
+            box-shadow: -5px 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .skill-category h3 {
+            color: #0f0;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .skill-category h3 i {
+            margin-right: 0.5rem;
+            color: #0f0;
+            display: inline-block;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .skill-category ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .skill-category li {
+            color: #e6f1ff;
+            border-left: 2px solid rgba(0, 255, 0, 0.3);
+            padding-left: 1rem;
+            margin: 0.7rem 0;
+            font-size: 1.05rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            transition: all 0.3s ease;
+        }
+
+        .skill-category li:hover {
+            border-left-color: #0f0;
+            color: #0f0;
+            transform: translateX(5px);
+            text-shadow: 0 0 8px rgba(0, 255, 0, 0.3);
+        }
+
+        h2 i {
+            margin-right: 0.5rem;
+            color: #0f0;
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                max-width: 960px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .container {
+                max-width: 720px;
+            }
+
+            .skills-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                max-width: 540px;
+            }
+
+            .skills-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .container>h2 {
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #0f0;
+            display: inline-block;
+            position: relative;
+            color: #e6f1ff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .container>h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            background: #0f0;
+            animation: borderWidth 0.6s ease-out forwards;
+        }
+
+        .container p {
+            color: #e6f1ff;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            font-size: 1.1rem;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Animation for profile picture - subtle border rotation */
+        @keyframes borderRotate {
+            from {
+                border-color: rgba(255, 255, 255, 0.2);
+            }
+
+            50% {
+                border-color: rgba(255, 255, 255, 0.4);
+            }
+
+            to {
+                border-color: rgba(255, 255, 255, 0.2);
+            }
+        }
+
+        /* Entry animation for skill cards */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Speed up card appearance */
+        .skill-category:nth-child(1) {
+            animation-delay: 1.3s;
+        }
+
+        .skill-category:nth-child(2) {
+            animation-delay: 1.4s;
+        }
+
+        .skill-category:nth-child(3) {
+            animation-delay: 1.5s;
+        }
+
+        .skill-category:nth-child(4) {
+            animation-delay: 1.6s;
+        }
+
+        .skill-category:nth-child(5) {
+            animation-delay: 1.7s;
+        }
+
+        .skill-category:nth-child(6) {
+            animation-delay: 1.8s;
+        }
+
+        /* Subtle animation for icons in cards */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Animation for section headers */
+        @keyframes borderWidth {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+        /* Modification of About Me text animation */
+        .fade-in-text span {
+            opacity: 0;
+            display: block;
+            transform: translateY(10px);
+            animation: fadeInText 0.8s ease-out forwards;
+            margin-bottom: 0.8rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .fade-in-text span i {
+            position: absolute;
+            left: 0;
+            top: 0.2rem;
+            color: #0f0;
+            opacity: 1;
+        }
+
+        @keyframes fadeInText {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Speed up About Me text animation */
+        .fade-in-text span:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .fade-in-text span:nth-child(2) {
+            animation-delay: 0.25s;
+        }
+
+        .fade-in-text span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .fade-in-text span:nth-child(4) {
+            animation-delay: 0.55s;
+        }
+
+        .fade-in-text span:nth-child(5) {
+            animation-delay: 0.7s;
+        }
+
+        /* Remaining text styles */
+        .fade-in-text {
+            font-weight: 400;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 50% 0%;
+            }
+
+            50% {
+                background-position: 50% 100%;
+            }
+
+            100% {
+                background-position: 50% 0%;
+            }
+        }
+
+        /* Add styles for footer */
+        .footer {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            background: linear-gradient(to top, rgba(17, 34, 64, 0.8), transparent);
+        }
+
+        .quote {
+            font-style: italic;
+            color: #a8b2d1;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .quote-text {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #e6f1ff;
+        }
+
+        .quote-author {
+            font-size: 0.9rem;
+            color: #8892b0;
+            font-style: normal;
+        }
+
+        /* Add styles for hacking effect */
+        .hacking-effect {
+            animation: none !important;
+            /* Disable previous animation */
+            width: auto !important;
+        }
+
+        .hacking-effect::after {
+            content: none !important;
+            /* Disable blinking cursor */
+        }
+
+        @keyframes matrixEffect {
+
+            0%,
+            100% {
+                color: #0f0;
+            }
+
+            50% {
+                color: #00ff00;
+            }
+        }
+
+        /* Modify terminal styles */
+        .terminal-info {
+            position: relative;
+            z-index: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        /* Add class for hiding terminal */
+        .matrix-active .terminal-info {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Modify matrix styles */
+        #matrix.active {
+            opacity: 1;
+            z-index: 100;
+        }
+
+        /* Styles for expanded terminal */
+        .terminal-expanded {
+            position: fixed;
+            width: 90%;
+            height: 400px;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: #1e1e1e;
+            overflow-y: auto;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            opacity: 0;
+            transition: all 0.3s ease-out;
+            z-index: 1000;
+        }
+
+        /* Class for active terminal */
+        .terminal-expanded.active {
+            transform: translate(-50%, 0) scale(1);
+            opacity: 1;
+        }
+
+        /* Background overlay */
+        .terminal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease-out;
+            z-index: 999;
+        }
+
+        .terminal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Styles for command history */
+        .command-history {
+            color: #98c379;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .command-history li {
+            margin-bottom: 8px;
+            opacity: 0;
+            animation: fadeInCommand 0.3s ease-out forwards;
+        }
+
+        .command-history .prompt {
+            color: #0f0;
+            margin-right: 8px;
+        }
+
+        .command-history .output {
+            color: #888;
+            margin-left: 24px;
+            font-size: 0.9em;
+        }
+
+        @keyframes fadeInCommand {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-connector {
+            position: absolute;
+            left: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, #0f0, transparent);
+            opacity: 0.3;
+        }
+
+        /* Add styles for hidden canvas */
+        #matrix {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            cursor: pointer;
+            /* Shows that it can be clicked */
+        }
+
+        #matrix.active {
+            opacity: 1;
+            z-index: 0;
+        }
+
+        /* Add styles for container and footer during matrix effect */
+        .container,
+        .footer {
+            position: relative;
+            z-index: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .matrix-active .container,
+        .matrix-active .footer {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .matrix-active .header {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Styles for colored icons */
+        /* About Me section icons */
+        .fade-in-text span i {
+            color: #0f0;
+            /* Keep hacker green */
+            margin-right: 0.8rem;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .fade-in-text span:hover i {
+            transform: scale(1.2);
+            filter: brightness(1.2);
+        }
+
+        /* Skills section icons */
+        .skill-category h3 i.fa-cloud {
+            color: #3b82f6;
+            /* Blue for Cloud */
+        }
+
+        .skill-category h3 i.fa-cogs {
+            color: #f59e0b;
+            /* Orange for DevOps */
+        }
+
+        .skill-category h3 i.fa-code {
+            color: #10b981;
+            /* Green for Development */
+        }
+
+        .skill-category h3 i.fa-users {
+            color: #8b5cf6;
+            /* Purple for Leadership */
+        }
+
+        .skill-category h3 i.fa-brain {
+            color: #ec4899;
+            /* Pink for AI */
+        }
+
+        .skill-category h3 i.fa-tools {
+            color: #6366f1;
+            /* Indigo for Tools */
+        }
+
+        /* Header icons */
+        .profile-links a i {
+            transition: all 0.3s ease;
+        }
+
+        .profile-links a:hover i {
+            transform: scale(1.2);
+        }
+
+        .profile-links a:nth-child(1) i {
+            color: #ef4444;
+            /* Red for CV */
+        }
+
+        .profile-links a:nth-child(2) i {
+            color: #9ca3af;
+            /* Gray for GitHub */
+        }
+
+        .profile-links a:nth-child(3) i {
+            color: #0077b5;
+            /* LinkedIn blue */
+        }
+
+        /* Section headers */
+        h2 i.fa-user {
+            color: #3b82f6;
+            /* Blue */
+        }
+
+        h2 i.fa-star {
+            color: #f59e0b;
+            /* Orange */
+        }
+
+        /* Update styles for Clippy */
+        .clippy {
+            width: 90px;
+            /* Increased from 45px to 90px */
+            height: 90px;
+            /* Increased from 45px to 90px */
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffffff' d='M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z'/%3E%3C/svg%3E") center/contain no-repeat;
+        }
+
+        /* Update styles for bubble */
+        .clippy-bubble {
+            background: #fffef0;
+            border: 1px solid #ffd700;
+            padding: 12px 15px;
+            border-radius: 15px;
+            position: relative;
+            max-width: 250px;
+            font-size: 14px;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #000;
+            /* Add black text color */
+        }
+
+        /* Improve styles for Clippy container */
+        .clippy-container {
+            position: fixed;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            right: -300px;
+            bottom: 30px;
+            z-index: 1000;
+            transition: right 0.5s ease;
+            opacity: 0;
+            /* Hide at start */
+            visibility: hidden;
+            /* Completely hide at start */
+        }
+
+        .clippy-container.active {
+            right: 30px;
+            opacity: 1;
+            /* Show when active */
+            visibility: visible;
+            /* Restore visibility when active */
+            /* Przywracamy widoczność gdy aktywny */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="header-content">
+            <img src="RobertKubis.jpeg" alt="Robert Kubiś" class="profile-image">
+            <div class="profile-info">
+                <h1>Robert Kubiś</h1>
+                <p class="subtitle">Engineering Team Lead | Cloud & DevOps Strategist | AI & Automation Enthusiast</p>
+
+                <div class="profile-links">
+                    <a href="https://h3x89.github.io/RobertKubisResume.pdf" target="_blank">
+                        <i class="fas fa-file-pdf"></i> CV
+                    </a>
+                    <a href="https://github.com/h3x89" target="_blank">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <a href="https://www.linkedin.com/in/robertkubis89/" target="_blank">
+                        <i class="fab fa-linkedin"></i> LinkedIn
+                    </a>
+                </div>
+                <div class="terminal-info">
+                    <span class="terminal-text">engineering-lead --skills="cloud,devops,ai" --exp="10+ years"</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2><i class="fas fa-user"></i> About Me</h2>
+        <p class="fade-in-text">
+            <span>
+                <i class="fas fa-history"></i>
+                With over a decade of experience in IT, I've spent the last 6 years at Nordcloud (an IBM company)
+                focusing on transforming cloud automation and scaling solutions for global customers and internal teams.
+            </span>
+            <span>
+                <i class="fas fa-rocket"></i>
+                My career spans various roles, from DevOps Engineer to Cloud Architect and currently as a leader
+                overseeing two teams—one development and one operational—comprising up to 20 professionals, including a
+                Product
+                Owner and Scrum Master.
+            </span>
+            <span>
+                <i class="fas fa-globe"></i>
+                I have extensive experience leading international teams, driving automation, standardization, and
+                operational excellence to deliver impactful, scalable solutions aligned with business objectives.
+            </span>
+            <span>
+                <i class="fas fa-chart-line"></i>
+                My leadership has consistently reduced operational costs, improved reliability, and enhanced
+                scalability, directly contributing to company success.
+            </span>
+            <span>
+                <i class="fas fa-robot"></i>
+                I'm passionate about integrating AI solutions and FinOps practices into DevOps workflows, focusing on
+                automation, cost optimization, and intelligent tooling to enhance development efficiency while
+                maintaining
+                optimal cloud spending.
+            </span>
+        </p>
+
+        <h2><i class="fas fa-star"></i> Skills</h2>
+        <div class="skills-container">
+            <div class="skill-category">
+                <h3><i class="fas fa-cloud"></i>Cloud & Infra</h3>
+                <ul>
+                    <li>AWS</li>
+                    <li>Kubernetes & Docker</li>
+                    <li>Terraform & IaC</li>
+                    <li>Linux System Administration</li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <h3><i class="fas fa-cogs"></i>DevOps & SRE</h3>
+                <ul>
+                    <li>CI/CD</li>
+                    <li>Infrastructure as Code</li>
+                    <li>Monitoring & Logging</li>
+                    <li>DevOps & SRE Practices</li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <h3><i class="fas fa-code"></i>Development</h3>
+                <ul>
+                    <li>Python, Bash</li>
+                    <li>SDLC & Process Automation</li>
+                    <li>System Architecture</li>
+                    <li>Solution Design</li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <h3><i class="fas fa-users"></i>Leadership</h3>
+                <ul>
+                    <li>Line Management</li>
+                    <li>Team Leadership (20+ people)</li>
+                    <li>Scrum & Kanban</li>
+                    <li>Strategic Planning</li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <h3><i class="fas fa-brain"></i>AI & Automation</h3>
+                <ul>
+                    <li>Cloud Cost Management</li>
+                    <li>FinOps Analysis & Reporting</li>
+                    <li>AI & ChatGPT Integration</li>
+                    <li>Process Automation</li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <h3><i class="fas fa-tools"></i>Tools & Platforms</h3>
+                <ul>
+                    <li>PagerDuty & Datadog</li>
+                    <li>Jira & Confluence</li>
+                    <li>Github & Github Actions</li>
+                    <li>Custom Scripts & Automations</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="quote">
+            <p class="quote-text">"If you define the problem correctly, you almost have the solution."</p>
+            <p class="quote-author">— Steve Jobs </p>
+        </div>
+    </div>
+
+    <!-- Dodajemy JavaScript przed końcem body -->
+    <script>
+        const terminalText = document.querySelector('.terminal-text');
+        const terminalInfo = document.querySelector('.terminal-info');
+        const originalText = terminalText.textContent;
+        let isExpanded = false;
+
+        // Najpierw dodajemy stałą z komendami przed skryptem
+        const realCommands = [
+            { cmd: 'whoami && id', output: 'robert@devops\nuid=1000(robert) gid=1000(devops) groups=1000(devops),4(cloud),20(architect),27(automation)' },
+            { cmd: './scan_profile.sh --target "Robert Kubis" --mode deep', output: 'Scanning professional profile...\n[FOUND] Experience: 10+ years in IT\n[FOUND] Current Role: Engineering Team Lead at Nordcloud (IBM)\n[FOUND] Teams Managed: 20+ professionals' },
+            { cmd: 'cat /etc/security/access.log | grep "leadership"', output: '[ACCESS] Team Leadership: Granted\n[SKILLS] Strategic Planning: Verified\n[CERT] Management Experience: Confirmed\nTeam Size: 20+ members across development and operations' },
+            { cmd: 'aws organizations list-accounts --query "Accounts[?Status==`ACTIVE`]"', output: '[\n    "prod-eu-central-1",\n    "prod-eu-west-1",\n    "staging-eu-central-1"\n]\nManaging multi-region cloud infrastructure' },
+            { cmd: 'kubectl get deployments -n automation', output: 'NAME                    READY   UP-TO-DATE   AVAILABLE   AGE\nci-pipeline              3/3     3            3           180d\ncd-automation            2/2     2            2           180d\nmonitoring-stack         4/4     4            4           180d' },
+            { cmd: './analyze_expertise.py --skills="cloud,devops,ai" --experience=10', output: 'Analyzing professional expertise...\n✓ Cloud Architecture: Advanced\n✓ DevOps Practices: Expert\n✓ AI Integration: Proficient\n✓ Team Leadership: Verified' },
+            { cmd: 'docker ps --filter "label=project=automation"', output: 'CONTAINER ID   IMAGE                    STATUS          PORTS\nabc123def     automation-engine:latest   Up 45 days     0.0.0.0:8080->8080/tcp\ndef456ghi     monitoring-suite:v2.1      Up 30 days     0.0.0.0:9090->9090/tcp' },
+            { cmd: 'top -b -n 1 | grep "Cost Optimization"', output: 'Running Cost Optimization Analysis...\nIdentified Savings: $250K+ annually\nOptimization Score: 94%\nEfficiency Rating: A+' },
+            { cmd: 'git log --author="Robert Kubis" --oneline | head -n 5', output: 'f4e5d6c Implement AI-driven automation pipeline\n7g8h9i0 Optimize cloud resource allocation\na1b2c3d Deploy multi-region infrastructure\nx9y8z7w Enhance security protocols\nm4n5o6p Scale kubernetes cluster' },
+            { cmd: './decrypt_achievements.sh --level=all', output: 'Decrypting professional achievements...\n[SUCCESS] Led transformation of cloud automation\n[SUCCESS] Reduced operational costs by 35%\n[SUCCESS] Improved system reliability to 99.99%\n[SUCCESS] Implemented AI-driven solutions' },
+            { cmd: 'nmap -p- --script "cloud-* and not brute" nordcloud.com', output: 'Scanning Cloud Infrastructure...\nDiscovered Services:\n- Automated Deployment Systems\n- Continuous Integration Pipeline\n- Security Monitoring\n- Cost Management Tools' },
+            { cmd: 'python3 -c "import career; print(career.get_specializations())"', output: '[\n    "Cloud Architecture",\n    "DevOps Leadership",\n    "AI & Automation",\n    "FinOps",\n    "Team Management"\n]' },
+            { cmd: 'tail -f /var/log/projects/success.log', output: '[SUCCESS] Transformed cloud automation practices\n[SUCCESS] Scaled solutions for global customers\n[SUCCESS] Enhanced operational efficiency\n[SUCCESS] Reduced infrastructure costs' },
+            { cmd: './analyze_impact.py --metrics="all" --timeframe="last_year"', output: 'Analyzing business impact...\n↑ Team Productivity: +45%\n↓ Operational Costs: -35%\n↑ System Reliability: 99.99%\n↑ Customer Satisfaction: 98%' },
+            { cmd: 'openssl req -subject "/CN=Robert Kubis/O=Cloud Architecture/C=PL"', output: 'Generating certificate for secure operations...\nVerified: Cloud Architect & Engineering Team Lead\nExpertise: Confirmed\nAccess Level: Administrator' }
+        ];
+
+        // Tworzymy elementy overlay i expanded terminal
+        const overlay = document.createElement('div');
+        overlay.className = 'terminal-overlay';
+        document.body.appendChild(overlay);
+
+        const expandedTerminal = document.createElement('div');
+        expandedTerminal.className = 'terminal-expanded';
+        document.body.appendChild(expandedTerminal);
+
+        terminalText.addEventListener('dblclick', () => {
+            if (!isExpanded) {
+                expandTerminal();
+            } else {
+                collapseTerminal();
+            }
+        });
+
+        overlay.addEventListener('click', collapseTerminal);
+
+        function expandTerminal() {
+            expandedTerminal.innerHTML = '';
+            const historyContainer = document.createElement('ul');
+            historyContainer.className = 'command-history';
+            expandedTerminal.appendChild(historyContainer);
+
+            overlay.classList.add('active');
+            expandedTerminal.classList.add('active');
+            isExpanded = true;
+
+            let i = 0;
+            const addCommand = () => {
+                if (i < realCommands.length) {
+                    const { cmd, output } = realCommands[i];
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span class="prompt">[robert@devops] $</span> ${cmd}`;
+                    historyContainer.appendChild(li);
+
+                    setTimeout(() => {
+                        const outputLi = document.createElement('li');
+                        outputLi.innerHTML = `<span class="output">${output}</span>`;
+                        historyContainer.appendChild(outputLi);
+                        expandedTerminal.scrollTop = expandedTerminal.scrollHeight;
+                    }, 300);
+
+                    i++;
+                    setTimeout(addCommand, 1000);
+                }
+            };
+
+            addCommand();
+        }
+
+        function collapseTerminal() {
+            overlay.classList.remove('active');
+            expandedTerminal.classList.remove('active');
+            isExpanded = false;
+        }
+    </script>
+
+    <canvas id="matrix"></canvas>
+    <script>
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        const quote = document.querySelector('.quote');
+        let matrixInterval;
+
+        // Ukrywamy canvas na starcie
+        canvas.style.display = 'none';
+
+        // Dodajemy obsługę klawisza ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && canvas.style.display !== 'none') {
+                hideMatrix();
+            }
+        });
+
+        // Dodajemy obsługę podwójnego kliknięcia na canvas
+        canvas.addEventListener('dblclick', (e) => {
+            if (canvas.style.display !== 'none') {
+                hideMatrix();
+            }
+        });
+
+        // Funkcja do ukrywania matrix
+        function hideMatrix() {
+            canvas.classList.remove('active');
+            document.body.classList.remove('matrix-active');
+            setTimeout(() => {
+                canvas.style.display = 'none';
+                clearInterval(matrixInterval);
+            }, 500);
+        }
+
+        quote.addEventListener('dblclick', () => {
+            if (canvas.style.display === 'none') {
+                // Pokazujemy efekt matrix
+                canvas.style.display = 'block';
+                canvas.classList.add('active');
+                document.body.classList.add('matrix-active');
+                initMatrix();
+            } else {
+                hideMatrix();
+            }
+        });
+
+        function initMatrix() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
+            const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const nums = '0123456789';
+            const alphabet = katakana + latin + nums;
+
+            const fontSize = 16;
+            const columns = canvas.width / fontSize;
+            const rainDrops = Array(Math.floor(columns)).fill(1);
+
+            function draw() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.fillStyle = '#0F0';
+                ctx.font = fontSize + 'px monospace';
+
+                for (let i = 0; i < rainDrops.length; i++) {
+                    const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                    ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+
+                    if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        rainDrops[i] = 0;
+                    }
+                    rainDrops[i]++;
+                }
+            }
+
+            matrixInterval = setInterval(draw, 30);
+        }
+
+        // Obsługa zmiany rozmiaru okna
+        window.addEventListener('resize', () => {
+            if (canvas.style.display !== 'none') {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+        });
+    </script>
+
+    <div class="clippy-container">
+        <div class="clippy-bubble">
+            Hey! Looks like you're exploring my website!
+            Did you know there's an Easter egg?
+            Try double-clicking the quote at the bottom or terminal! 😉
+        </div>
+        <div class="clippy"></div>
+    </div>
+
+    <script>
+        // Pokaż Clippy po 30 sekundach
+        setTimeout(() => {
+            document.querySelector('.clippy-container').classList.add('active');
+        }, 30000);
+
+        // Ukryj Clippy po kliknięciu
+        document.querySelector('.clippy').addEventListener('click', () => {
+            document.querySelector('.clippy-container').style.display = 'none';
+        });
+    </script>
+</body>
+
+</html>
