@@ -428,6 +428,70 @@
             .skills-container {
                 grid-template-columns: 1fr;
             }
+
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                padding: 1rem;
+            }
+
+            .profile-image {
+                width: 150px;
+                /* Smaller image on mobile */
+                height: 150px;
+                margin: 0 auto;
+            }
+
+            .profile-info {
+                width: 100%;
+                text-align: center;
+            }
+
+            .profile-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.8rem;
+            }
+
+            .profile-links a {
+                width: 80%;
+                /* Make buttons wider on mobile */
+                justify-content: center;
+            }
+
+            .terminal-info {
+                width: 100%;
+                font-size: 0.8rem;
+                /* Smaller font on mobile */
+                padding: 8px 12px;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+                margin: 0.5rem 0;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+                margin: 0.5rem 0;
+            }
+        }
+
+        /* Add tablet breakpoint for smoother transition */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .header-content {
+                padding: 1rem;
+            }
+
+            .profile-image {
+                width: 160px;
+                height: 160px;
+            }
+
+            .profile-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
         }
 
         .container>h2 {
