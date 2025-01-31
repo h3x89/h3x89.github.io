@@ -3,7 +3,7 @@
 # h3x89.github.io
 
 - [h3x89.github.io](https://h3x89.github.io)
-- [robertkubis.pl](https://robertkubis.pl)
+- [robertkubis.pl](http://robertkubis.pl)
 
 ## Personal Website
 
@@ -27,6 +27,8 @@ This is my personal website featuring an interactive portfolio with several enga
 - [x] add resume
 - [ ] add phone number
 - [ ] add email contact form
+- [ ] add https support for robertkubis.pl
+- [ ] add website monitoring
 
 ## Running the Application
 
