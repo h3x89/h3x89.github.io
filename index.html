@@ -218,6 +218,8 @@
             overflow: hidden;
             border: 1px solid #2a2a2a;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease-out;
+            z-index: 10;
         }
 
         .terminal-info::before {
@@ -594,6 +596,116 @@
             color: #6a737d;
             font-style: normal;
         }
+
+        /* Dodajemy style dla efektu hackowania */
+        .hacking-effect {
+            animation: none !important;
+            /* Wyłączamy poprzednią animację */
+            width: auto !important;
+        }
+
+        .hacking-effect::after {
+            content: none !important;
+            /* Wyłączamy migający kursor */
+        }
+
+        @keyframes matrixEffect {
+
+            0%,
+            100% {
+                color: #0f0;
+            }
+
+            50% {
+                color: #00ff00;
+            }
+        }
+
+        /* Modyfikujemy style dla terminala */
+        .terminal-info {
+            position: relative;
+        }
+
+        /* Style dla rozwiniętego terminala */
+        .terminal-expanded {
+            position: fixed;
+            width: 90%;
+            height: 400px;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: #1e1e1e;
+            overflow-y: auto;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            opacity: 0;
+            transition: all 0.3s ease-out;
+            z-index: 1000;
+        }
+
+        /* Klasa dla aktywnego terminala */
+        .terminal-expanded.active {
+            transform: translate(-50%, 0) scale(1);
+            opacity: 1;
+        }
+
+        /* Overlay dla tła */
+        .terminal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease-out;
+            z-index: 999;
+        }
+
+        .terminal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Style dla historii komend */
+        .command-history {
+            color: #98c379;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .command-history li {
+            margin-bottom: 8px;
+            opacity: 0;
+            animation: fadeInCommand 0.3s ease-out forwards;
+        }
+
+        .command-history .prompt {
+            color: #0f0;
+            margin-right: 8px;
+        }
+
+        .command-history .output {
+            color: #888;
+            margin-left: 24px;
+            font-size: 0.9em;
+        }
+
+        @keyframes fadeInCommand {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 
@@ -727,6 +839,91 @@
             <p class="quote-author">— Leonardo da Vinci</p>
         </div>
     </div>
+
+    <!-- Dodajemy JavaScript przed końcem body -->
+    <script>
+        const terminalText = document.querySelector('.terminal-text');
+        const terminalInfo = document.querySelector('.terminal-info');
+        const originalText = terminalText.textContent;
+        let isExpanded = false;
+
+        // Najpierw dodajemy stałą z komendami przed skryptem
+        const realCommands = [
+            { cmd: 'whoami && id', output: 'robert@devops\nuid=1000(robert) gid=1000(devops) groups=1000(devops),4(cloud),20(architect),27(automation)' },
+            { cmd: './scan_profile.sh --target "Robert Kubis" --mode deep', output: 'Scanning professional profile...\n[FOUND] Experience: 10+ years in IT\n[FOUND] Current Role: Engineering Team Lead at Nordcloud (IBM)\n[FOUND] Teams Managed: 20+ professionals' },
+            { cmd: 'cat /etc/security/access.log | grep "leadership"', output: '[ACCESS] Team Leadership: Granted\n[SKILLS] Strategic Planning: Verified\n[CERT] Management Experience: Confirmed\nTeam Size: 20+ members across development and operations' },
+            { cmd: 'aws organizations list-accounts --query "Accounts[?Status==`ACTIVE`]"', output: '[\n    "prod-eu-central-1",\n    "prod-eu-west-1",\n    "staging-eu-central-1"\n]\nManaging multi-region cloud infrastructure' },
+            { cmd: 'kubectl get deployments -n automation', output: 'NAME                    READY   UP-TO-DATE   AVAILABLE   AGE\nci-pipeline              3/3     3            3           180d\ncd-automation            2/2     2            2           180d\nmonitoring-stack         4/4     4            4           180d' },
+            { cmd: './analyze_expertise.py --skills="cloud,devops,ai" --experience=10', output: 'Analyzing professional expertise...\n✓ Cloud Architecture: Advanced\n✓ DevOps Practices: Expert\n✓ AI Integration: Proficient\n✓ Team Leadership: Verified' },
+            { cmd: 'docker ps --filter "label=project=automation"', output: 'CONTAINER ID   IMAGE                    STATUS          PORTS\nabc123def     automation-engine:latest   Up 45 days     0.0.0.0:8080->8080/tcp\ndef456ghi     monitoring-suite:v2.1      Up 30 days     0.0.0.0:9090->9090/tcp' },
+            { cmd: 'top -b -n 1 | grep "Cost Optimization"', output: 'Running Cost Optimization Analysis...\nIdentified Savings: $250K+ annually\nOptimization Score: 94%\nEfficiency Rating: A+' },
+            { cmd: 'git log --author="Robert Kubis" --oneline | head -n 5', output: 'f4e5d6c Implement AI-driven automation pipeline\n7g8h9i0 Optimize cloud resource allocation\na1b2c3d Deploy multi-region infrastructure\nx9y8z7w Enhance security protocols\nm4n5o6p Scale kubernetes cluster' },
+            { cmd: './decrypt_achievements.sh --level=all', output: 'Decrypting professional achievements...\n[SUCCESS] Led transformation of cloud automation\n[SUCCESS] Reduced operational costs by 35%\n[SUCCESS] Improved system reliability to 99.99%\n[SUCCESS] Implemented AI-driven solutions' },
+            { cmd: 'nmap -p- --script "cloud-* and not brute" nordcloud.com', output: 'Scanning Cloud Infrastructure...\nDiscovered Services:\n- Automated Deployment Systems\n- Continuous Integration Pipeline\n- Security Monitoring\n- Cost Management Tools' },
+            { cmd: 'python3 -c "import career; print(career.get_specializations())"', output: '[\n    "Cloud Architecture",\n    "DevOps Leadership",\n    "AI & Automation",\n    "FinOps",\n    "Team Management"\n]' },
+            { cmd: 'tail -f /var/log/projects/success.log', output: '[SUCCESS] Transformed cloud automation practices\n[SUCCESS] Scaled solutions for global customers\n[SUCCESS] Enhanced operational efficiency\n[SUCCESS] Reduced infrastructure costs' },
+            { cmd: './analyze_impact.py --metrics="all" --timeframe="last_year"', output: 'Analyzing business impact...\n↑ Team Productivity: +45%\n↓ Operational Costs: -35%\n↑ System Reliability: 99.99%\n↑ Customer Satisfaction: 98%' },
+            { cmd: 'openssl req -subject "/CN=Robert Kubis/O=Cloud Architecture/C=PL"', output: 'Generating certificate for secure operations...\nVerified: Cloud Architect & Engineering Team Lead\nExpertise: Confirmed\nAccess Level: Administrator' }
+        ];
+
+        // Tworzymy elementy overlay i expanded terminal
+        const overlay = document.createElement('div');
+        overlay.className = 'terminal-overlay';
+        document.body.appendChild(overlay);
+
+        const expandedTerminal = document.createElement('div');
+        expandedTerminal.className = 'terminal-expanded';
+        document.body.appendChild(expandedTerminal);
+
+        terminalText.addEventListener('dblclick', () => {
+            if (!isExpanded) {
+                expandTerminal();
+            } else {
+                collapseTerminal();
+            }
+        });
+
+        overlay.addEventListener('click', collapseTerminal);
+
+        function expandTerminal() {
+            expandedTerminal.innerHTML = '';
+            const historyContainer = document.createElement('ul');
+            historyContainer.className = 'command-history';
+            expandedTerminal.appendChild(historyContainer);
+
+            overlay.classList.add('active');
+            expandedTerminal.classList.add('active');
+            isExpanded = true;
+
+            let i = 0;
+            const addCommand = () => {
+                if (i < realCommands.length) {
+                    const { cmd, output } = realCommands[i];
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span class="prompt">[robert@devops] $</span> ${cmd}`;
+                    historyContainer.appendChild(li);
+
+                    setTimeout(() => {
+                        const outputLi = document.createElement('li');
+                        outputLi.innerHTML = `<span class="output">${output}</span>`;
+                        historyContainer.appendChild(outputLi);
+                        expandedTerminal.scrollTop = expandedTerminal.scrollHeight;
+                    }, 300);
+
+                    i++;
+                    setTimeout(addCommand, 1000);
+                }
+            };
+
+            addCommand();
+        }
+
+        function collapseTerminal() {
+            overlay.classList.remove('active');
+            expandedTerminal.classList.remove('active');
+            isExpanded = false;
+        }
+    </script>
 </body>
 
 </html>
