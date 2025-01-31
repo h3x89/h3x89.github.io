@@ -236,6 +236,12 @@
             display: inline-block;
         }
 
+        /* Style for separator */
+        .subtitle .separator {
+            display: inline;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
         .terminal-info {
             font-family: 'Courier New', monospace;
             font-size: 0.9rem;
@@ -427,6 +433,111 @@
 
             .skills-container {
                 grid-template-columns: 1fr;
+            }
+
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                padding: 1rem;
+            }
+
+            .profile-image {
+                width: 150px;
+                /* Smaller image on mobile */
+                height: 150px;
+                margin: 0 auto;
+            }
+
+            .profile-info {
+                width: 100%;
+                text-align: center;
+            }
+
+            .profile-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.8rem;
+            }
+
+            .profile-links a {
+                width: 80%;
+                /* Make buttons wider on mobile */
+                justify-content: center;
+            }
+
+            .terminal-info {
+                width: 90%;
+                max-width: 280px;
+                font-size: 0.6rem;
+                /* Decrease font size */
+                padding: 6px 8px;
+                margin: 0.5rem auto;
+                border-radius: 4px;
+            }
+
+            .terminal-text {
+                white-space: nowrap;
+                /* Force single line */
+                overflow: hidden;
+                text-overflow: ellipsis;
+                /* Add dots if text doesn't fit */
+            }
+
+            .subtitle {
+                font-size: 0.9rem;
+                margin: 0.5rem 0;
+                text-align: center;
+            }
+
+            .subtitle .phrase {
+                display: block;
+                margin: 0.2rem 0;
+                line-height: 1.4;
+                white-space: normal;
+            }
+
+            .subtitle .separator {
+                display: none;
+                /* Hide separator on mobile */
+            }
+
+            h1 {
+                font-size: 1.8rem;
+                margin: 0.5rem 0;
+            }
+        }
+
+        /* Add tablet breakpoint for smoother transition */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .header-content {
+                padding: 1rem;
+            }
+
+            .profile-image {
+                width: 160px;
+                height: 160px;
+            }
+
+            .profile-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        /* Additional breakpoint for very small screens */
+        @media (max-width: 360px) {
+            .terminal-info {
+                font-size: 0.5rem;
+                /* Even smaller font for small screens */
+                padding: 4px 6px;
+            }
+
+            .subtitle {
+                font-size: 0.8rem;
+            }
+
+            .subtitle .phrase {
+                margin: 0.15rem 0;
             }
         }
 
@@ -966,7 +1077,13 @@
             <img src="RobertKubis.jpeg" alt="Robert Kubiś" class="profile-image">
             <div class="profile-info">
                 <h1>Robert Kubiś</h1>
-                <p class="subtitle">Engineering Team Lead | Cloud & DevOps Strategist | AI & Automation Enthusiast</p>
+                <p class="subtitle">
+                    <span class="phrase">Engineering Team Lead</span>
+                    <span class="separator"> | </span>
+                    <span class="phrase">Cloud & DevOps Strategist</span>
+                    <span class="separator"> | </span>
+                    <span class="phrase">AI & Automation Enthusiast</span>
+                </p>
 
                 <div class="profile-links">
                     <a href="https://h3x89.github.io/RobertKubisResume.pdf" target="_blank">
@@ -1226,7 +1343,7 @@
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
 
-            const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
+            const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッん';
             const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
             const nums = '0123456789';
             const alphabet = katakana + latin + nums;
