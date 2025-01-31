@@ -46,6 +46,7 @@
             object-fit: cover;
             border: 4px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            animation: borderRotate 4s ease-in-out infinite;
         }
 
         .profile-info {
@@ -74,6 +75,8 @@
             align-items: center;
             gap: 0.8rem;
             font-size: 1.1rem;
+            position: relative;
+            overflow: hidden;
         }
 
         .profile-links a:hover {
@@ -85,6 +88,24 @@
 
         .profile-links a i {
             font-size: 1.2rem;
+        }
+
+        .profile-links a::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.2),
+                    transparent);
+            transition: 0.5s;
+        }
+
+        .profile-links a:hover::after {
+            left: 100%;
         }
 
         h1 {
@@ -115,6 +136,8 @@
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease-out;
+            animation-fill-mode: both;
         }
 
         .skill-category:hover {
@@ -132,6 +155,8 @@
         .skill-category h3 i {
             margin-right: 0.5rem;
             color: #0366d6;
+            display: inline-block;
+            animation: pulse 2s ease-in-out infinite;
         }
 
         .skill-category ul {
@@ -172,6 +197,17 @@
             padding-bottom: 0.5rem;
             border-bottom: 2px solid #0366d6;
             display: inline-block;
+            position: relative;
+        }
+
+        .container>h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            background: #0366d6;
+            animation: borderWidth 0.6s ease-out forwards;
         }
 
         .container p {
@@ -184,6 +220,133 @@
 
         html {
             scroll-behavior: smooth;
+        }
+
+        /* Animacja dla zdjęcia profilowego - delikatna rotacja bordera */
+        @keyframes borderRotate {
+            from {
+                border-color: rgba(255, 255, 255, 0.2);
+            }
+
+            50% {
+                border-color: rgba(255, 255, 255, 0.4);
+            }
+
+            to {
+                border-color: rgba(255, 255, 255, 0.2);
+            }
+        }
+
+        /* Animacja wejściowa dla kart umiejętności */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Opóźnienie animacji dla każdej kolejnej karty */
+        .skill-category:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .skill-category:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .skill-category:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .skill-category:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        /* Delikatna animacja dla ikon w kartach */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Animacja dla nagłówków sekcji */
+        @keyframes borderWidth {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+        /* Modyfikacja animacji dla tekstu About Me */
+        .fade-in-text span {
+            opacity: 0;
+            display: block;
+            transform: translateY(10px);
+            animation: fadeInText 1s ease-out forwards;
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .fade-in-text span i {
+            position: absolute;
+            left: 0;
+            top: 0.2rem;
+            color: #0366d6;
+            opacity: 0.8;
+        }
+
+        @keyframes fadeInText {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Opóźnienia dla kolejnych linii tekstu */
+        .fade-in-text span:nth-child(1) {
+            animation-delay: 0.4s;
+        }
+
+        .fade-in-text span:nth-child(2) {
+            animation-delay: 0.7s;
+        }
+
+        .fade-in-text span:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        .fade-in-text span:nth-child(4) {
+            animation-delay: 1.3s;
+            margin-bottom: 0;
+        }
+
+        /* Pozostałe style dla tekstu */
+        .fade-in-text {
+            font-weight: 400;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
         }
     </style>
 </head>
@@ -213,19 +376,29 @@
 
     <div class="container">
         <h2><i class="fas fa-user"></i> About Me</h2>
-        <p>
-            With over a decade of experience in IT, I've spent the last 6 years at Nordcloud (an IBM company) focusing
-            on
-            transforming cloud automation and scaling solutions for global customers and internal teams. My career spans
-            various roles, from DevOps Engineer to Cloud Architect and currently as a leader overseeing two teams—one
-            development and one operational—comprising up to 20 professionals, including a Product Owner and Scrum
-            Master.
-            I have extensive experience leading international teams, driving automation, standardization, and
-            operational
-            excellence to deliver impactful, scalable solutions aligned with business objectives. My leadership has
-            consistently reduced operational costs, improved reliability, and enhanced scalability, directly
-            contributing
-            to company success.
+        <p class="fade-in-text">
+            <span>
+                <i class="fas fa-history"></i>
+                With over a decade of experience in IT, I've spent the last 6 years at Nordcloud (an IBM company)
+                focusing on transforming cloud automation and scaling solutions for global customers and internal teams.
+            </span>
+            <span>
+                <i class="fas fa-rocket"></i>
+                My career spans various roles, from DevOps Engineer to Cloud Architect and currently as a leader
+                overseeing two teams—one development and one operational—comprising up to 20 professionals, including a
+                Product
+                Owner and Scrum Master.
+            </span>
+            <span>
+                <i class="fas fa-globe"></i>
+                I have extensive experience leading international teams, driving automation, standardization, and
+                operational excellence to deliver impactful, scalable solutions aligned with business objectives.
+            </span>
+            <span>
+                <i class="fas fa-chart-line"></i>
+                My leadership has consistently reduced operational costs, improved reliability, and enhanced
+                scalability, directly contributing to company success.
+            </span>
         </p>
 
         <h2><i class="fas fa-star"></i> Skills</h2>
