@@ -464,7 +464,7 @@
             scroll-behavior: smooth;
         }
 
-        /* Animacja dla zdjęcia profilowego - delikatna rotacja bordera */
+        /* Animation for profile picture - subtle border rotation */
         @keyframes borderRotate {
             from {
                 border-color: rgba(255, 255, 255, 0.2);
@@ -479,7 +479,7 @@
             }
         }
 
-        /* Animacja wejściowa dla kart umiejętności */
+        /* Entry animation for skill cards */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -492,7 +492,7 @@
             }
         }
 
-        /* Przyspieszamy pojawianie się kart */
+        /* Speed up card appearance */
         .skill-category:nth-child(1) {
             animation-delay: 1.3s;
         }
@@ -517,7 +517,7 @@
             animation-delay: 1.8s;
         }
 
-        /* Delikatna animacja dla ikon w kartach */
+        /* Subtle animation for icons in cards */
         @keyframes pulse {
             0% {
                 transform: scale(1);
@@ -532,7 +532,7 @@
             }
         }
 
-        /* Animacja dla nagłówków sekcji */
+        /* Animation for section headers */
         @keyframes borderWidth {
             from {
                 width: 0;
@@ -543,7 +543,7 @@
             }
         }
 
-        /* Modyfikacja animacji dla tekstu About Me */
+        /* Modification of About Me text animation */
         .fade-in-text span {
             opacity: 0;
             display: block;
@@ -574,7 +574,7 @@
             }
         }
 
-        /* Przyspieszamy animację tekstu About Me */
+        /* Speed up About Me text animation */
         .fade-in-text span:nth-child(1) {
             animation-delay: 0.1s;
         }
@@ -595,7 +595,7 @@
             animation-delay: 0.7s;
         }
 
-        /* Pozostałe style dla tekstu */
+        /* Remaining text styles */
         .fade-in-text {
             font-weight: 400;
             text-rendering: optimizeLegibility;
@@ -628,7 +628,7 @@
             }
         }
 
-        /* Dodajemy style dla stopki */
+        /* Add styles for footer */
         .footer {
             text-align: center;
             padding: 2rem 0;
@@ -657,16 +657,16 @@
             font-style: normal;
         }
 
-        /* Dodajemy style dla efektu hackowania */
+        /* Add styles for hacking effect */
         .hacking-effect {
             animation: none !important;
-            /* Wyłączamy poprzednią animację */
+            /* Disable previous animation */
             width: auto !important;
         }
 
         .hacking-effect::after {
             content: none !important;
-            /* Wyłączamy migający kursor */
+            /* Disable blinking cursor */
         }
 
         @keyframes matrixEffect {
@@ -681,26 +681,26 @@
             }
         }
 
-        /* Modyfikujemy style dla terminala */
+        /* Modify terminal styles */
         .terminal-info {
             position: relative;
             z-index: 1;
             transition: opacity 0.5s ease;
         }
 
-        /* Dodajemy klasę dla ukrywania terminala */
+        /* Add class for hiding terminal */
         .matrix-active .terminal-info {
             opacity: 0;
             pointer-events: none;
         }
 
-        /* Modyfikujemy style dla matrix */
+        /* Modify matrix styles */
         #matrix.active {
             opacity: 1;
             z-index: 100;
         }
 
-        /* Style dla rozwiniętego terminala */
+        /* Styles for expanded terminal */
         .terminal-expanded {
             position: fixed;
             width: 90%;
@@ -719,13 +719,13 @@
             z-index: 1000;
         }
 
-        /* Klasa dla aktywnego terminala */
+        /* Class for active terminal */
         .terminal-expanded.active {
             transform: translate(-50%, 0) scale(1);
             opacity: 1;
         }
 
-        /* Overlay dla tła */
+        /* Background overlay */
         .terminal-overlay {
             position: fixed;
             top: 0;
@@ -744,7 +744,7 @@
             visibility: visible;
         }
 
-        /* Style dla historii komend */
+        /* Styles for command history */
         .command-history {
             color: #98c379;
             margin: 0;
@@ -790,7 +790,7 @@
             opacity: 0.3;
         }
 
-        /* Dodajemy style dla ukrytego canvasa */
+        /* Add styles for hidden canvas */
         #matrix {
             position: fixed;
             top: 0;
@@ -801,7 +801,7 @@
             opacity: 0;
             transition: opacity 0.5s ease;
             cursor: pointer;
-            /* Pokazuje, że można kliknąć */
+            /* Shows that it can be clicked */
         }
 
         #matrix.active {
@@ -809,7 +809,7 @@
             z-index: 0;
         }
 
-        /* Dodajemy style dla kontenera i stopki podczas efektu matrix */
+        /* Add styles for container and footer during matrix effect */
         .container,
         .footer {
             position: relative;
@@ -826,6 +826,87 @@
         .matrix-active .header {
             opacity: 0;
             pointer-events: none;
+        }
+
+        /* Style dla kolorowych ikon */
+        /* About Me section icons */
+        .fade-in-text span i {
+            color: #0f0;
+            /* Zachowujemy hackerski zielony */
+            margin-right: 0.8rem;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .fade-in-text span:hover i {
+            transform: scale(1.2);
+            filter: brightness(1.2);
+        }
+
+        /* Skills section icons */
+        .skill-category h3 i.fa-cloud {
+            color: #3b82f6;
+            /* Niebieski dla Cloud */
+        }
+
+        .skill-category h3 i.fa-cogs {
+            color: #f59e0b;
+            /* Pomarańczowy dla DevOps */
+        }
+
+        .skill-category h3 i.fa-code {
+            color: #10b981;
+            /* Zielony dla Development */
+        }
+
+        .skill-category h3 i.fa-users {
+            color: #8b5cf6;
+            /* Fioletowy dla Leadership */
+        }
+
+        .skill-category h3 i.fa-brain {
+            color: #ec4899;
+            /* Różowy dla AI */
+        }
+
+        .skill-category h3 i.fa-tools {
+            color: #6366f1;
+            /* Indygo dla Tools */
+        }
+
+        /* Header icons */
+        .profile-links a i {
+            transition: all 0.3s ease;
+        }
+
+        .profile-links a:hover i {
+            transform: scale(1.2);
+        }
+
+        .profile-links a:nth-child(1) i {
+            color: #ef4444;
+            /* Czerwony dla CV */
+        }
+
+        .profile-links a:nth-child(2) i {
+            color: #9ca3af;
+            /* Szary dla GitHub */
+        }
+
+        .profile-links a:nth-child(3) i {
+            color: #0077b5;
+            /* LinkedIn niebieski */
+        }
+
+        /* Section headers */
+        h2 i.fa-user {
+            color: #3b82f6;
+            /* Niebieski */
+        }
+
+        h2 i.fa-star {
+            color: #f59e0b;
+            /* Pomarańczowy */
         }
     </style>
 </head>
