@@ -29,6 +29,76 @@ This is my personal website featuring an interactive portfolio with several enga
 - [ ] add email contact form
 - [ ] add https support for robertkubis.pl
 - [ ] add website monitoring
+- [ ] add website analytics
+- [ ] fix console errors
+- [ ] implement automated testing
+  - [ ] setup e2e tests (Cypress/Playwright)
+  - [ ] add visual regression tests
+  - [ ] write unit tests for JS modules
+  - [ ] configure CI/CD pipeline
+- [ ] implement backend functionality
+  - [ ] setup Python Flask server
+  - [ ] configure DynamoDB integration
+  - [ ] create REST API endpoints
+    - [ ] POST endpoint for data submission
+    - [ ] GET endpoint for data retrieval
+  - [ ] integrate frontend with backend
+    - [ ] implement contact form
+    - [ ] add message system
+  - [ ] write backend tests with pytest
+- [ ] migrate to AWS infrastructure
+  - [ ] setup infrastructure as code (Terraform/CloudFormation)
+  - [ ] configure S3 for static hosting
+  - [ ] setup CloudFront CDN
+  - [ ] implement Lambda functions for backend
+  - [ ] migrate DynamoDB to DynamoDB
+  - [ ] configure Route53 for DNS
+  - [ ] setup CI/CD with GitHub Actions
+  - [ ] implement monitoring with CloudWatch
+  - [ ] configure SSL certificates with ACM
+
+## Testing Strategy
+
+The website requires comprehensive testing to ensure reliability across different modules. Here's our testing approach:
+
+### End-to-End (E2E) Testing
+
+Using Cypress, Puppeteer, or Playwright to:
+
+- Simulate user interactions with the terminal
+- Verify Matrix effect animations
+- Test responsive design behavior
+- Ensure Clippy assistant functionality
+
+### Visual Regression Testing
+
+Using tools like BackstopJS or Percy to:
+
+- Capture and compare screenshots before/after changes
+- Verify CSS styles and animations
+- Ensure consistent layout across different screen sizes
+
+### Unit Testing
+
+Using Jest for JavaScript modules:
+
+- Test individual component logic
+- Verify DOM manipulations
+- Ensure module integration
+
+### Snapshot Testing
+
+- Create DOM snapshots for key components
+- Track HTML structure changes
+- Detect unintended modifications
+
+### CI/CD Integration
+
+Automated testing pipeline using GitHub Actions to:
+
+- Run all tests on each commit
+- Prevent merging if tests fail
+- Generate test reports
 
 ## Running the Application
 
@@ -89,3 +159,67 @@ Using a local HTTP server:
   - Interactive terminal simulation
   - Matrix rain effect animation
   - Clippy assistant functionality
+
+## Backend Architecture
+
+The website uses a Python-based backend stack for dynamic functionality:
+
+### Server Stack
+
+- Flask web framework for RESTful API
+- DynamoDB for NoSQL database storage
+- pytest for backend testing
+
+### Key Features
+
+- Contact form data storage
+- Message system
+- Dynamic content loading
+- API endpoints for data interaction
+
+### API Endpoints
+
+- POST /api/messages - Submit user messages
+- GET /api/messages - Retrieve stored messages
+
+## AWS Architecture
+
+The website will use serverless AWS architecture for scalability and cost-effectiveness:
+
+### Frontend Stack
+
+- S3 for static website hosting
+- CloudFront for content delivery and caching
+- Route53 for DNS management
+- ACM for SSL certificates
+
+### Backend Stack
+
+- Lambda functions for serverless API
+- API Gateway for REST endpoints
+- DynamoDB for NoSQL database
+- CloudWatch for monitoring and logging
+
+### CI/CD Pipeline
+
+- GitHub Actions for automated deployments
+- GitHub Actions for build process
+- S3 for artifact storage
+
+### Infrastructure
+
+- Terraform/CloudFormation for infrastructure as code
+- IAM for access management
+- CloudWatch Alarms for monitoring
+- AWS Budgets for cost control
+
+### Estimated Costs
+
+For low traffic personal website:
+
+- S3: ~$0.50/month
+- CloudFront: ~$1.00/month
+- Lambda: Free tier eligible
+- DynamoDB: Free tier eligible
+- Route53: ~$0.50/month per hosted zone
+- Total: ~$2-5/month
