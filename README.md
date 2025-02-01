@@ -29,6 +29,56 @@ This is my personal website featuring an interactive portfolio with several enga
 - [ ] add email contact form
 - [ ] add https support for robertkubis.pl
 - [ ] add website monitoring
+- [ ] add website analytics
+- [ ] fix console errors
+- [ ] implement automated testing
+  - [ ] setup e2e tests (Cypress/Playwright)
+  - [ ] add visual regression tests
+  - [ ] write unit tests for JS modules
+  - [ ] configure CI/CD pipeline
+
+## Testing Strategy
+
+The website requires comprehensive testing to ensure reliability across different modules. Here's our testing approach:
+
+### End-to-End (E2E) Testing
+
+Using Cypress, Puppeteer, or Playwright to:
+
+- Simulate user interactions with the terminal
+- Verify Matrix effect animations
+- Test responsive design behavior
+- Ensure Clippy assistant functionality
+
+### Visual Regression Testing
+
+Using tools like BackstopJS or Percy to:
+
+- Capture and compare screenshots before/after changes
+- Verify CSS styles and animations
+- Ensure consistent layout across different screen sizes
+
+### Unit Testing
+
+Using Jest for JavaScript modules:
+
+- Test individual component logic
+- Verify DOM manipulations
+- Ensure module integration
+
+### Snapshot Testing
+
+- Create DOM snapshots for key components
+- Track HTML structure changes
+- Detect unintended modifications
+
+### CI/CD Integration
+
+Automated testing pipeline using GitHub Actions to:
+
+- Run all tests on each commit
+- Prevent merging if tests fail
+- Generate test reports
 
 ## Running the Application
 
