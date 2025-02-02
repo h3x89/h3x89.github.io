@@ -30,7 +30,7 @@ This is my personal website featuring an interactive portfolio with several enga
 - [ ] add https support for robertkubis.pl
 - [ ] add website monitoring
 - [ ] add website analytics
-- [ ] fix console errors
+- [x] fix console errors
 - [ ] implement automated testing
   - [ ] setup e2e tests (Cypress/Playwright)
   - [ ] add visual regression tests
