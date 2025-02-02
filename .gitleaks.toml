@@ -1,9 +1,11 @@
-# [allowlist]
-# paths = [
-#     '''js/datadog\.js'''
-# ]
+# Konfiguracja allowlist dla gitleaks
+[allowlist]
+# Opcja 1: Ignorowanie całego pliku
+paths = [
+    '''js/datadog\.js'''
+]
 
-# lub bardziej precyzyjnie dla konkretnych linii
+# Opcja 2: Ignorowanie konkretnych wzorców
 [[allowlist]]
 regexes = [
     '''applicationId: ['"]ef98ba92-2942-4c3c-bccf-a0473752a05d['"]''',
