@@ -1,5 +1,5 @@
 # Allowlist configuration for gitleaks
-[[allowlist]]
+[allowlist]
 regexes = [
     '''applicationId: ['"]ef98ba92-2942-4c3c-bccf-a0473752a05d['"]''',
     '''clientToken: ['"]pub36d6cdb75f01bb02ab01e805a1d01d0b['"]'''
@@ -7,7 +7,6 @@ regexes = [
 description = "Datadog RUM public tokens"
 
 # Note: Other configuration options are commented out for now
-# [allowlist]
 # paths = [
 #     '''js/datadog\.js'''
 # ]
