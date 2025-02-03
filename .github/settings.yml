@@ -29,6 +29,8 @@ repository:
     secret_scanning_push_protection:
       status: enabled
 
+  # test 
+
 # branches:
 #   - name: main
 #     protection:
