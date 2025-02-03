@@ -1,0 +1,37 @@
+#     ____                                __  __  _
+#    / __ \___  ____  ____     ________  / /_/ /_(_)___  ____ ______
+#   / /_/ / _ \/ __ \/ __ \   / ___/ _ \/ __/ __/ / __ \/ __ `/ ___/
+#  / _, _/  __/ /_/ / /_/ /  (__  )  __/ /_/ /_/ / / / / /_/ (__  )
+# /_/ |_|\___/ .___/\____/  /____/\___/\__/\__/_/_/ /_/\__, /____/
+#           /_/                                       /____/
+
+# This file defines settings of this repository. Most if it is inherited from https://github.com/h3x89/github-settings/blob/master/.github/settings.yml
+
+# Full documentation: MCTooling GitHub+repo+settings+IaC
+
+_extends: h3x89/github-settings:.github/settings.yml
+
+repository:
+
+  name: h3x89.github.io
+
+  description: My personal website
+
+  homepage: https://h3x89.github.io
+
+# branches:
+#   - name: main
+#     protection:
+#       required_pull_request_reviews:
+#         required_approving_review_count: 1
+#         dismiss_stale_reviews: true
+#         require_code_owner_reviews: true
+#         dismissal_restrictions:
+#           users: []
+#           teams: []
+#       required_status_checks:
+#         strict: true
+#         contexts: ["JSON linter"]
+#       enforce_admins: false
+#       required_linear_history: true
+#       restrictions: null
