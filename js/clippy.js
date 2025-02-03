@@ -23,7 +23,13 @@ class Clippy {
         }, 30000);
 
         // Hide Clippy when clicked
-        this.clippy.addEventListener('click', () => {
+        this.clippy.addEventListener('click', (event) => {
+            if (window.location.origin !== 'https://h3x89.github.io') {
+                throw new Error('invalid origin');
+            }
+            if (!event.isTrusted) {
+                throw new Error('untrusted event');
+            }
             this.hide();
         });
     }

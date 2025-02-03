@@ -5,7 +5,6 @@ import Clippy from './clippy.js';
 document.addEventListener('DOMContentLoaded', (event) => {
     if (event.origin !== 'https://h3x89.github.io') {
         throw new Error('invalid origin');
-        return;
     }
 
     // Initialize Terminal
