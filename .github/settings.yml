@@ -19,6 +19,8 @@ repository:
 
   homepage: https://h3x89.github.io
 
+  private: false
+
 # branches:
 #   - name: main
 #     protection:
