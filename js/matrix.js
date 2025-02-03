@@ -21,31 +21,35 @@ class MatrixEffect {
     }
 
     initializeEventListeners() {
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && this.isActive) {
-                this.hideMatrix();
-            }
-        });
+        if (window.origin === window.location.origin) {
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && this.isActive) {
+                    this.hideMatrix();
+                }
+            });
 
-        this.canvas.addEventListener('dblclick', () => {
-            if (this.isActive) {
-                this.hideMatrix();
-            }
-        });
+            this.canvas.addEventListener('dblclick', () => {
+                if (this.isActive) {
+                    this.hideMatrix();
+                }
+            });
 
-        this.quote.addEventListener('dblclick', () => {
-            if (!this.isActive) {
-                this.showMatrix();
-            } else {
-                this.hideMatrix();
-            }
-        });
+            this.quote.addEventListener('dblclick', () => {
+                if (!this.isActive) {
+                    this.showMatrix();
+                } else {
+                    this.hideMatrix();
+                }
+            });
 
-        window.addEventListener('resize', () => {
-            if (this.isActive) {
-                this.resizeCanvas();
-            }
-        });
+            window.addEventListener('resize', () => {
+                if (this.isActive) {
+                    this.resizeCanvas();
+                }
+            });
+        } else {
+            console.error('Security Error: Event origin mismatch detected in MatrixEffect');
+        }
     }
 
     resizeCanvas() {

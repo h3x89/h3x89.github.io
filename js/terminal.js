@@ -45,19 +45,27 @@ class Terminal {
     }
 
     initializeEventListeners() {
-        this.terminalText.addEventListener('dblclick', () => {
-            if (!this.isExpanded) {
-                this.expandTerminal();
-            } else {
-                this.collapseTerminal();
-            }
-        });
+        if (window.origin === window.location.origin) {
+            this.terminalText.addEventListener('dblclick', () => {
+                if (!this.isExpanded) {
+                    this.expandTerminal();
+                } else {
+                    this.collapseTerminal();
+                }
+            });
 
-        this.overlay.addEventListener('click', () => this.collapseTerminal());
+            this.overlay.addEventListener('click', () => this.collapseTerminal());
+        } else {
+            console.error('Security Error: Event origin mismatch detected in Terminal');
+        }
     }
 
     expandTerminal() {
-        this.expandedTerminal.innerHTML = '';
+        // Clear the terminal safely
+        while (this.expandedTerminal.firstChild) {
+            this.expandedTerminal.removeChild(this.expandedTerminal.firstChild);
+        }
+
         const historyContainer = document.createElement('ul');
         historyContainer.className = 'command-history';
         this.expandedTerminal.appendChild(historyContainer);
@@ -70,13 +78,23 @@ class Terminal {
         const addCommand = () => {
             if (i < realCommands.length) {
                 const { cmd, output } = realCommands[i];
+
+                // Create command line element
                 const li = document.createElement('li');
-                li.innerHTML = `<span class="prompt">[robert@devops] $</span> ${cmd}`;
+                const promptSpan = document.createElement('span');
+                promptSpan.className = 'prompt';
+                promptSpan.textContent = '[robert@devops] $';
+                li.appendChild(promptSpan);
+                li.appendChild(document.createTextNode(' ' + cmd));
                 historyContainer.appendChild(li);
 
                 setTimeout(() => {
+                    // Create output line element
                     const outputLi = document.createElement('li');
-                    outputLi.innerHTML = `<span class="output">${output}</span>`;
+                    const outputSpan = document.createElement('span');
+                    outputSpan.className = 'output';
+                    outputSpan.textContent = output;
+                    outputLi.appendChild(outputSpan);
                     historyContainer.appendChild(outputLi);
                     this.expandedTerminal.scrollTop = this.expandedTerminal.scrollHeight;
                 }, 300);
