@@ -102,7 +102,7 @@ class Terminal {
                 li.appendChild(document.createTextNode(' ' + cmd));
                 historyContainer.appendChild(li);
 
-                setTimeout(() => {
+                setTimeout(function displayOutput() {
                     if (window.origin === window.location.origin) {
                         const outputLi = document.createElement('li');
                         const outputSpan = document.createElement('span');

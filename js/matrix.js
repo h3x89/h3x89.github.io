@@ -22,19 +22,19 @@ class MatrixEffect {
 
     initializeEventListeners() {
         if (window.origin === window.location.origin) {
-            document.addEventListener('keydown', (e) => {
+            document.addEventListener('keydown', function handleEscape(e) {
                 if (e.key === 'Escape' && this.isActive) {
                     this.hideMatrix();
                 }
             });
 
-            this.canvas.addEventListener('dblclick', () => {
+            this.canvas.addEventListener('dblclick', function handleCanvasClick() {
                 if (this.isActive) {
                     this.hideMatrix();
                 }
             });
 
-            this.quote.addEventListener('dblclick', () => {
+            this.quote.addEventListener('dblclick', function handleQuoteClick() {
                 if (!this.isActive) {
                     this.showMatrix();
                 } else {
@@ -42,7 +42,7 @@ class MatrixEffect {
                 }
             });
 
-            window.addEventListener('resize', () => {
+            window.addEventListener('resize', function handleResize() {
                 if (this.isActive) {
                     this.resizeCanvas();
                 }

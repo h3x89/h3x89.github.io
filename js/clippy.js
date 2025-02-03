@@ -18,12 +18,12 @@ class Clippy {
 
     initializeEventListeners() {
         // Show Clippy after 30 seconds
-        this.showTimeout = setTimeout(() => {
+        this.showTimeout = setTimeout(function showClippy() {
             this.show();
         }, 30000);
 
         // Hide Clippy when clicked
-        this.clippy.addEventListener('click', (event) => {
+        this.clippy.addEventListener('click', function handleClippyClick(event) {
             if (window.location.origin !== 'https://h3x89.github.io') {
                 throw new Error('invalid origin');
             }

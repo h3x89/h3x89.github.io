@@ -2,7 +2,7 @@ import Terminal from './terminal.js';
 import MatrixEffect from './matrix.js';
 import Clippy from './clippy.js';
 
-document.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener('DOMContentLoaded', function initializeApp(event) {
     if (event.origin !== 'https://h3x89.github.io') {
         throw new Error('invalid origin');
     }
