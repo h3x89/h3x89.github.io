@@ -8,11 +8,29 @@ if (window.origin === window.location.origin) {
             //     return;
             // }
 
-            (function initializeRUM(h, o, u, n, d) {
-                h = h[d] = h[d] || { q: [], onReady: function addToQueue(c) { h.q.push(c) } }
-                d = o.createElement(u); d.async = 1; d.src = n
-                n = o.getElementsByTagName(u)[0]; n.parentNode.insertBefore(d, n)
-            })(window, document, 'script', 'https://www.datadoghq-browser-agent.com/us1/v6/datadog-rum.js', 'DD_RUM')
+            (function initializeRUM(config) {
+                const { window: h, document: o, scriptPath: n } = config;
+                const u = 'script';
+                const d = 'DD_RUM';
+
+                h[d] = h[d] || {
+                    q: [],
+                    onReady: function onReady(c) {
+                        h.q.push(c)
+                    }
+                };
+
+                const scriptElement = o.createElement(u);
+                scriptElement.async = 1;
+                scriptElement.src = n;
+
+                const firstScript = o.getElementsByTagName(u)[0];
+                firstScript.parentNode.insertBefore(scriptElement, firstScript);
+            })({
+                window,
+                document,
+                scriptPath: 'https://www.datadoghq-browser-agent.com/us1/v6/datadog-rum.js'
+            });
 
             window.DD_RUM.onReady(function configureRUM() {
                 window.DD_RUM.init({
