@@ -17,15 +17,23 @@ class Clippy {
     }
 
     initializeEventListeners() {
-        // Show Clippy after 30 seconds
-        this.showTimeout = setTimeout(() => {
-            this.show();
-        }, 30000);
+        if (window.origin === window.location.origin) {
+            // Show Clippy after 30 seconds
+            this.showTimeout = setTimeout(() => {
+                this.show();
+            }, 30000);
 
-        // Hide Clippy when clicked
-        this.clippy.addEventListener('click', () => {
-            this.hide();
-        });
+            // Hide Clippy when clicked
+            this.clippy.addEventListener('click', (event) => {
+                if (event.isTrusted && event.target === this.clippy) {
+                    this.hide();
+                } else {
+                    console.error('Invalid event source detected');
+                }
+            });
+        } else {
+            console.error('Security Error: Event origin mismatch detected in Clippy');
+        }
     }
 
     show() {

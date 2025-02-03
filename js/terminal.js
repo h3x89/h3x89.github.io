@@ -45,19 +45,38 @@ class Terminal {
     }
 
     initializeEventListeners() {
-        this.terminalText.addEventListener('dblclick', () => {
-            if (!this.isExpanded) {
-                this.expandTerminal();
-            } else {
-                this.collapseTerminal();
-            }
-        });
+        if (window.origin === window.location.origin) {
+            this.terminalText.addEventListener('dblclick', (event) => {
+                if (event.isTrusted && event.target === this.terminalText) {
+                    if (!this.isExpanded) {
+                        this.expandTerminal();
+                    } else {
+                        this.collapseTerminal();
+                    }
+                }
+            });
 
-        this.overlay.addEventListener('click', () => this.collapseTerminal());
+            this.overlay.addEventListener('click', (event) => {
+                if (event.isTrusted && event.target === this.overlay) {
+                    this.collapseTerminal();
+                }
+            });
+        } else {
+            console.error('Security Error: Event origin mismatch detected in Terminal');
+        }
     }
 
     expandTerminal() {
-        this.expandedTerminal.innerHTML = '';
+        if (window.origin !== window.location.origin) {
+            console.error('Security Error: Invalid event origin');
+            return;
+        }
+
+        // Clear the terminal safely
+        while (this.expandedTerminal.firstChild) {
+            this.expandedTerminal.removeChild(this.expandedTerminal.firstChild);
+        }
+
         const historyContainer = document.createElement('ul');
         historyContainer.className = 'command-history';
         this.expandedTerminal.appendChild(historyContainer);
@@ -68,17 +87,31 @@ class Terminal {
 
         let i = 0;
         const addCommand = () => {
+            if (window.origin !== window.location.origin) {
+                console.error('Security Error: Invalid event origin in timeout');
+                return;
+            }
+
             if (i < realCommands.length) {
                 const { cmd, output } = realCommands[i];
                 const li = document.createElement('li');
-                li.innerHTML = `<span class="prompt">[robert@devops] $</span> ${cmd}`;
+                const promptSpan = document.createElement('span');
+                promptSpan.className = 'prompt';
+                promptSpan.textContent = '[robert@devops] $';
+                li.appendChild(promptSpan);
+                li.appendChild(document.createTextNode(' ' + cmd));
                 historyContainer.appendChild(li);
 
                 setTimeout(() => {
-                    const outputLi = document.createElement('li');
-                    outputLi.innerHTML = `<span class="output">${output}</span>`;
-                    historyContainer.appendChild(outputLi);
-                    this.expandedTerminal.scrollTop = this.expandedTerminal.scrollHeight;
+                    if (window.origin === window.location.origin) {
+                        const outputLi = document.createElement('li');
+                        const outputSpan = document.createElement('span');
+                        outputSpan.className = 'output';
+                        outputSpan.textContent = output;
+                        outputLi.appendChild(outputSpan);
+                        historyContainer.appendChild(outputLi);
+                        this.expandedTerminal.scrollTop = this.expandedTerminal.scrollHeight;
+                    }
                 }, 300);
 
                 i++;
