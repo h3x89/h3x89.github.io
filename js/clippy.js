@@ -25,7 +25,7 @@ class Clippy {
 
             // Hide Clippy when clicked
             this.clippy.addEventListener('click', (event) => {
-                if (event.isTrusted && event.target === this.clippy) {
+                if (event.isTrusted && event.target === this.clippy && event.currentTarget.ownerDocument.defaultView.origin === window.location.origin) {
                     this.hide();
                 } else {
                     console.error('Invalid event source detected');
