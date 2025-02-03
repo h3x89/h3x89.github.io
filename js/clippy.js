@@ -24,8 +24,12 @@ class Clippy {
             }, 30000);
 
             // Hide Clippy when clicked
-            this.clippy.addEventListener('click', () => {
-                this.hide();
+            this.clippy.addEventListener('click', (event) => {
+                if (event.isTrusted && event.target === this.clippy) {
+                    this.hide();
+                } else {
+                    console.error('Invalid event source detected');
+                }
             });
         } else {
             console.error('Security Error: Event origin mismatch detected in Clippy');
