@@ -46,21 +46,32 @@ class Terminal {
 
     initializeEventListeners() {
         if (window.origin === window.location.origin) {
-            this.terminalText.addEventListener('dblclick', () => {
-                if (!this.isExpanded) {
-                    this.expandTerminal();
-                } else {
-                    this.collapseTerminal();
+            this.terminalText.addEventListener('dblclick', (event) => {
+                if (event.isTrusted && event.target === this.terminalText) {
+                    if (!this.isExpanded) {
+                        this.expandTerminal();
+                    } else {
+                        this.collapseTerminal();
+                    }
                 }
             });
 
-            this.overlay.addEventListener('click', () => this.collapseTerminal());
+            this.overlay.addEventListener('click', (event) => {
+                if (event.isTrusted && event.target === this.overlay) {
+                    this.collapseTerminal();
+                }
+            });
         } else {
             console.error('Security Error: Event origin mismatch detected in Terminal');
         }
     }
 
     expandTerminal() {
+        if (window.origin !== window.location.origin) {
+            console.error('Security Error: Invalid event origin');
+            return;
+        }
+
         // Clear the terminal safely
         while (this.expandedTerminal.firstChild) {
             this.expandedTerminal.removeChild(this.expandedTerminal.firstChild);
@@ -76,10 +87,13 @@ class Terminal {
 
         let i = 0;
         const addCommand = () => {
+            if (window.origin !== window.location.origin) {
+                console.error('Security Error: Invalid event origin in timeout');
+                return;
+            }
+
             if (i < realCommands.length) {
                 const { cmd, output } = realCommands[i];
-
-                // Create command line element
                 const li = document.createElement('li');
                 const promptSpan = document.createElement('span');
                 promptSpan.className = 'prompt';
@@ -89,14 +103,15 @@ class Terminal {
                 historyContainer.appendChild(li);
 
                 setTimeout(() => {
-                    // Create output line element
-                    const outputLi = document.createElement('li');
-                    const outputSpan = document.createElement('span');
-                    outputSpan.className = 'output';
-                    outputSpan.textContent = output;
-                    outputLi.appendChild(outputSpan);
-                    historyContainer.appendChild(outputLi);
-                    this.expandedTerminal.scrollTop = this.expandedTerminal.scrollHeight;
+                    if (window.origin === window.location.origin) {
+                        const outputLi = document.createElement('li');
+                        const outputSpan = document.createElement('span');
+                        outputSpan.className = 'output';
+                        outputSpan.textContent = output;
+                        outputLi.appendChild(outputSpan);
+                        historyContainer.appendChild(outputLi);
+                        this.expandedTerminal.scrollTop = this.expandedTerminal.scrollHeight;
+                    }
                 }, 300);
 
                 i++;
