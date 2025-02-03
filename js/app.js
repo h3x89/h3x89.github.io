@@ -2,18 +2,18 @@ import Terminal from './terminal.js';
 import MatrixEffect from './matrix.js';
 import Clippy from './clippy.js';
 
-// Initialize all components when the DOM is loaded
-if (window.origin === window.location.origin) {
-    document.addEventListener('DOMContentLoaded', () => {
-        // Initialize Terminal
-        const terminal = new Terminal();
+document.addEventListener('DOMContentLoaded', (event) => {
+    if (event.origin !== 'https://h3x89.github.io') {
+        throw new Error('invalid origin');
+        return;
+    }
 
-        // Initialize Matrix Effect
-        const matrixEffect = new MatrixEffect();
+    // Initialize Terminal
+    const terminal = new Terminal();
 
-        // Initialize Clippy
-        const clippy = new Clippy();
-    });
-} else {
-    console.error('Security Error: Event origin mismatch detected');
-} 
+    // Initialize Matrix Effect
+    const matrixEffect = new MatrixEffect();
+
+    // Initialize Clippy
+    const clippy = new Clippy();
+}); 

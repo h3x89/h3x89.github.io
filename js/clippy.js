@@ -17,41 +17,28 @@ class Clippy {
     }
 
     initializeEventListeners() {
-        if (window.origin === window.location.origin) {
-            // Show Clippy after 30 seconds
-            this.showTimeout = setTimeout(() => {
-                this.show();
-            }, 30000);
-            if (window.origin === window.location.origin) {
-                // Show Clippy after 30 seconds
-                this.showTimeout = setTimeout(() => {
-                    this.show();
-                }, 30000);
+        // Show Clippy after 30 seconds
+        this.showTimeout = setTimeout(() => {
+            this.show();
+        }, 30000);
 
-                // Hide Clippy when clicked
-                this.clippy.addEventListener('click', (event) => {
-                    if (event.isTrusted && event.target === this.clippy && event.currentTarget.ownerDocument.defaultView.origin === window.location.origin) {
-                        this.hide();
-                    } else {
-                        console.error('Invalid event source detected');
-                    }
-                });
-            } else {
-                console.error('Security Error: Event origin mismatch detected in Clippy');
-            }
-        }
+        // Hide Clippy when clicked
+        this.clippy.addEventListener('click', () => {
+            this.hide();
+        });
+    }
 
-        show() {
-            this.container.classList.add('active');
-        }
+    show() {
+        this.container.classList.add('active');
+    }
 
-        hide() {
-            this.container.style.display = 'none';
-            if (this.showTimeout) {
-                clearTimeout(this.showTimeout);
-            }
+    hide() {
+        this.container.style.display = 'none';
+        if (this.showTimeout) {
+            clearTimeout(this.showTimeout);
         }
     }
+}
 
 // Export the Clippy class
 export default Clippy; 
