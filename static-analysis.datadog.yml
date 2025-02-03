@@ -8,3 +8,10 @@ rulesets:
   - javascript-inclusive
   - javascript-node-security
   - jsx-react
+
+# Allow console.error in the code
+overrides:
+  javascript-best-practices/no-console:
+    options:
+      allow:
+        - error
