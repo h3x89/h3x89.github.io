@@ -9,6 +9,13 @@
 # the `language` matrix defined below to confirm you have the correct set of
 # supported CodeQL languages.
 #
+
+
+# Robert Kubiś note:
+# Analyze (javascript-typescript)
+# Code Scanning could not process the submitted SARIF file:
+# CodeQL analyses from advanced configurations cannot be processed when the default setup is enabled
+
 name: "CodeQL Advanced"
 
 on:
