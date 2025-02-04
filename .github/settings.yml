@@ -7,15 +7,13 @@
 
 # This file defines settings of this repository. Most if it is inherited from https://github.com/h3x89/github-settings/blob/master/.github/settings.yml
 
-# Full documentation: MCTooling GitHub+repo+settings+IaC
-
 _extends: h3x89/github-settings:.github/settings.yml
 
 repository:
 
   name: h3x89.github.io
 
-  description: My personal website
+  description: Personal website and portfolio
 
   homepage: https://h3x89.github.io
 
