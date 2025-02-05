@@ -1,0 +1,16 @@
+name: Run settings_update workflow
+
+on:
+  schedule:
+    - cron: "0 4 * * *"
+  workflow_dispatch:
+
+jobs:
+  run-settings-update-worflow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Invoke settings update workflow
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: Update repository settings
+          token: ${{ secrets.REPO_SETTINGS_TOKEN }}

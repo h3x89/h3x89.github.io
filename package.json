@@ -1,0 +1,8 @@
+{
+    "name": "github-settings",
+    "version": "1.0.0",
+    "private": true,
+    "dependencies": {
+        "probot-settings": "github:probot/settings"
+    }
+}
