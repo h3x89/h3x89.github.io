@@ -14,3 +14,20 @@ jobs:
         with:
           workflow: Update repository settings
           token: ${{ secrets.REPO_SETTINGS_TOKEN }}
+
+
+# Example output:
+# 
+# Run benc-uk/workflow-dispatch@v1
+# with:
+#   workflow: Update repository settings
+#   token: ***
+# 🏃 Workflow Dispatch Action v1.2.4
+# 🔎 Found workflow, id: 141876675, name: Update repository settings, path: .github/workflows/settings_update.yml
+# 🚀 Calling GitHub API to dispatch workflow...
+# 🏆 API response status: 204
+
+# Remeber to add the token to the repository secrets!!! REPO_SETTINGS_TOKEN
+# Run benc-uk/workflow-dispatch@v1
+# 🏃 Workflow Dispatch Action v1.2.4
+# Error: Parameter token or opts.auth is required

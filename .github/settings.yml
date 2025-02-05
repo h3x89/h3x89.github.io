@@ -20,8 +20,8 @@ repository:
   private: false
 
   security_and_analysis:
-    advanced_security:
-      status: enabled
+    # advanced_security: # Advanced security is always available for public repos.
+    #   status: enabled
     secret_scanning:
       status: enabled
     secret_scanning_push_protection:

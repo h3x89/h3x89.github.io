@@ -29,3 +29,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_SETTINGS_TOKEN }}
           GITHUB_EVENT_PATH: ${{ github.event_path }}
+
+# Example output for private repository:
+# Running probot settings
+# ERROR (event): Upgrade to GitHub Pro or make this repository public to enable this feature. - https://docs.github.com/rest/branches/branch-protection#update-branch-protection
+
+# Repo required package.json file
