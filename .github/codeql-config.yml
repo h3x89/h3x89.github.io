@@ -1,0 +1,9 @@
+# CodeQL configuration file
+# This file disables the default CodeQL setup and uses advanced configuration
+name: "CodeQL Advanced Configuration"
+
+# Disable default setup
+disable-default-setup: true
+
+# Use advanced configuration
+advanced-setup: true

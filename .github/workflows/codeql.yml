@@ -30,9 +30,14 @@ jobs:
       uses: github/codeql-action/init@v3
       with:
         languages: ${{ matrix.language }}
+        # Disable default setup to avoid conflicts
+        disable-default-queries: false
 
     - name: Autobuild
       uses: github/codeql-action/autobuild@v3
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
+      with:
+        # Ensure this workflow takes precedence over default setup
+        category: "advanced-setup"
