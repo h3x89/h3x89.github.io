@@ -12,10 +12,10 @@ echo "Installing dependencies"
 npm ci || npm install
 
 echo "Running probot settings"
-if [ -f "node_modules/.bin/probot" ]; then
-    node_modules/.bin/probot receive --event repository.created --payload-path "${GITHUB_EVENT_PATH}" node_modules/probot-settings/index.js
+if [ -f ".github/run-probot-receive.mjs" ]; then
+    node .github/run-probot-receive.mjs
 else
-    echo "Error: probot binary not found"
+    echo "Error: probot runner script not found"
     exit 1
 fi
 
