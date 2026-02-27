@@ -9,7 +9,7 @@ const appPath = resolve(__dirname, "../node_modules/probot-settings/index.js");
 
 const args = [
   "-e",
-  process.env.GITHUB_EVENT_NAME || "repository.created",
+  "repository.created",
   "-p",
   process.env.GITHUB_EVENT_PATH,
   appPath,
