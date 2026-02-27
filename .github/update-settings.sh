@@ -13,7 +13,7 @@ npm ci || npm install
 
 echo "Running probot settings"
 if [ -f "node_modules/.bin/probot" ]; then
-    node_modules/.bin/probot receive -e repository.created -p "${GITHUB_EVENT_PATH}" node_modules/probot-settings/index.js
+    node_modules/.bin/probot receive --event repository.created --payload-path "${GITHUB_EVENT_PATH}" node_modules/probot-settings/index.js
 else
     echo "Error: probot binary not found"
     exit 1
