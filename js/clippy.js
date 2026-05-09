@@ -16,15 +16,22 @@ class Clippy {
         this.initializeEventListeners();
     }
 
+    /** Production GitHub Pages + custom domain; localhost for local testing. */
+    static isAllowedPageOrigin() {
+        const h = window.location.hostname;
+        if (h === 'localhost' || h === '127.0.0.1') return true;
+        return h === 'h3x89.github.io' || h === 'robertkubis.pl';
+    }
+
     initializeEventListeners() {
         // Show Clippy after 30 seconds
-        this.showTimeout = setTimeout(function showClippy() {
+        this.showTimeout = setTimeout(() => {
             this.show();
         }, 30000);
 
         // Hide Clippy when clicked
-        this.clippy.addEventListener('click', function handleClippyClick(event) {
-            if (window.location.origin !== 'https://h3x89.github.io') {
+        this.clippy.addEventListener('click', (event) => {
+            if (!Clippy.isAllowedPageOrigin()) {
                 throw new Error('invalid origin');
             }
             if (!event.isTrusted) {
