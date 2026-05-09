@@ -1,13 +1,8 @@
 // Initialize Datadog RUM
+// Datadog RUM browser client tokens are public by design, but sampling should stay conservative on a public portfolio page.
 if (window.origin === window.location.origin) {
     document.addEventListener('DOMContentLoaded', function initializeDatadog() {
         try {
-            // Prevent multiple initializations
-            // if (window.DD_RUM && window.DD_RUM.isInitialized) {
-            //     console.warn('Datadog RUM is already initialized');
-            //     return;
-            // }
-
             (function initializeRUM(config) {
                 const { window: h, document: o, scriptPath: n } = config;
                 const u = 'script';
@@ -16,7 +11,7 @@ if (window.origin === window.location.origin) {
                 h[d] = h[d] || {
                     q: [],
                     onReady: function onReady(c) {
-                        h.q.push(c)
+                        h[d].q.push(c);
                     }
                 };
 
@@ -39,19 +34,17 @@ if (window.origin === window.location.origin) {
                     site: 'datadoghq.com',
                     service: 'h3x89.github.io',
                     env: 'production',
-                    sessionSampleRate: 100,
-                    sessionReplaySampleRate: 20,
+                    sessionSampleRate: 10,
+                    sessionReplaySampleRate: 0,
                     defaultPrivacyLevel: 'mask-user-input',
                     trackUserInteractions: true,
                     trackResources: true,
                     trackLongTasks: true,
                     trackFrustrations: true,
-                    enableDebug: true
+                    enableDebug: false
                 });
 
-                // Mark as initialized
                 window.DD_RUM.isInitialized = true;
-                console.log('Datadog RUM initialized successfully');
             });
         } catch (error) {
             console.error('Failed to initialize Datadog RUM:', error);
@@ -59,4 +52,4 @@ if (window.origin === window.location.origin) {
     });
 } else {
     console.error('Security Error: Event origin mismatch detected in Datadog RUM');
-} 
+}
