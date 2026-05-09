@@ -24,10 +24,17 @@ class Clippy {
     }
 
     initializeEventListeners() {
-        // Show Clippy after 30 seconds
+        // `?showClippy=1` (or bare `showClippy`) helps QA on mobile without waiting 30s.
+        const params = new URLSearchParams(window.location.search);
+        const instant =
+            params.has('showClippy') &&
+            params.get('showClippy') !== '0' &&
+            params.get('showClippy') !== 'false';
+        const delayMs = instant ? 600 : 30000;
+
         this.showTimeout = setTimeout(() => {
             this.show();
-        }, 30000);
+        }, delayMs);
 
         // Hide Clippy when clicked
         this.clippy.addEventListener('click', (event) => {
