@@ -162,13 +162,16 @@ h3 {
 
 .terminal-text {
     position: relative;
-    width: fit-content;
+    display: inline-block;
+    width: 0;
+    max-width: 100%;
     font-size: 0.95rem;
     padding-right: 15px;
     color: var(--text);
     overflow: hidden;
     white-space: nowrap;
-    animation: typewriter 1.5s steps(50, end) 0.2s forwards;
+    vertical-align: bottom;
+    animation: typewriter 1.5s steps(50, end) 0.2s both;
 }
 
 .terminal-text::after {
@@ -194,9 +197,16 @@ h3 {
 
 .skills-container, .work-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
     margin: 1rem 0 2.5rem;
+}
+
+.skills-container {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.work-grid {
+    grid-template-columns: repeat(4, 1fr);
 }
 
 .focus-grid {
