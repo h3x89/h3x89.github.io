@@ -25,7 +25,7 @@ body {
 .container {
     max-width: 1180px;
     margin: 0 auto;
-    padding: 2rem clamp(1rem, 4vw, 3rem);
+    padding: 2rem clamp(1rem, 4vw, 3rem) clamp(2.25rem, 5vw, 3.5rem);
     position: relative;
 }
 
@@ -192,13 +192,15 @@ h3 {
 }
 
 .intro-card {
-    margin-bottom: 2rem;
+    /* vertical rhythm: use section spacing, not a one-off bottom margin */
+    margin-bottom: 0;
 }
 
 .skills-container, .work-grid {
     display: grid;
     gap: 1rem;
-    margin: 1rem 0 2.5rem;
+    /* bottom spacing comes from .container > section so gaps between blocks match */
+    margin: 1rem 0 0;
 }
 
 .skills-container {
@@ -252,8 +254,14 @@ h3 {
     font-size: 1rem;
 }
 
-.container>section {
-    margin-bottom: 0.5rem;
+/* Uniform spacing between content blocks in main (eyebrow → content rhythm) */
+.container > section {
+    margin: 0;
+    padding-top: clamp(2.25rem, 5vw, 3.5rem);
+}
+
+.container > section:first-child {
+    padding-top: 0;
 }
 
 .fade-in-text span {
@@ -273,7 +281,7 @@ h3 {
 .footer {
     text-align: center;
     padding: 2rem clamp(1rem, 4vw, 3rem);
-    margin-top: 1rem;
+    margin-top: clamp(1.5rem, 4vw, 2.5rem);
     border-top: 1px solid var(--border);
     background: rgba(17, 24, 39, 0.35);
 }
