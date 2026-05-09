@@ -20,14 +20,23 @@ class Clippy {
     static isAllowedPageOrigin() {
         const h = window.location.hostname;
         if (h === 'localhost' || h === '127.0.0.1') return true;
-        return h === 'h3x89.github.io' || h === 'robertkubis.pl';
+        return (
+            h === 'h3x89.github.io' || h === 'robertkubis.pl' || h === 'www.robertkubis.pl'
+        );
     }
 
     initializeEventListeners() {
-        // Show Clippy after 30 seconds
+        // `?showClippy=1` (or bare `showClippy`) helps QA on mobile without waiting 30s.
+        const params = new URLSearchParams(window.location.search);
+        const instant =
+            params.has('showClippy') &&
+            params.get('showClippy') !== '0' &&
+            params.get('showClippy') !== 'false';
+        const delayMs = instant ? 600 : 30000;
+
         this.showTimeout = setTimeout(() => {
             this.show();
-        }, 30000);
+        }, delayMs);
 
         // Hide Clippy when clicked
         this.clippy.addEventListener('click', (event) => {
