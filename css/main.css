@@ -192,8 +192,12 @@ h3 {
 }
 
 .intro-card {
-    /* vertical rhythm: use section spacing, not a one-off bottom margin */
     margin-bottom: 0;
+}
+
+/* Match other sections: eyebrow + h2 full width; framed panel only for body copy */
+.intro-card-body {
+    margin-top: 1rem;
 }
 
 .skills-container, .work-grid {
