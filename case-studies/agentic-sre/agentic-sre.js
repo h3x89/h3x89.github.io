@@ -38,6 +38,11 @@
       <a href="#control-plane">Control Plane</a>
       <a href="#outcomes">Outcomes</a>
     `;
+
+    const footerCopy = document.querySelector('.case-footer p');
+    if (footerCopy) {
+      footerCopy.textContent = 'This one-pager includes the System Graph directly and is ready as the final public Agentic SRE case study.';
+    }
   };
 
   normalizeMainOnePagerNav();
