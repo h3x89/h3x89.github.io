@@ -4,31 +4,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Agentic SRE | Robert Kubiś</title>
-  <meta name="description" content="Portfolio case study: Agentic SRE, a governed delivery pattern that turns operational signals into reviewed, approved and measured engineering outcomes.">
+  <meta name="description" content="Agentic SRE portfolio case study: governed AI delivery, system graph, control plane and outcome-oriented platform engineering.">
   <meta name="theme-color" content="#0a192f">
-  <link rel="canonical" href="https://robertkubis.pl/case-studies/agentic-sre/">
-  <link rel="icon" href="/favicon.ico" sizes="48x48">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="manifest" href="/site.webmanifest">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="agentic-sre.css">
+  <style>
+    .sg-section{overflow:hidden}.sg-shell{border:1px solid rgba(249,115,22,.24);border-radius:2rem;overflow:hidden;background:radial-gradient(circle at 18% 8%,rgba(249,115,22,.14),transparent 24rem),radial-gradient(circle at 84% 70%,rgba(96,165,250,.12),transparent 22rem),linear-gradient(180deg,rgba(15,23,42,.94),rgba(3,7,13,.72));box-shadow:var(--shadow)}.sg-toolbar{display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:center;padding:1rem;border-bottom:1px solid rgba(148,163,184,.16);background:rgba(3,7,13,.46)}.sg-toolbar strong{display:block;color:var(--text);font-size:1.05rem;margin-bottom:.25rem}.sg-toolbar span{color:var(--muted);font-size:.92rem}.sg-modes{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:.5rem}.sg-mode{border:1px solid rgba(148,163,184,.22);border-radius:999px;background:rgba(15,23,42,.7);color:var(--muted);min-height:2.65rem;padding:.58rem .85rem;display:inline-flex;align-items:center;gap:.48rem;font-weight:900;cursor:pointer;transition:transform 180ms ease,color 180ms ease,border-color 180ms ease,background 180ms ease}.sg-mode:hover,.sg-mode:focus-visible{transform:translateY(-1px);color:var(--text);border-color:rgba(249,115,22,.55);outline:none}.sg-mode.is-active{color:#111827;border-color:rgba(249,115,22,.8);background:linear-gradient(135deg,var(--brand),#fdba74)}.sg-stage{padding:1rem;background:linear-gradient(rgba(148,163,184,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(148,163,184,.05) 1px,transparent 1px);background-size:44px 44px}.sg-map{position:relative;height:760px;border:1px solid rgba(148,163,184,.14);border-radius:1.55rem;overflow:hidden;background:radial-gradient(circle at 50% 48%,rgba(249,115,22,.08),transparent 24rem),rgba(2,6,23,.36)}.sg-map::before{content:"";position:absolute;inset:3.1rem 2.3rem 2.3rem;border-radius:1.2rem;background:linear-gradient(90deg,rgba(148,163,184,.055) 1px,transparent 1px);background-size:16.66% 100%;pointer-events:none}.sg-lane{position:absolute;top:1rem;color:rgba(226,232,240,.44);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;font-weight:950;z-index:2}.sg-l1{left:4.2%}.sg-l2{left:19.9%}.sg-l3{left:35.2%}.sg-l4{left:51.1%}.sg-l5{left:68.4%}.sg-l6{right:5.4%}.sg-boundary{position:absolute;left:33.5%;top:15%;width:16.5%;height:66%;border:1.5px dashed rgba(96,165,250,.42);border-radius:1.5rem;background:rgba(37,99,235,.045);box-shadow:inset 0 0 36px rgba(96,165,250,.05);z-index:2;pointer-events:none}.sg-boundary span{position:absolute;top:.75rem;left:50%;transform:translateX(-50%);display:inline-flex;align-items:center;gap:.45rem;color:#bfdbfe;background:rgba(15,23,42,.92);border:1px solid rgba(96,165,250,.32);border-radius:999px;padding:.38rem .65rem;font-size:.72rem;font-weight:950;letter-spacing:.08em;white-space:nowrap;text-transform:uppercase}.sg-lines{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}.sg-lines path{fill:none;stroke:rgba(148,163,184,.25);stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;opacity:.48;transition:opacity 260ms ease,stroke 260ms ease,stroke-width 260ms ease,filter 260ms ease}.sg-lines path.sg-dash{stroke-dasharray:12 14}.sg-event .sg-lines path.sg-event-path,.sg-scheduled .sg-lines path.sg-scheduled-path,.sg-provider .sg-lines path.sg-provider-path{stroke:var(--brand);stroke-width:5;opacity:1;stroke-dasharray:12 14;filter:drop-shadow(0 0 10px rgba(249,115,22,.34));animation:sg-dash 1.15s linear infinite}.sg-provider .sg-lines path.sg-provider-path{stroke:#60a5fa;filter:drop-shadow(0 0 10px rgba(96,165,250,.34))}.sg-scheduled .sg-lines path.sg-scheduled-path{stroke:#fbbf24;filter:drop-shadow(0 0 10px rgba(251,191,36,.28))}@keyframes sg-dash{to{stroke-dashoffset:-52}}.sg-node{position:absolute;z-index:3;width:140px;min-height:96px;border:1px solid rgba(148,163,184,.2);border-radius:1.05rem;background:linear-gradient(180deg,rgba(15,23,42,.95),rgba(15,23,42,.7));color:var(--text);padding:.72rem;display:grid;gap:.28rem;align-content:start;text-align:left;box-shadow:0 16px 42px rgba(0,0,0,.24);transition:transform 260ms var(--ease-out),border-color 260ms ease,box-shadow 260ms ease,opacity 260ms ease,background 260ms ease}.sg-node b{color:var(--brand-2);font-size:1.05rem}.sg-node strong{font-size:.86rem;line-height:1.1}.sg-node span{color:var(--muted);font-size:.69rem;line-height:1.25}.sg-node.core{width:152px;min-height:118px;border-color:rgba(249,115,22,.5);background:radial-gradient(circle at top left,rgba(249,115,22,.22),transparent 9rem),linear-gradient(180deg,rgba(30,41,59,.98),rgba(15,23,42,.82))}.sg-node.boundary-node{border-color:rgba(96,165,250,.38);background:radial-gradient(circle at top left,rgba(96,165,250,.16),transparent 8rem),linear-gradient(180deg,rgba(15,23,42,.96),rgba(15,23,42,.74))}.sg-node.success-node{border-color:rgba(74,222,128,.42);background:radial-gradient(circle at top left,rgba(74,222,128,.12),transparent 8rem),linear-gradient(180deg,rgba(15,23,42,.96),rgba(15,23,42,.74))}.sg-node[data-step]::after{content:attr(data-step);position:absolute;top:-.52rem;right:.78rem;width:1.35rem;height:1.35rem;border-radius:999px;display:grid;place-items:center;color:#111827;background:var(--brand);font-size:.68rem;font-weight:950;box-shadow:0 0 0 .32rem rgba(249,115,22,.12)}.sg-node:hover,.sg-node:focus-visible{transform:translateY(-4px);border-color:rgba(249,115,22,.75);box-shadow:0 22px 58px rgba(249,115,22,.17);outline:none}.sg-node.is-selected{z-index:9;opacity:1!important;transform:translateY(-7px) scale(1.035);border-color:rgba(253,186,116,.92)!important;background:radial-gradient(circle at top left,rgba(249,115,22,.32),transparent 9rem),linear-gradient(180deg,rgba(30,41,59,.99),rgba(15,23,42,.9));box-shadow:0 0 0 1px rgba(253,186,116,.34),0 24px 70px rgba(249,115,22,.32),0 0 42px rgba(249,115,22,.18)}.sg-event .sg-node,.sg-scheduled .sg-node,.sg-provider .sg-node{opacity:.52}.sg-event .sg-node.event-active,.sg-scheduled .sg-node.scheduled-active,.sg-provider .sg-node.provider-active,.sg-event .sg-node.always-active,.sg-scheduled .sg-node.always-active,.sg-provider .sg-node.always-active{opacity:1}.sg-n1{left:4.2%;top:11.5%}.sg-n2{left:4.2%;top:38.5%}.sg-n3{left:4.2%;top:66%}.sg-n4{left:18.8%;top:39.5%}.sg-n5{left:34.5%;top:39.5%}.sg-n6{left:34.5%;top:66%}.sg-n7{left:50.7%;top:11.5%}.sg-n8{left:50.7%;top:39.5%}.sg-n9{left:50.7%;top:66%}.sg-n10{left:50.7%;top:84.3%;min-height:72px}.sg-n11{left:67.3%;top:11.5%}.sg-n12{left:67.3%;top:39.5%}.sg-n13{left:67.3%;top:66%}.sg-n14{left:82.4%;top:39.5%}.sg-n15{left:82.4%;top:66%}.sg-detail{display:grid;grid-template-columns:.88fr 1.12fr;gap:1rem;padding:1rem;border-top:1px solid rgba(148,163,184,.14);background:rgba(3,7,13,.38)}.sg-card,.sg-layer-panel,.sg-layer-box{border:1px solid rgba(148,163,184,.15);border-radius:1.1rem;background:rgba(15,23,42,.58);padding:1rem}.sg-card p,.sg-layer-box p,.sg-layer-box span{color:var(--muted);margin:.35rem 0 0;font-size:.92rem;line-height:1.55}.sg-card strong,.sg-layer-box strong{display:block;color:var(--text);margin-bottom:.5rem}.sg-title{font-size:1.25rem;color:var(--text);margin:.1rem 0 .35rem}.sg-kicker{color:var(--brand-2);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;font-weight:950}.sg-detail-grid,.sg-layer-panel-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}.sg-pill-row{display:flex;flex-wrap:wrap;gap:.42rem;margin-top:.85rem}.sg-pill-row span,.sg-chip{border:1px solid rgba(249,115,22,.2);background:rgba(249,115,22,.07);color:var(--text);border-radius:999px;padding:.34rem .52rem;font-size:.76rem;font-weight:850}.sg-layers{padding:1.15rem;border-top:1px solid rgba(148,163,184,.14);background:rgba(3,7,13,.34)}.sg-layers-head{display:flex;justify-content:space-between;gap:1rem;align-items:end;margin-bottom:1rem}.sg-layers-head h3{margin:0;color:var(--text);font-size:1.35rem}.sg-layers-head p{margin:.25rem 0 0;color:var(--muted);max-width:820px}.sg-layer-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.9rem}.sg-layer{position:relative;min-height:16rem;border:1px solid rgba(148,163,184,.16);border-radius:1.15rem;padding:1rem;background:linear-gradient(180deg,rgba(15,23,42,.76),rgba(15,23,42,.47));overflow:hidden;cursor:pointer;text-align:left;transition:transform 180ms ease,border-color 180ms ease,box-shadow 180ms ease,background 180ms ease}.sg-layer::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at top left,rgba(249,115,22,.1),transparent 9rem);pointer-events:none}.sg-layer:hover,.sg-layer:focus-visible,.sg-layer.is-layer-selected{transform:translateY(-3px);border-color:rgba(249,115,22,.48);box-shadow:0 18px 48px rgba(249,115,22,.11);outline:none}.sg-layer.is-layer-selected{background:radial-gradient(circle at top left,rgba(249,115,22,.18),transparent 9rem),linear-gradient(180deg,rgba(15,23,42,.84),rgba(15,23,42,.56))}.sg-layer h4{position:relative;margin:.45rem 0 .45rem;color:var(--text);font-size:1rem;line-height:1.15}.sg-layer p{position:relative;margin:0;color:var(--muted);font-size:.84rem;line-height:1.48}.sg-layer ul{position:relative;margin:.85rem 0 0;padding-left:1rem;color:var(--muted);font-size:.78rem;line-height:1.4}.sg-layer li+li{margin-top:.38rem}.sg-note{position:relative;margin-top:.9rem;padding:.7rem;border:1px solid rgba(148,163,184,.13);border-radius:.8rem;background:rgba(3,7,13,.28);color:var(--muted);font-size:.77rem;line-height:1.4}.sg-scale{grid-column:1/-1;min-height:11rem;display:grid;grid-template-columns:minmax(16rem,.72fr) 1.28fr;gap:1.1rem;align-items:center;border-color:rgba(74,222,128,.32);background:radial-gradient(circle at 10% 20%,rgba(74,222,128,.14),transparent 18rem),radial-gradient(circle at 84% 40%,rgba(96,165,250,.10),transparent 18rem),linear-gradient(180deg,rgba(15,23,42,.82),rgba(15,23,42,.48))}.sg-scale-number{display:block;margin:.4rem 0 .25rem;font-size:clamp(2.25rem,4vw,3.25rem);font-weight:950;color:var(--green);letter-spacing:-.05em}.sg-layer-panel{margin-top:1rem;background:radial-gradient(circle at 10% 0,rgba(249,115,22,.08),transparent 18rem),rgba(15,23,42,.46)}.sg-layer-panel-head{display:flex;justify-content:space-between;gap:1rem;align-items:start;margin-bottom:.85rem}.sg-layer-panel-head h4{margin:.25rem 0 0;font-size:1.35rem;color:var(--text)}@media(max-width:1180px){.sg-stage{overflow-x:auto}.sg-map{min-width:1120px}.sg-layer-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.sg-scale{grid-template-columns:1fr}.sg-layer-panel-grid{grid-template-columns:1fr}}@media(max-width:900px){.sg-toolbar{grid-template-columns:1fr}.sg-modes{justify-content:flex-start}.sg-detail,.sg-detail-grid{grid-template-columns:1fr}.sg-layers-head,.sg-layer-panel-head{display:block}}@media(max-width:820px){.sg-stage{overflow-x:visible}.sg-map{height:auto;min-width:0;display:grid;gap:.72rem;padding:1rem}.sg-lines,.sg-boundary,.sg-lane{display:none}.sg-node,.sg-node.core{position:relative;left:auto;top:auto;width:100%;min-height:auto}.sg-node.is-selected{transform:translateY(-2px) scale(1.01)}.sg-layer-grid{grid-template-columns:1fr}.sg-scale{grid-column:span 1}}@media(prefers-reduced-motion:reduce){.sg-lines path{animation:none!important}.sg-node,.sg-layer,.sg-mode{transition:none!important}}
+  </style>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
   <header class="site-header" aria-label="Case study navigation">
-    <a class="brand" href="/" aria-label="Back to robertkubis.pl homepage">
+    <a class="brand" href="#top" aria-label="Back to top">
       <span class="brand-mark">rk</span>
       <span>Robert <span>Kubiś</span></span>
     </a>
     <nav aria-label="Page sections">
-      <a href="#flow">Flow</a>
-      <a href="#engineering-30">Engineering 3.0</a>
-      <a href="#architecture">Architecture</a>
-      <a href="#capabilities">Capabilities</a>
-      <a href="/">Portfolio</a>
+      <a href="#top">Overview</a>
+      <a href="#system-graph">System Graph</a>
+      <a href="#control-plane">Control Plane</a>
+      <a href="#outcomes">Outcomes</a>
     </nav>
   </header>
 
@@ -40,7 +35,8 @@
         <span class="motion-rail rail-one"></span>
         <span class="motion-rail rail-two"></span>
       </div>
-      <div class="hero-copy">
+
+      <div class="hero-copy" data-reveal>
         <p class="eyebrow">Portfolio case study</p>
         <h1 id="hero-title">Agentic <span>SRE</span></h1>
         <p class="subtitle">Turn operational signals into reviewed, approved and measured engineering outcomes.</p>
@@ -50,439 +46,179 @@
           one auditable delivery loop.
         </p>
         <p class="hero-audience">
-          The project explores how AI-assisted engineering becomes reliable when probabilistic agents operate
-          inside explicit platform contracts, SRE feedback loops and accountable governance.
+          The system graph below shows the full control loop: runtime signals, scoped tool access,
+          coding agents, CI quality gates, human approval and feedback into a managed multi-service runtime.
         </p>
         <div class="hero-actions" aria-label="Primary actions">
-          <a class="button button-primary" href="#flow">View the workflow</a>
-          <a class="button button-secondary" href="#capabilities">Capabilities demonstrated</a>
+          <a class="button button-primary" href="#system-graph">Explore system graph</a>
+          <a class="button button-secondary" href="#delivery-loop">Review delivery loop</a>
         </div>
-        <div class="impact-ribbon" aria-label="Business impact summary">
-          <p><strong>Faster triage</strong><span>Signals become scoped engineering work instead of disconnected toil.</span></p>
-          <p><strong>Auditable delivery</strong><span>Issue, plan, PR, checks and approval stay linked.</span></p>
-          <p><strong>Human-owned risk</strong><span>Agents assist, but high-impact decisions remain governed.</span></p>
+
+        <div class="impact-ribbon" aria-label="Business impact summary" data-reveal-group>
+          <p data-reveal><strong>Faster triage</strong><span>Signals become scoped engineering work instead of disconnected toil.</span></p>
+          <p data-reveal><strong>Auditable delivery</strong><span>Issue, plan, PR, checks and approval stay linked.</span></p>
+          <p data-reveal><strong>Human-owned risk</strong><span>Agents assist, but high-impact decisions remain governed.</span></p>
         </div>
+
         <p class="prototype-note">
           Public-safe note: examples are sanitized and representative. Workflow views use conceptual states,
           not private production metrics or internal infrastructure details.
         </p>
       </div>
 
-      <div class="hero-stats" aria-label="Case study principles">
-        <article>
-          <span>01</span>
-          <strong>Agents reason</strong>
-          <p>Diagnose, plan, implement and review with context.</p>
-        </article>
-        <article>
-          <span>02</span>
-          <strong>Rails validate</strong>
-          <p>Issues, CI, policy gates and audit trail bound the work.</p>
-        </article>
-        <article>
-          <span>03</span>
-          <strong>Humans decide</strong>
-          <p>High-impact changes remain accountable and reviewable.</p>
-        </article>
+      <div class="hero-stats" aria-label="Case study principles" data-reveal-group>
+        <article data-reveal><span>01</span><strong>Agents reason</strong><p>Diagnose, plan, implement and review with context.</p></article>
+        <article data-reveal><span>02</span><strong>Rails validate</strong><p>Issues, CI, policy gates and audit trail bound the work.</p></article>
+        <article data-reveal><span>03</span><strong>Humans decide</strong><p>High-impact changes remain accountable and reviewable.</p></article>
+      </div>
+    </section>
+
+    <section id="system-graph" class="section-shell sg-section" aria-labelledby="system-graph-title">
+      <div class="section-heading centered" data-reveal>
+        <p class="eyebrow">Technical deep dive</p>
+        <h2 id="system-graph-title">A governed AI delivery graph, not a disconnected set of tools.</h2>
+        <p>The graph shows how triggers, orchestration, scoped tools, coding agents, CI gates, human approval and runtime feedback connect into one auditable control loop.</p>
+      </div>
+
+      <div class="sg-shell sg-event" data-system-graph data-reveal>
+        <div class="sg-toolbar">
+          <div><strong>Choose the path to highlight</strong><span>Then click any node to see what it does, how it works and why it matters.</span></div>
+          <div class="sg-modes" role="group" aria-label="Graph path selector">
+            <button class="sg-mode is-active" type="button" data-sg-mode="event">〰 Event remediation</button>
+            <button class="sg-mode" type="button" data-sg-mode="scheduled">◷ Scheduled improvement</button>
+            <button class="sg-mode" type="button" data-sg-mode="provider">⌘ Provider fallback</button>
+          </div>
+        </div>
+        <div class="sg-stage">
+          <div class="sg-map">
+            <span class="sg-lane sg-l1">Triggers</span><span class="sg-lane sg-l2">Orchestration</span><span class="sg-lane sg-l3">MCP boundary</span><span class="sg-lane sg-l4">Context / agents</span><span class="sg-lane sg-l5">Delivery</span><span class="sg-lane sg-l6">Feedback</span>
+            <svg class="sg-lines" viewBox="0 0 1200 760" aria-hidden="true">
+              <path class="sg-event-path sg-dash" d="M125 145 C210 170 245 314 300 355"></path><path class="sg-event-path sg-dash" d="M125 552 C210 500 248 410 300 355"></path><path class="sg-scheduled-path sg-dash" d="M125 350 C200 352 245 352 300 355"></path><path class="sg-scheduled-path sg-dash" d="M125 552 C210 505 250 408 300 380"></path><path class="sg-event-path sg-scheduled-path" d="M378 360 C395 360 405 360 414 360"></path><path class="sg-event-path sg-scheduled-path" d="M486 360 C535 285 600 190 680 150"></path><path class="sg-event-path" d="M680 246 C665 288 662 315 680 355"></path><path class="sg-scheduled-path" d="M486 420 C486 470 486 515 486 552"></path><path class="sg-scheduled-path" d="M556 552 C585 500 620 415 680 355"></path><path class="sg-event-path sg-scheduled-path" d="M750 355 C780 355 795 355 810 355"></path><path class="sg-scheduled-path" d="M750 355 C778 255 802 182 810 150"></path><path class="sg-event-path sg-scheduled-path sg-dash" d="M824 424 C866 468 856 518 818 552"></path><path class="sg-event-path sg-scheduled-path sg-dash" d="M880 552 C924 520 946 432 990 355"></path><path class="sg-event-path sg-scheduled-path sg-dash" d="M1008 450 C1038 486 1030 528 1002 552"></path><path class="sg-event-path sg-scheduled-path" d="M990 610 C780 705 405 665 300 438"></path><path class="sg-provider-path sg-dash" d="M680 450 C680 488 680 520 680 552"></path><path class="sg-provider-path sg-dash" d="M680 648 C680 668 680 684 680 698"></path><path class="sg-provider-path sg-dash" d="M735 698 C760 640 742 585 680 552"></path><path class="sg-provider-path sg-dash" d="M680 552 C650 500 650 430 680 392"></path>
+            </svg>
+            <div class="sg-boundary"><span>◈ MCP scoped access</span></div>
+            <button class="sg-node sg-n1 event-active is-selected" type="button" data-step="1" data-kicker="Trigger · Observability" data-title="Observability signal" data-role="A monitored signal from the documented observability stack and reporting workflows." data-how="SRE reporting flows use observability surfaces and read-only Grafana-style tools. The signal starts analysis; it does not automatically authorize production changes." data-why="It ties remediation to measurable system behavior in the managed runtime."><b>⌁</b><strong>Observability signal</strong><span>Grafana, logs, metrics, health</span></button>
+            <button class="sg-node sg-n2 scheduled-active" type="button" data-step="1" data-kicker="Trigger · Scheduled improvement" data-title="Cron / scheduler" data-role="Scheduled automation across the orchestration runtime, Kestra-dispatched workflows and native GitHub Actions schedules." data-how="Repo Doctor, Agent Session Insights, issue reminders, nightly health checks and cost audits act as recurring feedback loops." data-why="The platform looks for friction and improvement opportunities before a human asks."><b>◷</b><strong>Cron / scheduler</strong><span>orchestration, Kestra, GitHub cron</span></button>
+            <button class="sg-node sg-n3 event-active scheduled-active" type="button" data-kicker="Trigger · Delivery system" data-title="GitHub event" data-role="Issue, PR, check, review-thread or workflow event from GitHub." data-how="AI review, Researcher and coding agents work around changed files, comments, reviews, unresolved threads, linked issues and checks." data-why="GitHub remains the audit trail for branches, PRs, checks, comments and review decisions."><b>⑂</b><strong>GitHub event</strong><span>issues, PRs, checks, reviews</span></button>
+            <button class="sg-node core sg-n4 always-active event-active scheduled-active" type="button" data-step="2" data-kicker="Orchestration core" data-title="Orchestration runtime" data-role="A documented agent runtime with gateway, dashboard, cron, sessions and logs." data-how="The runtime connects chat/dashboard interaction, scheduled jobs, run state, sessions and report outputs into one operating surface." data-why="It gives the platform runtime memory and repeatability rather than a pile of independent scripts."><b>ϟ</b><strong>Orchestration runtime</strong><span>gateway, dashboard, cron, sessions</span></button>
+            <button class="sg-node boundary-node sg-n5 always-active event-active scheduled-active" type="button" data-step="3" data-kicker="Boundary · API contracts" data-title="LiteLLM MCP" data-role="A real MCP boundary exposed through LiteLLM as JSON-RPC tools." data-how="The repository documents /mcp, tools/list, tools/call, OpenAPI-backed contracts and wrapped REST arguments for tool calls." data-why="Agents get bounded tool capabilities instead of broad, implicit infrastructure access."><b>◇</b><strong>LiteLLM MCP</strong><span>/mcp JSON-RPC, tool contracts</span></button>
+            <button class="sg-node boundary-node sg-n6 event-active scheduled-active" type="button" data-kicker="Boundary · Least privilege" data-title="Tool scopes" data-role="Concrete tool constraints derived from OpenAPI contracts, allowlists and workflow policies." data-how="Examples include read-only toolsets, Researcher MCP allowlists, guarded GitHub Issues access and Repo Doctor being forbidden from live-server MCP tools." data-why="Tool access becomes auditable and intentionally limited."><b>⚒</b><strong>Tool scopes</strong><span>allowlists, read-only, guarded actions</span></button>
+            <button class="sg-node sg-n7 event-active scheduled-active" type="button" data-step="4" data-kicker="Context · Knowledge + repo evidence" data-title="Run context" data-role="A bounded context package built from PR metadata, issue history, session artifacts, tool outputs and the Markdown knowledge base." data-how="Agents are instructed to search knowledge indexes before changes; local and CI checks validate knowledge structure and index coverage." data-why="The repository itself acts as an operating memory that makes agent work less generic."><b>▣</b><strong>Run context</strong><span>PR metadata, sessions, knowledge base</span></button>
+            <button class="sg-node core sg-n8 event-active scheduled-active provider-active" type="button" data-step="5" data-kicker="Execution · Agent roles" data-title="Specialized agents" data-role="AI review actors, Repo Doctor actor review, Researcher, orchestration jobs and direct coding agents working on repository PRs." data-how="Coding agents create branches and PRs, then follow check-pr / wait-for-PR-CI / session-report rules. Scheduled agents create findings and feedback." data-why="The graph distinguishes scheduled automation from normal coding-agent delivery on the repo."><b>☷</b><strong>Specialized agents</strong><span>coding, reviews, researcher, repo doctor</span></button>
+            <button class="sg-node sg-n9 event-active scheduled-active provider-active" type="button" data-step="4" data-kicker="LLM routing" data-title="LiteLLM router" data-role="Central model and provider abstraction layer." data-how="Shared Top Free execution profiles are used by PR review, agent-loop, Repo Doctor, OCR and Technical flows." data-why="It gives agent workflows fallback behavior when providers are unavailable or rate-limited."><b>▤</b><strong>LiteLLM router</strong><span>virtual keys, profiles, fallback status</span></button>
+            <button class="sg-node sg-n10 provider-active" type="button" data-kicker="Fallback · Repo-backed chain" data-title="Top Free chain" data-role="The code-backed provider fallback chain for shared agent execution profiles." data-how="OpenRouter → Cerebras → Groq → Cloudflare → OpenCode Go as paid break-glass fallback." data-why="This is technical proof of resilient model routing, not just a generic LLM box."><b>⌘</b><strong>Top Free chain</strong><span>OpenRouter → Cerebras → Groq → Cloudflare → OpenCode Go</span></button>
+            <button class="sg-node sg-n11 scheduled-active" type="button" data-step="6" data-kicker="Delivery · Work definition" data-title="Structured issue" data-role="Output path for Repo Doctor, health checks and scheduled findings." data-how="Repo Doctor uses dashboard issues, delta comments and optional standalone finding issues with anti-flood controls." data-why="Recurring findings become reviewable engineering work."><b>●</b><strong>Structured issue</strong><span>findings, scope, acceptance criteria</span></button>
+            <button class="sg-node sg-n12 event-active scheduled-active" type="button" data-step="6" data-kicker="Delivery · Reviewable change" data-title="Pull request" data-role="The place where coding-agent output becomes inspectable engineering work." data-how="Branches, PR body quality, linked issues, evidence, comments, reviews and artifacts become the audit trail." data-why="Agents do not silently mutate the system."><b>⑂</b><strong>Pull request</strong><span>reviewable code and evidence</span></button>
+            <button class="sg-node sg-n13 event-active scheduled-active" type="button" data-step="7" data-kicker="Delivery · Quality gates" data-title="CI Control Plane" data-role="A full control plane, not a single check: required CI, local parity, review-thread resolution, agent session reports and advisory AI review." data-how="Required checks include PR quality, GitHub Actions lint, Markdown/knowledge validation, fast lint, cost policy, review threads resolved, CI/local parity and Agent Session Report. AI review roles remain advisory." data-why="This is the strongest deterministic rail around probabilistic agent output."><b>⚚</b><strong>CI Control Plane</strong><span>required gates plus advisory AI reviews</span></button>
+            <button class="sg-node sg-n14 event-active scheduled-active" type="button" data-step="8" data-kicker="Governance · Accountability" data-title="Human approval" data-role="The final decision point for meaningful repository changes." data-how="A human reviews PRs, checks, comments, review threads, agent reports and blast radius before merge." data-why="Agents assist; risk ownership stays with a person."><b>♙</b><strong>Human approval</strong><span>review, risk ownership, merge</span></button>
+            <button class="sg-node success-node sg-n15 event-active scheduled-active" type="button" data-step="9" data-kicker="Feedback · Runtime Platform" data-title="Runtime feedback" data-role="Feedback from the managed runtime, observability stack, dashboard and scheduled reports." data-how="The repository documents a broad service landscape across ingress, observability, automation, AI stack, smart-home/runtime apps and developer tooling. The flow is framed as maintaining and monitoring around 70 services or containers across the managed runtime." data-why="Agentic SRE exists to keep a real multi-service runtime maintainable, not just to generate PRs."><b>◎</b><strong>Runtime feedback</strong><span>runtime reports, service health</span></button>
+          </div>
+        </div>
+        <div class="sg-detail" aria-live="polite">
+          <article class="sg-card"><p class="sg-kicker" data-sg-node-kicker>Trigger · Observability</p><h3 class="sg-title" data-sg-node-title>Observability signal</h3><p data-sg-node-role>A monitored signal from the documented observability stack and reporting workflows.</p><div class="sg-pill-row"><span>Click any node</span><span>Repo-grounded what / how / why</span><span>Graph-first</span></div></article>
+          <div class="sg-detail-grid"><article class="sg-card"><strong>How it works</strong><p data-sg-node-how>SRE reporting flows use observability surfaces and read-only Grafana-style tools. The signal starts analysis; it does not automatically authorize production changes.</p></article><article class="sg-card"><strong>Why it matters</strong><p data-sg-node-why>It ties remediation to measurable system behavior in the managed runtime.</p></article></div>
+        </div>
+        <section class="sg-layers" aria-labelledby="sg-layers-title">
+          <div class="sg-layers-head"><div><p class="sg-kicker">Operating layers</p><h3 id="sg-layers-title">The deeper machinery behind the graph</h3><p>Click a layer to expand a human-readable explanation. Runtime scale is shown as a first-class layer, while service details remain public-safe.</p></div><span class="sg-chip">repo-grounded</span></div>
+          <div class="sg-layer-grid" data-sg-layer-grid>
+            <button class="sg-layer sg-scale" type="button" data-layer-title="Runtime Scale" data-layer-kicker="Scale · Managed operations" data-layer-role="The Agentic SRE loop maintains and monitors roughly 70 services or containers across the managed runtime." data-layer-how="The public view groups the runtime into ingress, observability, automation, AI stack, smart-home/runtime apps, storage, backup and developer tooling instead of exposing private service internals." data-layer-why="The scale makes the portfolio story concrete: this is not a toy PR bot, but an operating model for a real multi-service platform." data-layer-evidence="Repository stack overview · service docs · compose and runtime docs"><div><h4>Runtime Scale</h4><span class="sg-scale-number">~70 services / containers</span><p>Maintained and monitored across the managed runtime.</p></div><div><ul><li><strong>Service groups:</strong> ingress, observability, automation, AI stack, smart-home/runtime apps.</li><li><strong>Public-safe:</strong> categories and scale, not private hostnames or secrets.</li></ul><div class="sg-note">Meaning: Agentic SRE exists because the runtime is large enough to need a governed operating loop.</div></div></button>
+            <button class="sg-layer is-layer-selected" type="button" data-layer-title="CI Control Plane" data-layer-kicker="Quality gates · deterministic rail" data-layer-role="Required checks and local parity around every PR, separating deterministic gates from advisory AI review." data-layer-how="PR work is expected to pass title/body quality, GitHub Actions lint, Markdown and knowledge validation, fast lint, LiteLLM cost policy, review-thread state, CI/local parity and Agent Session Report. Local scripts such as check-pr.sh and wait-for-pr-ci.sh make agents verify the same flow before handoff." data-layer-why="This is the strongest control surface around probabilistic agent output: generated work becomes acceptable only when repo policy, CI, session evidence and review state line up." data-layer-evidence=".github/ci-required-checks.yml · knowledge/tools-and-clis/check-pr-local.md · check-pr.sh · wait-for-pr-ci.sh"><h4>CI Control Plane</h4><p>Required checks and local parity around every PR.</p><ul><li><strong>Required:</strong> PR quality, lint, knowledge checks, review threads, session report.</li><li><strong>Local parity:</strong> check-pr.sh and wait-for-pr-ci.sh.</li><li><strong>Advisory:</strong> AI actors add critique without replacing CI.</li></ul><div class="sg-note">Meaning: PRs do not go straight to humans.</div></button>
+            <button class="sg-layer" type="button" data-layer-title="Scheduled Feedback Loops" data-layer-kicker="Self-improvement · recurring jobs" data-layer-role="Recurring jobs that convert repository friction, stale work and agent-session signals into reports, dashboard issues and follow-up tasks." data-layer-how="Repo Doctor is Kestra-dispatched and updates dashboard or finding issues. Agent Session Insights scans merged PRs, Agent Session Reports and Documentation Guardian comments. Nightly health checks, issue reminders and cost audits produce additional feedback." data-layer-why="This shows the system improving the way agents work, not just using agents once." data-layer-evidence="files/kestra-flows/repo-doctor-dispatch.yml · files/kestra-flows/agent-session-insights-dispatch.yml"><h4>Scheduled Feedback Loops</h4><p>Recurring jobs turn agent friction into improvement work.</p><ul><li><strong>Repo Doctor:</strong> repo audit and dashboard issue.</li><li><strong>Agent Session Insights:</strong> merged PR and session-report analysis.</li><li><strong>Other loops:</strong> nightly health, reminders, cost audit.</li></ul><div class="sg-note">Meaning: cron improves future agent runs.</div></button>
+            <button class="sg-layer" type="button" data-layer-title="Repository Knowledge Base" data-layer-kicker="Context · Markdown operating memory" data-layer-role="The repository works as a Markdown knowledge corpus and operating memory for agents." data-layer-how="Agent instructions point to knowledge indexes by host, service and task before changes. CI validates knowledge structure and index coverage." data-layer-why="This explains why agent output can be repo-grounded." data-layer-evidence="Knowledge index · repository instructions · knowledge structure checks"><h4>Repository Knowledge Base</h4><p>The repo is an operating memory for agents.</p><ul><li><strong>Indexes:</strong> host, service and task knowledge.</li><li><strong>Rule:</strong> read existing knowledge before changing.</li><li><strong>Checks:</strong> structure and index coverage in CI.</li></ul><div class="sg-note">Meaning: knowledge is part of the runtime.</div></button>
+            <button class="sg-layer" type="button" data-layer-title="Runtime Platform" data-layer-kicker="Runtime · Managed platform" data-layer-role="The concrete operating environment that Agentic SRE helps keep maintainable." data-layer-how="Repository docs describe Docker, Docker Compose, CasaOS services, Caddy, automation, monitoring and AI-stack components. The story is framed around roughly 70 services or containers being maintained and observed across the runtime." data-layer-why="This anchors the portfolio story in real operations." data-layer-evidence="Repository stack overview · compose/runtime docs · monitoring docs"><h4>Runtime Platform</h4><p>The system maintains a real multi-service runtime.</p><ul><li><strong>Host class:</strong> Ubuntu/CasaOS runtime environment.</li><li><strong>Runtime:</strong> Docker, Compose, CasaOS services.</li><li><strong>Scale:</strong> around 70 services / containers.</li></ul><div class="sg-note">Meaning: the graph is tied to a real operating surface.</div></button>
+            <button class="sg-layer" type="button" data-layer-title="Coding Agents" data-layer-kicker="Delivery · direct repo work" data-layer-role="Direct coding agents working on repository PRs outside the scheduled-automation-only path." data-layer-how="Claude Code, Cursor and Codex-style agents operate through branch, draft PR, local checks, CI, AI review and human merge decision. They must follow repo rules, use local validation scripts and close the loop with Agent Session Report." data-layer-why="This makes clear that Agentic SRE includes normal coding-agent delivery." data-layer-evidence="Repository instructions · check-pr.sh · wait-for-pr-ci.sh"><h4>Coding Agents</h4><p>Not only scheduled jobs: coding agents work directly on repo PRs.</p><ul><li><strong>Agents:</strong> Claude Code, Cursor, Codex guidance.</li><li><strong>Path:</strong> branch → draft PR → local checks → CI.</li><li><strong>Closeout:</strong> Agent Session Report.</li></ul><div class="sg-note">Meaning: coding agents converge with scheduled flows at PR + CI.</div></button>
+            <button class="sg-layer" type="button" data-layer-title="AI Review Matrix" data-layer-kicker="Review · specialist critique" data-layer-role="A set of advisory AI reviewer roles that critique PRs from different angles." data-layer-how="Technical, Sceptyk/Maruda, Business, Documentation Guardian, OpenCodeReview and summary jobs produce comments, verdicts and follow-up recommendations." data-layer-why="The system does not trust one agent blindly; other agents challenge the work." data-layer-evidence="AI review workflows · review actor docs"><h4>AI Review Matrix</h4><p>Specialist reviewers critique agent output before merge.</p><ul><li><strong>Roles:</strong> Technical, Sceptyk/Maruda, Business.</li><li><strong>Docs:</strong> Documentation Guardian and summaries.</li><li><strong>Output:</strong> comments, verdicts, follow-up work.</li></ul><div class="sg-note">Meaning: critique is multi-perspective.</div></button>
+            <button class="sg-layer" type="button" data-layer-title="Agent Session Feedback" data-layer-kicker="Learning loop · agent operations" data-layer-role="A post-PR feedback loop that turns agent-session evidence into workflow improvements." data-layer-how="Agent Session Insights scans merged PRs, Agent Session Reports and Documentation Guardian comments. It aggregates friction patterns, missing documentation and repeated failures into dashboard updates and future improvement work." data-layer-why="This is the agents-improve-agents loop." data-layer-evidence="files/kestra-flows/agent-session-insights-dispatch.yml · Documentation Guardian comments"><h4>Agent Session Feedback</h4><p>Post-merge analysis improves future agent work.</p><ul><li><strong>Input:</strong> merged PRs and Agent Session Reports.</li><li><strong>Signals:</strong> friction, missing docs, repeated failures.</li><li><strong>Output:</strong> dashboard updates and improvement work.</li></ul><div class="sg-note">Meaning: feedback becomes platform learning.</div></button>
+            <button class="sg-layer" type="button" data-layer-title="Service Landscape" data-layer-kicker="Runtime · service groups" data-layer-role="A public-safe view of service categories that make the managed runtime worth maintaining." data-layer-how="Instead of listing private service details, show grouped categories: ingress, observability, automation, AI stack, smart-home/runtime apps, storage, backup and developer tooling. The runtime story is explicitly framed as roughly 70 services or containers that the flow helps maintain and monitor." data-layer-why="This explains the scale and purpose of Agentic SRE." data-layer-evidence="Repository stack overview · service docs"><h4>Service Landscape</h4><p>A public-safe map of what the runtime contains.</p><ul><li><strong>Platform:</strong> ingress/proxy, automation, developer tooling.</li><li><strong>Reliability:</strong> observability, reports, health checks.</li><li><strong>Scale:</strong> around 70 services / containers.</li></ul><div class="sg-note">Meaning: show categories and scale, not private internals.</div></button>
+          </div>
+          <div class="sg-layer-panel" aria-live="polite"><div class="sg-layer-panel-head"><div><p class="sg-kicker">Selected layer explained</p><h4 data-sg-layer-title>CI Control Plane</h4></div><span class="sg-chip" data-sg-layer-kicker>Quality gates · deterministic rail</span></div><div class="sg-layer-panel-grid"><div class="sg-layer-box"><strong>What it is</strong><p data-sg-layer-role>Required checks and local parity around every PR, separating deterministic gates from advisory AI review.</p></div><div class="sg-layer-box"><strong>How it works in practice</strong><span data-sg-layer-how>PR work is expected to pass title/body quality, GitHub Actions lint, Markdown and knowledge validation, fast lint, LiteLLM cost policy, review-thread state, CI/local parity and Agent Session Report. Local scripts such as check-pr.sh and wait-for-pr-ci.sh make agents verify the same flow before handoff.</span></div><div class="sg-layer-box"><strong>Why it matters</strong><span data-sg-layer-why>This is the strongest control surface around probabilistic agent output.</span></div><div class="sg-layer-box"><strong>Repo evidence</strong><span data-sg-layer-evidence>.github/ci-required-checks.yml · knowledge/tools-and-clis/check-pr-local.md · check-pr.sh · wait-for-pr-ci.sh</span></div></div></div>
+        </section>
       </div>
     </section>
 
     <section class="section-shell glance-section" aria-labelledby="glance-title">
-      <div class="section-heading centered">
+      <div class="section-heading centered" data-reveal>
         <p class="eyebrow">Project at a glance</p>
         <h2 id="glance-title">A compact reference for the full case study.</h2>
       </div>
-      <div class="glance-grid" aria-label="Project summary">
-        <article><span>Role</span><strong>AI / Platform / SRE architecture</strong></article>
-        <article><span>Scope</span><strong>Agentic delivery workflow</strong></article>
-        <article><span>Focus</span><strong>Reliability, governance, observability</strong></article>
-        <article><span>Output</span><strong>Reusable delivery pattern</strong></article>
+      <div class="glance-grid" aria-label="Project summary" data-reveal-group>
+        <article data-reveal><span>Role</span><strong>AI / Platform / SRE architecture</strong></article>
+        <article data-reveal><span>Scope</span><strong>Agentic delivery workflow</strong></article>
+        <article data-reveal><span>Focus</span><strong>Reliability, governance, observability</strong></article>
+        <article data-reveal><span>Output</span><strong>Reusable delivery pattern</strong></article>
       </div>
     </section>
 
     <section class="section-shell gap-section" aria-labelledby="gap-title">
-      <div class="section-heading">
+      <div class="section-heading" data-reveal>
         <p class="eyebrow">The operational gap</p>
         <h2 id="gap-title">Monitoring detects symptoms. It does not automatically create a safe path to resolution.</h2>
-        <p>
-          The hard problem is the manual handoff between alert, context, owner, change, review, deployment and proof
-          that the service actually improved.
-        </p>
+        <p>The hard problem is the manual handoff between alert, context, owner, change, review, deployment and proof that the service actually improved.</p>
       </div>
-
-      <div class="manual-flow" aria-label="Traditional fragmented operational workflow">
-        <div><span aria-hidden="true">⚠</span><strong>Alert</strong></div>
-        <div><span aria-hidden="true">⌕</span><strong>Investigate manually</strong></div>
-        <div><span aria-hidden="true">□</span><strong>Search docs</strong></div>
-        <div><span aria-hidden="true">◎</span><strong>Find owner</strong></div>
-        <div><span aria-hidden="true">&lt;/&gt;</span><strong>Implement</strong></div>
-        <div><span aria-hidden="true">△</span><strong>Test</strong></div>
-        <div><span aria-hidden="true">↥</span><strong>Deploy</strong></div>
-        <div><span aria-hidden="true">✓</span><strong>Verify</strong></div>
+      <div class="manual-flow" aria-label="Traditional fragmented operational workflow" data-reveal-group>
+        <div data-reveal><span aria-hidden="true">⚠</span><strong>Alert</strong></div><div data-reveal><span aria-hidden="true">⌕</span><strong>Investigate manually</strong></div><div data-reveal><span aria-hidden="true">□</span><strong>Search docs</strong></div><div data-reveal><span aria-hidden="true">◎</span><strong>Find owner</strong></div><div data-reveal><span aria-hidden="true">&lt;/&gt;</span><strong>Implement</strong></div><div data-reveal><span aria-hidden="true">△</span><strong>Test</strong></div><div data-reveal><span aria-hidden="true">↥</span><strong>Deploy</strong></div><div data-reveal><span aria-hidden="true">✓</span><strong>Verify</strong></div>
       </div>
-      <p class="callout callout-warning">Context switching, tribal knowledge, inconsistent quality and slow feedback loops.</p>
+      <p class="callout callout-warning" data-reveal>Context switching, tribal knowledge, inconsistent quality and slow feedback loops.</p>
     </section>
 
-    <section id="flow" class="section-shell flow-section" aria-labelledby="flow-title">
-      <div class="section-heading centered">
+    <section id="delivery-loop" class="section-shell flow-section" aria-labelledby="flow-title" data-flow-section>
+      <div class="section-heading centered" data-reveal>
         <p class="eyebrow">Main story</p>
         <h2 id="flow-title">Signal → verified change</h2>
         <p>One work item evolves from operational signal into a reviewed, approved and measured engineering outcome.</p>
       </div>
-
-      <article class="scenario-card" aria-labelledby="scenario-title">
-        <p class="eyebrow">Representative example</p>
-        <h3 id="scenario-title">A recurring integration error becomes one governed remediation loop.</h3>
-        <p>
-          The platform correlates telemetry and repository context, creates a structured issue, prepares a change,
-          runs validation and review, then checks whether service indicators move back toward target.
-        </p>
-      </article>
-
+      <article class="scenario-card" aria-labelledby="scenario-title" data-reveal><p class="eyebrow">Representative example</p><h3 id="scenario-title">A recurring integration error becomes one governed remediation loop.</h3><p>The platform correlates telemetry and repository context, creates a structured issue, prepares a change, runs validation and review, then checks whether service indicators move back toward target.</p></article>
       <ol class="verified-flow" aria-label="Agentic SRE signal to verified action flow">
-        <li class="flow-step" data-flow-step>
-          <span class="flow-icon" aria-hidden="true">〰</span>
-          <strong>Signal</strong>
-          <p>Alerts, metrics, logs, traces and scheduled checks.</p>
-        </li>
-        <li class="flow-step" data-flow-step>
-          <span class="flow-icon" aria-hidden="true">⌕</span>
-          <strong>Evidence</strong>
-          <p>Telemetry, repository context and runbook hints are correlated.</p>
-        </li>
-        <li class="flow-step" data-flow-step>
-          <span class="flow-icon" aria-hidden="true">!</span>
-          <strong>Structured Issue</strong>
-          <p>Ambiguous signal becomes scoped work with constraints.</p>
-        </li>
-        <li class="flow-step" data-flow-step>
-          <span class="flow-icon" aria-hidden="true">☷</span>
-          <strong>Agent Plan</strong>
-          <p>Remediation plan and verification path are proposed.</p>
-        </li>
-        <li class="flow-step" data-flow-step>
-          <span class="flow-icon" aria-hidden="true">&lt;/&gt;</span>
-          <strong>Pull Request</strong>
-          <p>Change is prepared as reviewable code and evidence.</p>
-        </li>
-        <li class="flow-step" data-flow-step>
-          <span class="flow-icon" aria-hidden="true">◇</span>
-          <strong>CI</strong>
-          <p>Static checks, tests and policy gates run deterministically.</p>
-        </li>
-        <li class="flow-step" data-flow-step>
-          <span class="flow-icon" aria-hidden="true">✦</span>
-          <strong>AI Review</strong>
-          <p>Specialist reviewers critique technical, business and risk impact.</p>
-        </li>
-        <li class="flow-step" data-flow-step>
-          <span class="flow-icon" aria-hidden="true">♙</span>
-          <strong>Human Approval</strong>
-          <p>Engineer reviews evidence and owns the decision.</p>
-        </li>
-        <li class="flow-step success" data-flow-step>
-          <span class="flow-icon" aria-hidden="true">✓</span>
-          <strong>SLO Verified</strong>
-          <p>Observability confirms whether the outcome improved.</p>
-        </li>
+        <li class="flow-step" data-flow-step><span class="flow-icon" aria-hidden="true">〰</span><strong>Signal</strong><p>Alerts, metrics, logs, traces and scheduled checks.</p></li><li class="flow-step" data-flow-step><span class="flow-icon" aria-hidden="true">⌕</span><strong>Evidence</strong><p>Telemetry, repository context and runbook hints are correlated.</p></li><li class="flow-step" data-flow-step><span class="flow-icon" aria-hidden="true">!</span><strong>Structured Issue</strong><p>Ambiguous signal becomes scoped work with constraints.</p></li><li class="flow-step" data-flow-step><span class="flow-icon" aria-hidden="true">☷</span><strong>Agent Plan</strong><p>Remediation plan and verification path are proposed.</p></li><li class="flow-step" data-flow-step><span class="flow-icon" aria-hidden="true">&lt;/&gt;</span><strong>Pull Request</strong><p>Change is prepared as reviewable code and evidence.</p></li><li class="flow-step" data-flow-step><span class="flow-icon" aria-hidden="true">◇</span><strong>CI</strong><p>Static checks, tests and policy gates run deterministically.</p></li><li class="flow-step" data-flow-step><span class="flow-icon" aria-hidden="true">✦</span><strong>AI Review</strong><p>Specialist reviewers critique technical, business and risk impact.</p></li><li class="flow-step" data-flow-step><span class="flow-icon" aria-hidden="true">♙</span><strong>Human Approval</strong><p>Engineer reviews evidence and owns the decision.</p></li><li class="flow-step success" data-flow-step><span class="flow-icon" aria-hidden="true">✓</span><strong>SLO Verified</strong><p>Observability confirms whether the outcome improved.</p></li>
       </ol>
-
-      <div class="rail-grid" aria-label="Probabilistic intelligence and deterministic rails">
-        <article class="rail-card intelligence">
-          <div class="rail-symbol" aria-hidden="true">◉</div>
-          <div>
-            <p class="eyebrow">Probabilistic intelligence</p>
-            <h3>Agents propose the best next actions.</h3>
-            <ul>
-              <li><strong>Diagnose</strong><span>understand what is happening</span></li>
-              <li><strong>Plan</strong><span>propose safe and effective steps</span></li>
-              <li><strong>Implement</strong><span>generate code and configuration changes</span></li>
-              <li><strong>Review</strong><span>critique quality, risks and tests</span></li>
-            </ul>
-          </div>
-        </article>
-
-        <article class="rail-card deterministic">
-          <div class="rail-symbol" aria-hidden="true">⬡</div>
-          <div>
-            <p class="eyebrow">Deterministic platform rails</p>
-            <h3>Guardrails make every change reviewable.</h3>
-            <ul>
-              <li><strong>Issue contracts</strong><span>structured scope and acceptance criteria</span></li>
-              <li><strong>Tests</strong><span>automated verification before merge</span></li>
-              <li><strong>Policy gates</strong><span>security, compliance and quality checks</span></li>
-              <li><strong>Audit trail</strong><span>issue, PR, commit and review history</span></li>
-              <li><strong>Observability</strong><span>measure impact and close the loop</span></li>
-            </ul>
-          </div>
-        </article>
+      <div class="rail-grid" aria-label="Probabilistic intelligence and deterministic rails" data-reveal-group>
+        <article class="rail-card intelligence" data-reveal><div class="rail-symbol" aria-hidden="true">◉</div><div><p class="eyebrow">Probabilistic intelligence</p><h3>Agents propose the best next actions.</h3><ul><li><strong>Diagnose</strong><span>understand what is happening</span></li><li><strong>Plan</strong><span>propose safe and effective steps</span></li><li><strong>Implement</strong><span>generate code and configuration changes</span></li><li><strong>Review</strong><span>critique quality, risks and tests</span></li></ul></div></article>
+        <article class="rail-card deterministic" data-reveal><div class="rail-symbol" aria-hidden="true">⬡</div><div><p class="eyebrow">Deterministic platform rails</p><h3>Guardrails make every change reviewable.</h3><ul><li><strong>Issue contracts</strong><span>structured scope and acceptance criteria</span></li><li><strong>Tests</strong><span>automated verification before merge</span></li><li><strong>Policy gates</strong><span>security, compliance and quality checks</span></li><li><strong>Audit trail</strong><span>issue, PR, commit and review history</span></li><li><strong>Observability</strong><span>measure impact and close the loop</span></li></ul></div></article>
       </div>
     </section>
 
-    <section id="engineering-30" class="section-shell engineering-section" aria-labelledby="engineering-title">
-      <div class="section-heading centered">
-        <p class="eyebrow">Narrative frame</p>
-        <h2 id="engineering-title">Engineering 3.0 in practice</h2>
-        <p>Not vibe coding. Intent, architecture, constraints, validation and governance move to the center.</p>
-      </div>
+    <section id="engineering-30" class="section-shell engineering-section" aria-labelledby="engineering-title"><div class="section-heading centered" data-reveal><p class="eyebrow">Narrative frame</p><h2 id="engineering-title">Engineering 3.0 in practice</h2><p>Not vibe coding. Intent, architecture, constraints, validation and governance move to the center.</p></div><div class="split-workflow" data-reveal-group><article class="workflow-panel traditional" data-reveal><p class="eyebrow">Traditional workflow</p><h3>Fragmented. Manual. Error-prone.</h3><div class="mini-path" aria-label="Traditional path"><span>Alert</span><span>Investigate</span><span>Search docs</span><span>Find owner</span><span>Implement</span><span>Test</span><span>Deploy</span></div><p class="callout">The engineer spends energy moving information between disconnected systems.</p></article><article class="workflow-panel modern" data-reveal><p class="eyebrow">Engineering 3.0 workflow</p><h3>Structured. Governed. Outcome-driven.</h3><ol><li><strong>Define intent</strong><span>clear outcome and constraints</span></li><li><strong>Structured issue</strong><span>context, scope and guardrails</span></li><li><strong>Agents plan and implement</strong><span>specialized agents collaborate</span></li><li><strong>Deterministic validation</strong><span>tests, policies and runtime checks</span></li><li><strong>Human approval</strong><span>engineer remains accountable</span></li><li><strong>SLO feedback</strong><span>measure, learn and improve</span></li></ol></article></div></section>
 
-      <div class="split-workflow">
-        <article class="workflow-panel traditional">
-          <p class="eyebrow">Traditional workflow</p>
-          <h3>Fragmented. Manual. Error-prone.</h3>
-          <div class="mini-path" aria-label="Traditional path">
-            <span>Alert</span>
-            <span>Investigate</span>
-            <span>Search docs</span>
-            <span>Find owner</span>
-            <span>Implement</span>
-            <span>Test</span>
-            <span>Deploy</span>
-          </div>
-          <p class="callout">The engineer spends energy moving information between disconnected systems.</p>
-        </article>
+    <section id="architecture" class="section-shell architecture-section" aria-labelledby="architecture-title"><div class="section-heading centered" data-reveal><p class="eyebrow">Architecture by responsibility</p><h2 id="architecture-title">The Agentic SRE platform loop</h2></div><div class="architecture-strip" aria-label="Agentic SRE architecture layers" data-reveal-group><article data-reveal><span>1</span><strong>Signals</strong><p>Telemetry, logs, metrics, scheduled checks and user feedback.</p></article><article data-reveal><span>2</span><strong>Agent orchestration</strong><p>Runtime, dispatcher, worker roles, task state and handoff.</p></article><article data-reveal><span>3</span><strong>Engineering workflow</strong><p>Issues, branches, PRs, evidence and reviewable changes.</p></article><article data-reveal><span>4</span><strong>AI routing</strong><p>Right agent, right tool, right context and provider fallback.</p></article><article data-reveal><span>5</span><strong>Quality &amp; governance</strong><p>CI, policies, specialist reviews and human approval.</p></article><article data-reveal><span>6</span><strong>Observability</strong><p>SLI/SLO feedback, DORA signals, dashboards and auditability.</p></article></div><div class="flywheel" aria-hidden="true" data-reveal>Continuous improvement flywheel</div></section>
 
-        <article class="workflow-panel modern">
-          <p class="eyebrow">Engineering 3.0 workflow</p>
-          <h3>Structured. Governed. Outcome-driven.</h3>
-          <ol>
-            <li><strong>Define intent</strong><span>clear outcome and constraints</span></li>
-            <li><strong>Structured issue</strong><span>context, scope and guardrails</span></li>
-            <li><strong>Agents plan and implement</strong><span>specialized agents collaborate</span></li>
-            <li><strong>Deterministic validation</strong><span>tests, policies and runtime checks</span></li>
-            <li><strong>Human approval</strong><span>engineer remains accountable</span></li>
-            <li><strong>SLO feedback</strong><span>measure, learn and improve</span></li>
-          </ol>
-        </article>
-      </div>
-    </section>
+    <section id="control-plane" class="section-shell control-section" aria-labelledby="tower-title"><div class="section-heading" data-reveal><p class="eyebrow">Representative workflow view</p><h2 id="tower-title">Agentic Delivery Control Plane</h2><p>Compact public-safe view of the governed delivery model. Values below are representative workflow states, not production metrics.</p></div><p class="prototype-banner" data-reveal>Sanitized architecture view: enough to explain the operating model without exposing private infrastructure details.</p><div class="control-grid" data-reveal-group><article class="tower-card" data-reveal><h3><span>1</span> Backlog &amp; Issues</h3><div class="issue-list"><p><strong>Improve recurring integration error triage</strong><em>P1 · structured issue · owner required</em></p><p><strong>Document deployment verification loop</strong><em>P2 · docs · DocGuard</em></p><p><strong>Reduce flaky review reruns</strong><em>P2 · CI · router evidence</em></p></div></article><article class="tower-card" data-reveal><h3><span>2</span> Agent execution</h3><div class="agent-rows"><p><strong>Code Agent</strong><span class="chip run">RUN</span><em>preparing PR</em></p><p><strong>Test Agent</strong><span class="chip run">RUN</span><em>expanding checks</em></p><p><strong>DocGuard</strong><span class="chip reuse">REUSE</span><em>docs unchanged</em></p><p><strong>Risk Reviewer</strong><span class="chip run">RUN</span><em>challenging assumptions</em></p><p><strong>Visual Review</strong><span class="chip skip">SKIP</span><em>no image delta</em></p></div></article><article class="tower-card" data-reveal><h3><span>3</span> Quality gates</h3><ul class="gate-list"><li>Lint &amp; static analysis <span class="status-pass">PASS</span></li><li>Unit / script checks <span class="status-pass">PASS</span></li><li>Policy validation <span class="status-pass">PASS</span></li><li>Review thread gate <span class="status-pending">PENDING</span></li><li>Human approval <span class="status-required">REQUIRED</span></li></ul></article><article class="tower-card" data-reveal><h3><span>4</span> Reliability signals</h3><div class="signal-panel"><strong>SLO status</strong><span>within target</span><strong>Error budget</strong><span>healthy</span><strong>Post-change check</strong><span>pending verification</span></div></article></div><div class="matrix-grid" data-reveal-group><article class="matrix-card" data-reveal><h3>Reviewer routing matrix</h3><div class="table-wrap"><table><thead><tr><th>Change type</th><th>Technical</th><th>Business</th><th>Risk</th><th>DocGuard</th><th>Visual</th></tr></thead><tbody><tr><td>Code</td><td>RUN</td><td>RUN</td><td>RUN</td><td>SKIP</td><td>SKIP</td></tr><tr><td>Docs</td><td>REUSE</td><td>REUSE</td><td>REUSE</td><td>RUN</td><td>SKIP</td></tr><tr><td>Workflow</td><td>RUN</td><td>RUN</td><td>RUN</td><td>RUN</td><td>SKIP</td></tr><tr><td>Diagram</td><td>SKIP</td><td>SKIP</td><td>SKIP</td><td>RUN</td><td>RUN</td></tr></tbody></table></div><p class="fine-print">Representative example. Exact routing is implementation-specific and can evolve over time.</p></article><article class="matrix-card fallback-card" data-reveal><h3>Provider fallback chain</h3><div class="fallback-strip" aria-label="Simplified provider fallback chain"><span>Primary</span><span>Fallback 1</span><span>Fallback 2</span><span>Fallback 3</span><span>Break-glass</span></div><p>Only reviewers selected to run call an LLM. Model/provider fallback is separate from reviewer routing.</p></article></div></section>
 
-    <section class="section-shell governance-section" aria-labelledby="role-title">
-      <div class="section-heading centered">
-        <p class="eyebrow">My role</p>
-        <h2 id="role-title">What I designed and built</h2>
-        <p>
-          This project is not a tool inventory. It is an end-to-end operating model for AI-assisted engineering:
-          from problem signal, through agent execution, to validated and measurable change.
-        </p>
-      </div>
-      <div class="governance-grid">
-        <article><strong>Agent workflow</strong><p>Designed the issue-driven flow that gives coding and review agents scoped, auditable work.</p></article>
-        <article><strong>Delivery rails</strong><p>Connected branches, pull requests, CI checks, review evidence and merge-readiness gates.</p></article>
-        <article><strong>Review roles</strong><p>Separated technical, business, documentation, visual and risk-oriented review responsibilities.</p></article>
-        <article><strong>Model routing</strong><p>Explored provider fallback and task-specific routing so AI workloads degrade more gracefully.</p></article>
-        <article><strong>Governance model</strong><p>Kept human approval and escalation boundaries explicit for risky or production-impacting actions.</p></article>
-        <article><strong>Reliability feedback</strong><p>Linked delivery outcomes back to observability, SLI/SLO thinking and follow-up work.</p></article>
-      </div>
-    </section>
-
-    <section id="architecture" class="section-shell architecture-section" aria-labelledby="architecture-title">
-      <div class="section-heading centered">
-        <p class="eyebrow">Architecture by responsibility</p>
-        <h2 id="architecture-title">The Agentic SRE platform loop</h2>
-      </div>
-
-      <div class="architecture-strip" aria-label="Agentic SRE architecture layers">
-        <article><span>1</span><strong>Signals</strong><p>Telemetry, logs, metrics, scheduled checks and user feedback.</p></article>
-        <article><span>2</span><strong>Agent orchestration</strong><p>Runtime, dispatcher, worker roles, task state and handoff.</p></article>
-        <article><span>3</span><strong>Engineering workflow</strong><p>Issues, branches, PRs, evidence and reviewable changes.</p></article>
-        <article><span>4</span><strong>AI routing</strong><p>Right agent, right tool, right context and provider fallback.</p></article>
-        <article><span>5</span><strong>Quality &amp; governance</strong><p>CI, policies, specialist reviews and human approval.</p></article>
-        <article><span>6</span><strong>Observability</strong><p>SLI/SLO feedback, DORA signals, dashboards and auditability.</p></article>
-      </div>
-      <div class="flywheel" aria-hidden="true">Continuous improvement flywheel</div>
-    </section>
-
-    <section class="section-shell governance-section" aria-labelledby="principles-title">
-      <div class="section-heading centered">
-        <p class="eyebrow">Design principles</p>
-        <h2 id="principles-title">Reliable AI delivery needs architecture, not magic.</h2>
-      </div>
-      <div class="governance-grid">
-        <article><strong>Intent before implementation</strong><p>Agents work best when goals, context, constraints and acceptance criteria are explicit.</p></article>
-        <article><strong>Deterministic checks stay separate</strong><p>Tests, policy gates and review-thread rules validate what AI-generated changes cannot prove alone.</p></article>
-        <article><strong>Every decision needs evidence</strong><p>Issues, commits, reviews, CI status and post-change checks remain linked for auditability.</p></article>
-        <article><strong>Autonomy has boundaries</strong><p>Agents may inspect and prepare work, while risky or destructive actions require escalation.</p></article>
-        <article><strong>Observability closes the loop</strong><p>The workflow is incomplete until service indicators confirm whether the change helped.</p></article>
-        <article><strong>The pattern must be reusable</strong><p>The platform is designed as a repeatable delivery model, not a one-off automation demo.</p></article>
-      </div>
-    </section>
-
-    <section id="control-tower" class="section-shell control-section" aria-labelledby="tower-title">
-      <div class="section-heading">
-        <p class="eyebrow">Representative workflow view</p>
-        <h2 id="tower-title">Agentic Delivery Control Tower</h2>
-        <p>Compact public-safe view of the governed delivery model. Values below are representative workflow states, not production metrics.</p>
-      </div>
-      <p class="prototype-banner">Sanitized architecture view: enough to explain the operating model without exposing private infrastructure details.</p>
-
-      <div class="control-grid">
-        <article class="tower-card">
-          <h3><span>1</span> Backlog &amp; Issues</h3>
-          <div class="issue-list">
-            <p><strong>Improve recurring integration error triage</strong><em>P1 · structured issue · owner required</em></p>
-            <p><strong>Document deployment verification loop</strong><em>P2 · docs · DocGuard</em></p>
-            <p><strong>Reduce flaky review reruns</strong><em>P2 · CI · router evidence</em></p>
-          </div>
-        </article>
-
-        <article class="tower-card">
-          <h3><span>2</span> Agent execution</h3>
-          <div class="agent-rows">
-            <p><strong>Code Agent</strong><span class="chip run">RUN</span><em>preparing PR</em></p>
-            <p><strong>Test Agent</strong><span class="chip run">RUN</span><em>expanding checks</em></p>
-            <p><strong>DocGuard</strong><span class="chip reuse">REUSE</span><em>docs unchanged</em></p>
-            <p><strong>Risk Reviewer</strong><span class="chip run">RUN</span><em>challenging assumptions</em></p>
-            <p><strong>Visual Review</strong><span class="chip skip">SKIP</span><em>no image delta</em></p>
-          </div>
-        </article>
-
-        <article class="tower-card">
-          <h3><span>3</span> Quality gates</h3>
-          <ul class="gate-list">
-            <li>Lint &amp; static analysis <span>PASS</span></li>
-            <li>Unit / script checks <span>PASS</span></li>
-            <li>Policy validation <span>PASS</span></li>
-            <li>Review thread gate <span>PENDING</span></li>
-            <li>Human approval <span>REQUIRED</span></li>
-          </ul>
-        </article>
-
-        <article class="tower-card">
-          <h3><span>4</span> Reliability signals</h3>
-          <div class="signal-panel">
-            <strong>SLO status</strong><span>within target</span>
-            <strong>Error budget</strong><span>healthy</span>
-            <strong>Post-change check</strong><span>pending verification</span>
-          </div>
-        </article>
-      </div>
-
-      <div class="matrix-grid">
-        <article class="matrix-card">
-          <h3>Reviewer routing matrix</h3>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr><th>Change type</th><th>Technical</th><th>Business</th><th>Risk</th><th>DocGuard</th><th>Visual</th></tr>
-              </thead>
-              <tbody>
-                <tr><td>Code</td><td>RUN</td><td>RUN</td><td>RUN</td><td>SKIP</td><td>SKIP</td></tr>
-                <tr><td>Docs</td><td>REUSE</td><td>REUSE</td><td>REUSE</td><td>RUN</td><td>SKIP</td></tr>
-                <tr><td>Workflow</td><td>RUN</td><td>RUN</td><td>RUN</td><td>RUN</td><td>SKIP</td></tr>
-                <tr><td>Diagram</td><td>SKIP</td><td>SKIP</td><td>SKIP</td><td>RUN</td><td>RUN</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <p class="fine-print">Representative example. Exact routing is implementation-specific and can evolve over time.</p>
-        </article>
-
-        <article class="matrix-card fallback-card">
-          <h3>Provider fallback chain</h3>
-          <div class="fallback-strip" aria-label="Simplified provider fallback chain">
-            <span>Primary</span><span>Fallback 1</span><span>Fallback 2</span><span>Fallback 3</span><span>Break-glass</span>
-          </div>
-          <p>Only reviewers selected to run call an LLM. Model/provider fallback is separate from reviewer routing.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="section-shell governance-section" aria-labelledby="governance-title">
-      <div class="section-heading centered">
-        <p class="eyebrow">Trust, safety and governance</p>
-        <h2 id="governance-title">Safe by design. Human accountable.</h2>
-      </div>
-      <div class="governance-grid">
-        <article><strong>Agents may inspect</strong><p>Repository and read-only context can be used to understand the problem.</p></article>
-        <article><strong>Agents may prepare</strong><p>Issues, plans, branches and PRs are allowed as proposed changes.</p></article>
-        <article><strong>Checks must validate</strong><p>CI, policy gates and specialist reviews provide deterministic evidence.</p></article>
-        <article><strong>Humans approve</strong><p>Merge and production-impacting decisions remain human-owned.</p></article>
-        <article><strong>Destructive actions escalate</strong><p>Dangerous operations are prohibited or explicitly escalated.</p></article>
-        <article><strong>Audit trail stays intact</strong><p>Issue, PR, commit and review history remain linked and inspectable.</p></article>
-      </div>
-    </section>
-
-    <section id="capabilities" class="section-shell outcomes-section" aria-labelledby="capabilities-title">
-      <div class="section-heading centered">
-        <p class="eyebrow">Capabilities demonstrated</p>
-        <h2 id="capabilities-title">From exploratory AI platform to reusable delivery pattern.</h2>
-        <p>
-          The value is not the number of tools. The value is a repeatable operating model for turning uncertain AI output
-          into governed engineering work that stakeholders can trust, inspect and improve.
-        </p>
-      </div>
-
-      <article class="scenario-card" aria-labelledby="business-translation-title">
-        <p class="eyebrow">Architecture translation</p>
-        <h3 id="business-translation-title">Problem → architecture → proof.</h3>
-        <p>
-          The case study translates a practical operational bottleneck into an architecture pattern: detect a signal,
-          gather context, create scoped work, validate the change and verify the outcome.
-        </p>
-      </article>
-
-      <div class="governance-grid" aria-label="AI engineering capability map">
-        <article><strong>Solution discovery</strong><p>Frame the operational pain, users, constraints and success signals before choosing models or tools.</p></article>
-        <article><strong>Architecture design</strong><p>Split responsibilities across agents, deterministic rails, integrations, observability and governance.</p></article>
-        <article><strong>Reliable AI delivery</strong><p>Use issues, branches, PRs, tests and specialist reviews to make agent output auditable and reversible.</p></article>
-        <article><strong>Risk management</strong><p>Keep approval, escalation and destructive-action boundaries explicit instead of assuming full autonomy.</p></article>
-        <article><strong>Platform thinking</strong><p>Make the workflow reusable across services, providers and agent roles rather than building a one-off demo.</p></article>
-        <article><strong>Outcome measurement</strong><p>Close the loop with SLI/SLO feedback, review evidence and follow-up work when the result is not good enough.</p></article>
-      </div>
-
-      <blockquote>
-        A controlled AI engineering platform: small enough to inspect end-to-end, structured around concerns that matter in production-grade AI solution architecture.
-      </blockquote>
-    </section>
-
-    <section class="section-shell governance-section" aria-labelledby="evidence-title">
-      <div class="section-heading centered">
-        <p class="eyebrow">Selected implementation evidence</p>
-        <h2 id="evidence-title">The case study is backed by implementation patterns, not only diagrams.</h2>
-      </div>
-      <div class="governance-grid">
-        <article><strong>Issue-driven workflow</strong><p>Operational signals are translated into scoped work with acceptance criteria and linked follow-up.</p></article>
-        <article><strong>PR quality gates</strong><p>Changes move through branch, pull request, validation checks and review evidence before merge.</p></article>
-        <article><strong>AI review roles</strong><p>Specialized reviewers separate technical quality, business value, documentation and risk concerns.</p></article>
-        <article><strong>Fallback-aware routing</strong><p>Model and provider selection are treated as part of platform reliability, not an afterthought.</p></article>
-        <article><strong>Observability feedback</strong><p>Delivery is connected back to SLI/SLO thinking and post-change verification.</p></article>
-        <article><strong>Public-safe abstraction</strong><p>The portfolio version explains the pattern without exposing private topology, credentials or live metrics.</p></article>
-      </div>
-    </section>
-
-    <section class="section-shell outcomes-section" aria-labelledby="outcomes-title">
-      <div class="section-heading centered">
-        <p class="eyebrow">Outcomes</p>
-        <h2 id="outcomes-title">What this demonstrates</h2>
-        <p>
-          The project demonstrates how AI-assisted engineering can stay useful, inspectable and accountable
-          when it is built on platform contracts rather than ad-hoc prompting.
-        </p>
-      </div>
-      <div class="outcome-grid">
-        <article><span aria-hidden="true">↘</span><strong>Reduced repetitive diagnosis</strong><p>Less manual correlation between alerts, logs, docs and repository context.</p></article>
-        <article><span aria-hidden="true">▣</span><strong>Auditable delivery flow</strong><p>Issue, plan, PR, checks, reviews and decisions stay linked.</p></article>
-        <article><span aria-hidden="true">⬡</span><strong>Controlled AI-assisted changes</strong><p>Agents operate inside explicit guardrails, tests and human approval.</p></article>
-        <article><span aria-hidden="true">◎</span><strong>Measured post-change verification</strong><p>Observability checks whether the intended outcome improved.</p></article>
-      </div>
-      <blockquote>AI suggests. Platform enforces. Humans decide. Systems improve.</blockquote>
-    </section>
+    <section id="outcomes" class="section-shell outcomes-section" aria-labelledby="capabilities-title"><div class="section-heading centered" data-reveal><p class="eyebrow">Capabilities demonstrated</p><h2 id="capabilities-title">From exploratory AI platform to reusable delivery pattern.</h2><p>The value is a repeatable operating model for turning uncertain AI output into governed engineering work that stakeholders can trust, inspect and improve.</p></div><div class="governance-grid" aria-label="AI engineering capability map" data-reveal-group><article data-reveal><strong>Solution discovery</strong><p>Frame the operational pain, users, constraints and success signals before choosing models or tools.</p></article><article data-reveal><strong>Architecture design</strong><p>Split responsibilities across agents, deterministic rails, integrations, observability and governance.</p></article><article data-reveal><strong>Reliable AI delivery</strong><p>Use issues, branches, PRs, tests and specialist reviews to make agent output auditable and reversible.</p></article><article data-reveal><strong>Risk management</strong><p>Keep approval, escalation and destructive-action boundaries explicit instead of assuming full autonomy.</p></article><article data-reveal><strong>Platform thinking</strong><p>Make the workflow reusable across services, providers and agent roles rather than building a one-off demo.</p></article><article data-reveal><strong>Outcome measurement</strong><p>Close the loop with SLI/SLO feedback, review evidence and follow-up work when the result is not good enough.</p></article></div><blockquote data-reveal>A controlled AI engineering platform: small enough to inspect end-to-end, structured around concerns that matter in production-grade AI solution architecture.</blockquote></section>
   </main>
 
-  <footer class="case-footer">
-    <div class="case-footer-inner">
-      <div>
-        <p class="eyebrow">Part of robertkubis.pl</p>
-        <h2>More portfolio context</h2>
-        <p>Return to the main portfolio or open the CV for the broader platform, observability and AI-enabled operations context.</p>
-      </div>
-      <div class="case-footer-links">
-        <a class="button button-secondary" href="/"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back to portfolio</a>
-        <a class="button button-primary" href="/RobertKubisResume.pdf" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-pdf" aria-hidden="true"></i> Open CV</a>
-      </div>
-    </div>
-  </footer>
+  <footer class="case-footer"><div class="case-footer-inner" data-reveal><div><h2>Prototype review target</h2><p>This one-pager now includes the System Graph directly. The standalone System Graph page remains as a backup/reference prototype.</p></div><div class="case-footer-links"><a class="button button-primary" href="#top">Back to top</a><a class="button button-secondary" href="#system-graph">Review system graph</a></div></div></footer>
 
-  <script type="module" src="agentic-sre.js"></script>
+  <script src="agentic-sre.js"></script>
+  <script>
+    (() => {
+      const graphs = Array.from(document.querySelectorAll('[data-system-graph]'));
+      graphs.forEach((graph) => {
+        const modes = Array.from(graph.querySelectorAll('[data-sg-mode]'));
+        const nodes = Array.from(graph.querySelectorAll('.sg-node'));
+        const nf = {
+          kicker: graph.querySelector('[data-sg-node-kicker]'), title: graph.querySelector('[data-sg-node-title]'), role: graph.querySelector('[data-sg-node-role]'), how: graph.querySelector('[data-sg-node-how]'), why: graph.querySelector('[data-sg-node-why]')
+        };
+        const setMode = (mode) => {
+          graph.classList.remove('sg-event','sg-scheduled','sg-provider');
+          graph.classList.add(`sg-${mode}`);
+          modes.forEach((button) => { const active = button.dataset.sgMode === mode; button.classList.toggle('is-active', active); button.setAttribute('aria-pressed', String(active)); });
+        };
+        const selectNode = (node) => {
+          nodes.forEach((item) => item.classList.toggle('is-selected', item === node));
+          nf.kicker.textContent = node.dataset.kicker || 'System node'; nf.title.textContent = node.dataset.title || 'Node'; nf.role.textContent = node.dataset.role || ''; nf.how.textContent = node.dataset.how || ''; nf.why.textContent = node.dataset.why || '';
+        };
+        modes.forEach((button) => button.addEventListener('click', () => setMode(button.dataset.sgMode)));
+        nodes.forEach((node) => { node.addEventListener('click', () => selectNode(node)); node.addEventListener('focus', () => selectNode(node)); });
+        selectNode(graph.querySelector('.sg-node.is-selected') || nodes[0]);
+        const layers = Array.from(graph.querySelectorAll('[data-sg-layer-grid] .sg-layer'));
+        const lf = { kicker: graph.querySelector('[data-sg-layer-kicker]'), title: graph.querySelector('[data-sg-layer-title]'), role: graph.querySelector('[data-sg-layer-role]'), how: graph.querySelector('[data-sg-layer-how]'), why: graph.querySelector('[data-sg-layer-why]'), evidence: graph.querySelector('[data-sg-layer-evidence]') };
+        const selectLayer = (layer) => {
+          layers.forEach((item) => item.classList.toggle('is-layer-selected', item === layer));
+          lf.kicker.textContent = layer.dataset.layerKicker || 'Operating layer'; lf.title.textContent = layer.dataset.layerTitle || 'Layer'; lf.role.textContent = layer.dataset.layerRole || ''; lf.how.textContent = layer.dataset.layerHow || ''; lf.why.textContent = layer.dataset.layerWhy || ''; lf.evidence.textContent = layer.dataset.layerEvidence || '';
+        };
+        layers.forEach((layer) => { layer.addEventListener('click', () => selectLayer(layer)); layer.addEventListener('focus', () => selectLayer(layer)); });
+        selectLayer(graph.querySelector('.sg-layer.is-layer-selected') || layers[0]);
+      });
+    })();
+  </script>
 </body>
 </html>
