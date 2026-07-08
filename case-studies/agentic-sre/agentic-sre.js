@@ -2,58 +2,50 @@
   const root = document.documentElement;
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  const revealSelectors = [
-    ".hero-copy",
-    ".hero-stats article",
-    ".section-heading",
-    ".scenario-card",
-    ".rail-card",
-    ".workflow-panel",
-    ".tower-card",
-    ".matrix-card",
-    ".glance-grid article",
-    ".governance-grid article",
-    ".architecture-strip article",
-    ".outcome-grid article",
-    ".case-footer-inner",
-    ".impact-ribbon p",
-    ".manual-flow div",
-    ".prototype-banner",
-    ".callout",
-    ".flywheel"
-  ];
+  const heroSpacing = document.createElement("style");
+  heroSpacing.textContent = `
+    .hero .subtitle {
+      display: block;
+      max-width: 52rem;
+      margin: 1rem auto 0;
+      line-height: 1.3;
+    }
 
-  const revealGroups = [
-    ".hero-stats",
-    ".impact-ribbon",
-    ".glance-grid",
-    ".manual-flow",
-    ".rail-grid",
-    ".split-workflow",
-    ".architecture-strip",
-    ".governance-grid",
-    ".control-grid",
-    ".matrix-grid",
-    ".outcome-grid"
-  ];
+    .hero .subtitle + .hero-summary {
+      margin-top: 1rem;
+    }
+  `;
+  document.head.appendChild(heroSpacing);
 
-  revealGroups.forEach((selector) => {
-    document.querySelectorAll(selector).forEach((group) => {
-      group.setAttribute("data-reveal-group", "");
-    });
-  });
+  const normalizeMainOnePagerNav = () => {
+    const nav = document.querySelector('.site-header nav[aria-label="Page sections"]');
+    const isMainOnePager = Boolean(
+      nav &&
+      document.querySelector('#system-graph') &&
+      document.querySelector('#delivery-loop') &&
+      document.querySelector('#control-plane') &&
+      document.querySelector('#outcomes')
+    );
 
-  const revealItems = [
-    ...document.querySelectorAll("[data-reveal]"),
-    ...revealSelectors.flatMap((selector) => Array.from(document.querySelectorAll(selector)))
-  ];
+    if (!isMainOnePager) {
+      return;
+    }
 
-  const uniqueRevealItems = [...new Set(revealItems)];
-  uniqueRevealItems.forEach((item) => {
-    item.setAttribute("data-reveal", "");
-  });
+    nav.innerHTML = `
+      <a href="#top">Overview</a>
+      <a href="#system-graph">System Graph</a>
+      <a href="#delivery-loop">Delivery Loop</a>
+      <a href="#control-plane">Control Plane</a>
+      <a href="#outcomes">Outcomes</a>
+    `;
+  };
 
-  uniqueRevealItems.forEach((item) => {
+  normalizeMainOnePagerNav();
+
+  root.classList.add("motion-ready");
+
+  const revealItems = Array.from(document.querySelectorAll("[data-reveal]"));
+  revealItems.forEach((item) => {
     const parent = item.closest("[data-reveal-group]");
     if (!parent) {
       return;
@@ -64,26 +56,15 @@
     item.style.setProperty("--reveal-delay", `${Math.min(siblingIndex * 70, 280)}ms`);
   });
 
-  root.classList.add("motion-ready");
-
-  const markVisible = (element) => {
-    element.classList.add("is-visible");
-  };
-
-  const flowSection = document.querySelector(".flow-section");
-  const flowSteps = Array.from(document.querySelectorAll("[data-flow-step]"));
-  const fallbackCards = Array.from(document.querySelectorAll(".fallback-card"));
-
-  document.querySelectorAll(".fallback-strip span").forEach((step, index) => {
-    step.style.setProperty("--step-index", index);
-  });
+  const markVisible = (element) => element.classList.add("is-visible");
 
   if (reduceMotion || !("IntersectionObserver" in window)) {
-    uniqueRevealItems.forEach(markVisible);
-    flowSteps.forEach((step) => {
-      step.classList.add("is-complete");
+    revealItems.forEach(markVisible);
+    document.querySelectorAll("[data-flow-step]").forEach((step) => step.classList.add("is-complete"));
+    document.querySelectorAll(".fallback-strip span").forEach((step, index) => {
+      step.style.setProperty("--step-index", index);
     });
-    fallbackCards.forEach((card) => card.classList.add("is-visible"));
+    document.querySelectorAll(".fallback-card").forEach((card) => card.classList.add("is-visible"));
     return;
   }
 
@@ -101,31 +82,38 @@
     threshold: 0.16
   });
 
-  uniqueRevealItems.forEach((item) => revealObserver.observe(item));
+  revealItems.forEach((item) => revealObserver.observe(item));
+
+  const flowSection = document.querySelector("[data-flow-section]");
+  const flowSteps = Array.from(document.querySelectorAll("[data-flow-step]"));
+  let flowPlayed = false;
+  let activeTimer = null;
+
+  const playFlow = () => {
+    if (flowPlayed) {
+      return;
+    }
+
+    flowPlayed = true;
+
+    flowSteps.forEach((step, index) => {
+      window.setTimeout(() => {
+        if (activeTimer) {
+          window.clearTimeout(activeTimer);
+        }
+
+        flowSteps.forEach((candidate) => candidate.classList.remove("is-current"));
+        step.classList.add("is-current", "is-observed");
+
+        activeTimer = window.setTimeout(() => {
+          step.classList.remove("is-current");
+          step.classList.add("is-complete");
+        }, 520);
+      }, index * 180);
+    });
+  };
 
   if (flowSection && flowSteps.length > 0) {
-    let flowPlayed = false;
-
-    const playFlow = () => {
-      if (flowPlayed) {
-        return;
-      }
-
-      flowPlayed = true;
-
-      flowSteps.forEach((step, index) => {
-        window.setTimeout(() => {
-          flowSteps.forEach((candidate) => candidate.classList.remove("is-current"));
-          step.classList.add("is-current", "is-observed");
-
-          window.setTimeout(() => {
-            step.classList.remove("is-current");
-            step.classList.add("is-complete");
-          }, 520);
-        }, index * 180);
-      });
-    };
-
     const flowObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) {
@@ -143,6 +131,10 @@
     flowObserver.observe(flowSection);
   }
 
+  document.querySelectorAll(".fallback-strip span").forEach((step, index) => {
+    step.style.setProperty("--step-index", index);
+  });
+
   const fallbackObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) {
@@ -157,5 +149,5 @@
     threshold: 0.25
   });
 
-  fallbackCards.forEach((card) => fallbackObserver.observe(card));
+  document.querySelectorAll(".fallback-card").forEach((card) => fallbackObserver.observe(card));
 })();
