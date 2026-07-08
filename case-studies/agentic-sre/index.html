@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agentic SRE | Robert Kubiś</title>
+  <meta name="description" content="Portfolio case study: Agentic SRE, a governed delivery pattern that turns operational signals into reviewed, approved and measured engineering outcomes.">
+  <meta name="theme-color" content="#0a192f">
+  <link rel="canonical" href="https://robertkubis.pl/case-studies/agentic-sre/">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="agentic-sre.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" aria-label="Case study navigation">
+    <a class="brand" href="/" aria-label="Back to robertkubis.pl homepage">
+      <span class="brand-mark">rk</span>
+      <span>Robert <span>Kubiś</span></span>
+    </a>
+    <nav aria-label="Page sections">
+      <a href="#flow">Flow</a>
+      <a href="#engineering-30">Engineering 3.0</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#capabilities">Capabilities</a>
+      <a href="/">Portfolio</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section id="top" class="hero section-shell" aria-labelledby="hero-title">
+      <div class="hero-backdrop" aria-hidden="true"></div>
+      <div class="hero-copy">
+        <p class="eyebrow">Portfolio case study</p>
+        <h1 id="hero-title">Agentic <span>SRE</span></h1>
+        <p class="subtitle">Turn operational signals into reviewed, approved and measured engineering outcomes.</p>
+        <p class="hero-summary">
+          Agentic SRE is an independent AI and platform engineering project that connects observability,
+          structured work, coding agents, deterministic validation, specialist reviews and human approval into
+          one auditable delivery loop.
+        </p>
+        <p class="hero-audience">
+          The project explores how AI-assisted engineering becomes reliable when probabilistic agents operate
+          inside explicit platform contracts, SRE feedback loops and accountable governance.
+        </p>
+        <div class="hero-actions" aria-label="Primary actions">
+          <a class="button button-primary" href="#flow">View the workflow</a>
+          <a class="button button-secondary" href="#capabilities">Capabilities demonstrated</a>
+        </div>
+        <div class="impact-ribbon" aria-label="Business impact summary">
+          <p><strong>Faster triage</strong><span>Signals become scoped engineering work instead of disconnected toil.</span></p>
+          <p><strong>Auditable delivery</strong><span>Issue, plan, PR, checks and approval stay linked.</span></p>
+          <p><strong>Human-owned risk</strong><span>Agents assist, but high-impact decisions remain governed.</span></p>
+        </div>
+        <p class="prototype-note">
+          Public-safe note: examples are sanitized and representative. Workflow views use conceptual states,
+          not private production metrics or internal infrastructure details.
+        </p>
+      </div>
+
+      <div class="hero-stats" aria-label="Case study principles">
+        <article>
+          <span>01</span>
+          <strong>Agents reason</strong>
+          <p>Diagnose, plan, implement and review with context.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <strong>Rails validate</strong>
+          <p>Issues, CI, policy gates and audit trail bound the work.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <strong>Humans decide</strong>
+          <p>High-impact changes remain accountable and reviewable.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-shell glance-section" aria-labelledby="glance-title">
+      <div class="section-heading centered">
+        <p class="eyebrow">Project at a glance</p>
+        <h2 id="glance-title">A compact reference for the full case study.</h2>
+      </div>
+      <div class="glance-grid" aria-label="Project summary">
+        <article><span>Role</span><strong>AI / Platform / SRE architecture</strong></article>
+        <article><span>Scope</span><strong>Agentic delivery workflow</strong></article>
+        <article><span>Focus</span><strong>Reliability, governance, observability</strong></article>
+        <article><span>Output</span><strong>Reusable delivery pattern</strong></article>
+      </div>
+    </section>
+
+    <section class="section-shell gap-section" aria-labelledby="gap-title">
+      <div class="section-heading">
+        <p class="eyebrow">The operational gap</p>
+        <h2 id="gap-title">Monitoring detects symptoms. It does not automatically create a safe path to resolution.</h2>
+        <p>
+          The hard problem is the manual handoff between alert, context, owner, change, review, deployment and proof
+          that the service actually improved.
+        </p>
+      </div>
+
+      <div class="manual-flow" aria-label="Traditional fragmented operational workflow">
+        <div><span aria-hidden="true">⚠</span><strong>Alert</strong></div>
+        <div><span aria-hidden="true">⌕</span><strong>Investigate manually</strong></div>
+        <div><span aria-hidden="true">□</span><strong>Search docs</strong></div>
+        <div><span aria-hidden="true">◎</span><strong>Find owner</strong></div>
+        <div><span aria-hidden="true">&lt;/&gt;</span><strong>Implement</strong></div>
+        <div><span aria-hidden="true">△</span><strong>Test</strong></div>
+        <div><span aria-hidden="true">↥</span><strong>Deploy</strong></div>
+        <div><span aria-hidden="true">✓</span><strong>Verify</strong></div>
+      </div>
+      <p class="callout callout-warning">Context switching, tribal knowledge, inconsistent quality and slow feedback loops.</p>
+    </section>
+
+    <section id="flow" class="section-shell flow-section" aria-labelledby="flow-title">
+      <div class="section-heading centered">
+        <p class="eyebrow">Main story</p>
+        <h2 id="flow-title">Signal → verified change</h2>
+        <p>One work item evolves from operational signal into a reviewed, approved and measured engineering outcome.</p>
+      </div>
+
+      <article class="scenario-card" aria-labelledby="scenario-title">
+        <p class="eyebrow">Representative example</p>
+        <h3 id="scenario-title">A recurring integration error becomes one governed remediation loop.</h3>
+        <p>
+          The platform correlates telemetry and repository context, creates a structured issue, prepares a change,
+          runs validation and review, then checks whether service indicators move back toward target.
+        </p>
+      </article>
+
+      <ol class="verified-flow" aria-label="Agentic SRE signal to verified action flow">
+        <li class="flow-step" data-flow-step>
+          <span class="flow-icon" aria-hidden="true">〰</span>
+          <strong>Signal</strong>
+          <p>Alerts, metrics, logs, traces and scheduled checks.</p>
+        </li>
+        <li class="flow-step" data-flow-step>
+          <span class="flow-icon" aria-hidden="true">⌕</span>
+          <strong>Evidence</strong>
+          <p>Telemetry, repository context and runbook hints are correlated.</p>
+        </li>
+        <li class="flow-step active" data-flow-step>
+          <span class="flow-icon" aria-hidden="true">!</span>
+          <strong>Structured Issue</strong>
+          <p>Ambiguous signal becomes scoped work with constraints.</p>
+        </li>
+        <li class="flow-step" data-flow-step>
+          <span class="flow-icon" aria-hidden="true">☷</span>
+          <strong>Agent Plan</strong>
+          <p>Remediation plan and verification path are proposed.</p>
+        </li>
+        <li class="flow-step" data-flow-step>
+          <span class="flow-icon" aria-hidden="true">&lt;/&gt;</span>
+          <strong>Pull Request</strong>
+          <p>Change is prepared as reviewable code and evidence.</p>
+        </li>
+        <li class="flow-step" data-flow-step>
+          <span class="flow-icon" aria-hidden="true">◇</span>
+          <strong>CI</strong>
+          <p>Static checks, tests and policy gates run deterministically.</p>
+        </li>
+        <li class="flow-step" data-flow-step>
+          <span class="flow-icon" aria-hidden="true">✦</span>
+          <strong>AI Review</strong>
+          <p>Specialist reviewers critique technical, business and risk impact.</p>
+        </li>
+        <li class="flow-step" data-flow-step>
+          <span class="flow-icon" aria-hidden="true">♙</span>
+          <strong>Human Approval</strong>
+          <p>Engineer reviews evidence and owns the decision.</p>
+        </li>
+        <li class="flow-step success" data-flow-step>
+          <span class="flow-icon" aria-hidden="true">✓</span>
+          <strong>SLO Verified</strong>
+          <p>Observability confirms whether the outcome improved.</p>
+        </li>
+      </ol>
+
+      <div class="rail-grid" aria-label="Probabilistic intelligence and deterministic rails">
+        <article class="rail-card intelligence">
+          <div class="rail-symbol" aria-hidden="true">◉</div>
+          <div>
+            <p class="eyebrow">Probabilistic intelligence</p>
+            <h3>Agents propose the best next actions.</h3>
+            <ul>
+              <li><strong>Diagnose</strong><span>understand what is happening</span></li>
+              <li><strong>Plan</strong><span>propose safe and effective steps</span></li>
+              <li><strong>Implement</strong><span>generate code and configuration changes</span></li>
+              <li><strong>Review</strong><span>critique quality, risks and tests</span></li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="rail-card deterministic">
+          <div class="rail-symbol" aria-hidden="true">⬡</div>
+          <div>
+            <p class="eyebrow">Deterministic platform rails</p>
+            <h3>Guardrails make every change reviewable.</h3>
+            <ul>
+              <li><strong>Issue contracts</strong><span>structured scope and acceptance criteria</span></li>
+              <li><strong>Tests</strong><span>automated verification before merge</span></li>
+              <li><strong>Policy gates</strong><span>security, compliance and quality checks</span></li>
+              <li><strong>Audit trail</strong><span>issue, PR, commit and review history</span></li>
+              <li><strong>Observability</strong><span>measure impact and close the loop</span></li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="engineering-30" class="section-shell engineering-section" aria-labelledby="engineering-title">
+      <div class="section-heading centered">
+        <p class="eyebrow">Narrative frame</p>
+        <h2 id="engineering-title">Engineering 3.0 in practice</h2>
+        <p>Not vibe coding. Intent, architecture, constraints, validation and governance move to the center.</p>
+      </div>
+
+      <div class="split-workflow">
+        <article class="workflow-panel traditional">
+          <p class="eyebrow">Traditional workflow</p>
+          <h3>Fragmented. Manual. Error-prone.</h3>
+          <div class="mini-path" aria-label="Traditional path">
+            <span>Alert</span>
+            <span>Investigate</span>
+            <span>Search docs</span>
+            <span>Find owner</span>
+            <span>Implement</span>
+            <span>Test</span>
+            <span>Deploy</span>
+          </div>
+          <p class="callout">The engineer spends energy moving information between disconnected systems.</p>
+        </article>
+
+        <article class="workflow-panel modern">
+          <p class="eyebrow">Engineering 3.0 workflow</p>
+          <h3>Structured. Governed. Outcome-driven.</h3>
+          <ol>
+            <li><strong>Define intent</strong><span>clear outcome and constraints</span></li>
+            <li><strong>Structured issue</strong><span>context, scope and guardrails</span></li>
+            <li><strong>Agents plan and implement</strong><span>specialized agents collaborate</span></li>
+            <li><strong>Deterministic validation</strong><span>tests, policies and runtime checks</span></li>
+            <li><strong>Human approval</strong><span>engineer remains accountable</span></li>
+            <li><strong>SLO feedback</strong><span>measure, learn and improve</span></li>
+          </ol>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-shell governance-section" aria-labelledby="role-title">
+      <div class="section-heading centered">
+        <p class="eyebrow">My role</p>
+        <h2 id="role-title">What I designed and built</h2>
+        <p>
+          This project is not a tool inventory. It is an end-to-end operating model for AI-assisted engineering:
+          from problem signal, through agent execution, to validated and measurable change.
+        </p>
+      </div>
+      <div class="governance-grid">
+        <article><strong>Agent workflow</strong><p>Designed the issue-driven flow that gives coding and review agents scoped, auditable work.</p></article>
+        <article><strong>Delivery rails</strong><p>Connected branches, pull requests, CI checks, review evidence and merge-readiness gates.</p></article>
+        <article><strong>Review roles</strong><p>Separated technical, business, documentation, visual and risk-oriented review responsibilities.</p></article>
+        <article><strong>Model routing</strong><p>Explored provider fallback and task-specific routing so AI workloads degrade more gracefully.</p></article>
+        <article><strong>Governance model</strong><p>Kept human approval and escalation boundaries explicit for risky or production-impacting actions.</p></article>
+        <article><strong>Reliability feedback</strong><p>Linked delivery outcomes back to observability, SLI/SLO thinking and follow-up work.</p></article>
+      </div>
+    </section>
+
+    <section id="architecture" class="section-shell architecture-section" aria-labelledby="architecture-title">
+      <div class="section-heading centered">
+        <p class="eyebrow">Architecture by responsibility</p>
+        <h2 id="architecture-title">The Agentic SRE platform loop</h2>
+      </div>
+
+      <div class="architecture-strip" aria-label="Agentic SRE architecture layers">
+        <article><span>1</span><strong>Signals</strong><p>Telemetry, logs, metrics, scheduled checks and user feedback.</p></article>
+        <article><span>2</span><strong>Agent orchestration</strong><p>Runtime, dispatcher, worker roles, task state and handoff.</p></article>
+        <article><span>3</span><strong>Engineering workflow</strong><p>Issues, branches, PRs, evidence and reviewable changes.</p></article>
+        <article><span>4</span><strong>AI routing</strong><p>Right agent, right tool, right context and provider fallback.</p></article>
+        <article><span>5</span><strong>Quality &amp; governance</strong><p>CI, policies, specialist reviews and human approval.</p></article>
+        <article><span>6</span><strong>Observability</strong><p>SLI/SLO feedback, DORA signals, dashboards and auditability.</p></article>
+      </div>
+      <div class="flywheel" aria-hidden="true">Continuous improvement flywheel</div>
+    </section>
+
+    <section class="section-shell governance-section" aria-labelledby="principles-title">
+      <div class="section-heading centered">
+        <p class="eyebrow">Design principles</p>
+        <h2 id="principles-title">Reliable AI delivery needs architecture, not magic.</h2>
+      </div>
+      <div class="governance-grid">
+        <article><strong>Intent before implementation</strong><p>Agents work best when goals, context, constraints and acceptance criteria are explicit.</p></article>
+        <article><strong>Deterministic checks stay separate</strong><p>Tests, policy gates and review-thread rules validate what AI-generated changes cannot prove alone.</p></article>
+        <article><strong>Every decision needs evidence</strong><p>Issues, commits, reviews, CI status and post-change checks remain linked for auditability.</p></article>
+        <article><strong>Autonomy has boundaries</strong><p>Agents may inspect and prepare work, while risky or destructive actions require escalation.</p></article>
+        <article><strong>Observability closes the loop</strong><p>The workflow is incomplete until service indicators confirm whether the change helped.</p></article>
+        <article><strong>The pattern must be reusable</strong><p>The platform is designed as a repeatable delivery model, not a one-off automation demo.</p></article>
+      </div>
+    </section>
+
+    <section id="control-tower" class="section-shell control-section" aria-labelledby="tower-title">
+      <div class="section-heading">
+        <p class="eyebrow">Representative workflow view</p>
+        <h2 id="tower-title">Agentic Delivery Control Tower</h2>
+        <p>Compact public-safe view of the governed delivery model. Values below are representative workflow states, not production metrics.</p>
+      </div>
+      <p class="prototype-banner">Sanitized architecture view: enough to explain the operating model without exposing private infrastructure details.</p>
+
+      <div class="control-grid">
+        <article class="tower-card">
+          <h3><span>1</span> Backlog &amp; Issues</h3>
+          <div class="issue-list">
+            <p><strong>Improve recurring integration error triage</strong><em>P1 · structured issue · owner required</em></p>
+            <p><strong>Document deployment verification loop</strong><em>P2 · docs · DocGuard</em></p>
+            <p><strong>Reduce flaky review reruns</strong><em>P2 · CI · router evidence</em></p>
+          </div>
+        </article>
+
+        <article class="tower-card">
+          <h3><span>2</span> Agent execution</h3>
+          <div class="agent-rows">
+            <p><strong>Code Agent</strong><span class="chip run">RUN</span><em>preparing PR</em></p>
+            <p><strong>Test Agent</strong><span class="chip run">RUN</span><em>expanding checks</em></p>
+            <p><strong>DocGuard</strong><span class="chip reuse">REUSE</span><em>docs unchanged</em></p>
+            <p><strong>Risk Reviewer</strong><span class="chip run">RUN</span><em>challenging assumptions</em></p>
+            <p><strong>Visual Review</strong><span class="chip skip">SKIP</span><em>no image delta</em></p>
+          </div>
+        </article>
+
+        <article class="tower-card">
+          <h3><span>3</span> Quality gates</h3>
+          <ul class="gate-list">
+            <li>Lint &amp; static analysis <span>PASS</span></li>
+            <li>Unit / script checks <span>PASS</span></li>
+            <li>Policy validation <span>PASS</span></li>
+            <li>Review thread gate <span>PENDING</span></li>
+            <li>Human approval <span>REQUIRED</span></li>
+          </ul>
+        </article>
+
+        <article class="tower-card">
+          <h3><span>4</span> Reliability signals</h3>
+          <div class="signal-panel">
+            <strong>SLO status</strong><span>within target</span>
+            <strong>Error budget</strong><span>healthy</span>
+            <strong>Post-change check</strong><span>pending verification</span>
+          </div>
+        </article>
+      </div>
+
+      <div class="matrix-grid">
+        <article class="matrix-card">
+          <h3>Reviewer routing matrix</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Change type</th><th>Technical</th><th>Business</th><th>Risk</th><th>DocGuard</th><th>Visual</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Code</td><td>RUN</td><td>RUN</td><td>RUN</td><td>SKIP</td><td>SKIP</td></tr>
+                <tr><td>Docs</td><td>REUSE</td><td>REUSE</td><td>REUSE</td><td>RUN</td><td>SKIP</td></tr>
+                <tr><td>Workflow</td><td>RUN</td><td>RUN</td><td>RUN</td><td>RUN</td><td>SKIP</td></tr>
+                <tr><td>Diagram</td><td>SKIP</td><td>SKIP</td><td>SKIP</td><td>RUN</td><td>RUN</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="fine-print">Representative example. Exact routing is implementation-specific and can evolve over time.</p>
+        </article>
+
+        <article class="matrix-card fallback-card">
+          <h3>Provider fallback chain</h3>
+          <div class="fallback-strip" aria-label="Simplified provider fallback chain">
+            <span>Primary</span><span>Fallback 1</span><span>Fallback 2</span><span>Fallback 3</span><span>Break-glass</span>
+          </div>
+          <p>Only reviewers selected to run call an LLM. Model/provider fallback is separate from reviewer routing.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-shell governance-section" aria-labelledby="governance-title">
+      <div class="section-heading centered">
+        <p class="eyebrow">Trust, safety and governance</p>
+        <h2 id="governance-title">Safe by design. Human accountable.</h2>
+      </div>
+      <div class="governance-grid">
+        <article><strong>Agents may inspect</strong><p>Repository and read-only context can be used to understand the problem.</p></article>
+        <article><strong>Agents may prepare</strong><p>Issues, plans, branches and PRs are allowed as proposed changes.</p></article>
+        <article><strong>Checks must validate</strong><p>CI, policy gates and specialist reviews provide deterministic evidence.</p></article>
+        <article><strong>Humans approve</strong><p>Merge and production-impacting decisions remain human-owned.</p></article>
+        <article><strong>Destructive actions escalate</strong><p>Dangerous operations are prohibited or explicitly escalated.</p></article>
+        <article><strong>Audit trail stays intact</strong><p>Issue, PR, commit and review history remain linked and inspectable.</p></article>
+      </div>
+    </section>
+
+    <section id="capabilities" class="section-shell outcomes-section" aria-labelledby="capabilities-title">
+      <div class="section-heading centered">
+        <p class="eyebrow">Capabilities demonstrated</p>
+        <h2 id="capabilities-title">From exploratory AI platform to reusable delivery pattern.</h2>
+        <p>
+          The value is not the number of tools. The value is a repeatable operating model for turning uncertain AI output
+          into governed engineering work that stakeholders can trust, inspect and improve.
+        </p>
+      </div>
+
+      <article class="scenario-card" aria-labelledby="business-translation-title">
+        <p class="eyebrow">Architecture translation</p>
+        <h3 id="business-translation-title">Problem → architecture → proof.</h3>
+        <p>
+          The case study translates a practical operational bottleneck into an architecture pattern: detect a signal,
+          gather context, create scoped work, validate the change and verify the outcome.
+        </p>
+      </article>
+
+      <div class="governance-grid" aria-label="AI engineering capability map">
+        <article><strong>Solution discovery</strong><p>Frame the operational pain, users, constraints and success signals before choosing models or tools.</p></article>
+        <article><strong>Architecture design</strong><p>Split responsibilities across agents, deterministic rails, integrations, observability and governance.</p></article>
+        <article><strong>Reliable AI delivery</strong><p>Use issues, branches, PRs, tests and specialist reviews to make agent output auditable and reversible.</p></article>
+        <article><strong>Risk management</strong><p>Keep approval, escalation and destructive-action boundaries explicit instead of assuming full autonomy.</p></article>
+        <article><strong>Platform thinking</strong><p>Make the workflow reusable across services, providers and agent roles rather than building a one-off demo.</p></article>
+        <article><strong>Outcome measurement</strong><p>Close the loop with SLI/SLO feedback, review evidence and follow-up work when the result is not good enough.</p></article>
+      </div>
+
+      <blockquote>
+        A controlled AI engineering platform: small enough to inspect end-to-end, structured around concerns that matter in production-grade AI solution architecture.
+      </blockquote>
+    </section>
+
+    <section class="section-shell governance-section" aria-labelledby="evidence-title">
+      <div class="section-heading centered">
+        <p class="eyebrow">Selected implementation evidence</p>
+        <h2 id="evidence-title">The case study is backed by implementation patterns, not only diagrams.</h2>
+      </div>
+      <div class="governance-grid">
+        <article><strong>Issue-driven workflow</strong><p>Operational signals are translated into scoped work with acceptance criteria and linked follow-up.</p></article>
+        <article><strong>PR quality gates</strong><p>Changes move through branch, pull request, validation checks and review evidence before merge.</p></article>
+        <article><strong>AI review roles</strong><p>Specialized reviewers separate technical quality, business value, documentation and risk concerns.</p></article>
+        <article><strong>Fallback-aware routing</strong><p>Model and provider selection are treated as part of platform reliability, not an afterthought.</p></article>
+        <article><strong>Observability feedback</strong><p>Delivery is connected back to SLI/SLO thinking and post-change verification.</p></article>
+        <article><strong>Public-safe abstraction</strong><p>The portfolio version explains the pattern without exposing private topology, credentials or live metrics.</p></article>
+      </div>
+    </section>
+
+    <section class="section-shell outcomes-section" aria-labelledby="outcomes-title">
+      <div class="section-heading centered">
+        <p class="eyebrow">Outcomes</p>
+        <h2 id="outcomes-title">What this demonstrates</h2>
+        <p>
+          The project demonstrates how AI-assisted engineering can stay useful, inspectable and accountable
+          when it is built on platform contracts rather than ad-hoc prompting.
+        </p>
+      </div>
+      <div class="outcome-grid">
+        <article><span aria-hidden="true">↘</span><strong>Reduced repetitive diagnosis</strong><p>Less manual correlation between alerts, logs, docs and repository context.</p></article>
+        <article><span aria-hidden="true">▣</span><strong>Auditable delivery flow</strong><p>Issue, plan, PR, checks, reviews and decisions stay linked.</p></article>
+        <article><span aria-hidden="true">⬡</span><strong>Controlled AI-assisted changes</strong><p>Agents operate inside explicit guardrails, tests and human approval.</p></article>
+        <article><span aria-hidden="true">◎</span><strong>Measured post-change verification</strong><p>Observability checks whether the intended outcome improved.</p></article>
+      </div>
+      <blockquote>AI suggests. Platform enforces. Humans decide. Systems improve.</blockquote>
+    </section>
+  </main>
+
+  <footer class="case-footer">
+    <div class="case-footer-inner">
+      <div>
+        <p class="eyebrow">Part of robertkubis.pl</p>
+        <h2>More portfolio context</h2>
+        <p>Return to the main portfolio or open the CV for the broader platform, observability and AI-enabled operations context.</p>
+      </div>
+      <div class="case-footer-links">
+        <a class="button button-secondary" href="/"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back to portfolio</a>
+        <a class="button button-primary" href="/RobertKubisResume.pdf" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-pdf" aria-hidden="true"></i> Open CV</a>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="agentic-sre.js"></script>
+</body>
+</html>

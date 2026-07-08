@@ -96,10 +96,11 @@ body {
     transform: translateY(-2px);
 }
 
-.profile-links a:nth-child(1) i { color: #ef4444; }
-.profile-links a:nth-child(2) i { color: #9ca3af; }
-.profile-links a:nth-child(3) i { color: #0077b5; }
-.profile-links a:nth-child(4) i { color: var(--brand-2); }
+.profile-links a.link-cv i { color: #ef4444; }
+.profile-links a.link-agentic i { color: var(--brand-2); }
+.profile-links a.link-github i { color: #9ca3af; }
+.profile-links a.link-linkedin i { color: #0077b5; }
+.profile-links a.link-mail i { color: var(--brand-2); }
 
 h1, h2, h3 {
     line-height: 1.15;
