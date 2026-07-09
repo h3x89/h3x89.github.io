@@ -5,9 +5,9 @@ class MatrixEffect {
 
     init() {
         this.canvas = document.getElementById('matrix');
-        this.quote = document.querySelector('.quote');
+        this.trigger = document.querySelector('[data-matrix-trigger]') || document.querySelector('.quote');
 
-        if (!this.canvas || !this.quote) {
+        if (!this.canvas || !this.trigger) {
             console.error('Matrix elements not found');
             return;
         }
@@ -34,7 +34,7 @@ class MatrixEffect {
                 }
             });
 
-            this.quote.addEventListener('dblclick', () => {
+            this.trigger.addEventListener('dblclick', () => {
                 if (!this.isActive) {
                     this.showMatrix();
                 } else {
@@ -119,4 +119,4 @@ class MatrixEffect {
     }
 }
 
-export default MatrixEffect; 
+export default MatrixEffect;
