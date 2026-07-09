@@ -72,9 +72,12 @@ Known public entry points:
 |---|---|---|
 | `/` | Main portfolio homepage | Covered |
 | `/index.html` | Main portfolio homepage | Covered |
-| `/agentic-sre/` | Short redirect to the Agentic SRE case study | Lower value; final destination is more important |
+| `/agentic-sre/` | Short redirect to the Agentic SRE case study | Not instrumented directly; final destination is more important |
+| `/sreagent/` | Legacy redirect path to the Agentic SRE shortcut | Not instrumented directly; redirect-only route |
 | `/case-studies/agentic-sre/` | Main Agentic SRE portfolio case study | Should be covered |
 | `/RobertKubisResume.pdf` | Public CV PDF | Cannot execute RUM directly; track clicks leading to it |
+
+Redirect-only routes are intentionally left without Datadog RUM. They immediately forward visitors to the canonical case-study URL, so instrumenting them would add noisy transient views while still failing to capture non-JavaScript traffic.
 
 Static assets such as CSS, images, favicons and PDFs do not execute Datadog RUM. They can only be observed indirectly when loaded as resources by a RUM-covered page or when a click leading to them is tracked.
 
@@ -213,6 +216,7 @@ Then check:
 ~~~text
 http://localhost:8000/
 http://localhost:8000/agentic-sre/
+http://localhost:8000/sreagent/
 http://localhost:8000/case-studies/agentic-sre/
 ~~~
 

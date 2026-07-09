@@ -1,14 +1,6 @@
 // Initialize Datadog RUM for the public portfolio website.
 // Datadog RUM browser client tokens are public by design. Never put Datadog API keys here.
 (function initializePortfolioDatadog() {
-    const runWhenDomReady = (callback) => {
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', callback, { once: true });
-            return;
-        }
-
-        callback();
-    };
 
     const getPageType = () => {
         const path = window.location.pathname;
@@ -177,61 +169,59 @@
         });
     };
 
-    runWhenDomReady(function initializeDatadog() {
-        try {
-            (function loadRUM(config) {
-                const { window: h, document: o, scriptPath: n } = config;
-                const tagName = 'script';
-                const globalName = 'DD_RUM';
+    try {
+        (function loadRUM(config) {
+            const { window: h, document: o, scriptPath: n } = config;
+            const tagName = 'script';
+            const globalName = 'DD_RUM';
 
-                h[globalName] = h[globalName] || {
-                    q: [],
-                    onReady: function onReady(callback) {
-                        h[globalName].q.push(callback);
-                    }
-                };
-
-                const scriptElement = o.createElement(tagName);
-                scriptElement.async = 1;
-                scriptElement.src = n;
-
-                const firstScript = o.getElementsByTagName(tagName)[0];
-                firstScript.parentNode.insertBefore(scriptElement, firstScript);
-            })({
-                window,
-                document,
-                scriptPath: 'https://www.datadoghq-browser-agent.com/us1/v6/datadog-rum.js'
-            });
-
-            window.DD_RUM.onReady(function configureRUM() {
-                window.DD_RUM.init({
-                    applicationId: 'ef98ba92-2942-4c3c-bccf-a0473752a05d',
-                    clientToken: 'pub36d6cdb75f01bb02ab01e805a1d01d0b',
-                    site: 'datadoghq.com',
-                    service: 'robertkubis.pl',
-                    env: 'production',
-                    sessionSampleRate: 100,
-                    sessionReplaySampleRate: 0,
-                    defaultPrivacyLevel: 'mask-user-input',
-                    trackUserInteractions: true,
-                    trackResources: true,
-                    trackLongTasks: true,
-                    trackFrustrations: true,
-                    enableDebug: false
-                });
-
-                const visitorClassification = classifyVisitor();
-                if (typeof window.DD_RUM.setGlobalContextProperty === 'function') {
-                    window.DD_RUM.setGlobalContextProperty('portfolio_page_type', getPageType());
-                    window.DD_RUM.setGlobalContextProperty('likely_bot_or_ai', visitorClassification.likely_bot_or_ai);
-                    window.DD_RUM.setGlobalContextProperty('bot_family', visitorClassification.bot_family);
+            h[globalName] = h[globalName] || {
+                q: [],
+                onReady: function onReady(callback) {
+                    h[globalName].q.push(callback);
                 }
+            };
 
-                window.DD_RUM.isInitialized = true;
-                registerPortfolioActions();
+            const scriptElement = o.createElement(tagName);
+            scriptElement.async = 1;
+            scriptElement.src = n;
+
+            const firstScript = o.getElementsByTagName(tagName)[0];
+            firstScript.parentNode.insertBefore(scriptElement, firstScript);
+        })({
+            window,
+            document,
+            scriptPath: 'https://www.datadoghq-browser-agent.com/us1/v6/datadog-rum.js'
+        });
+
+        window.DD_RUM.onReady(function configureRUM() {
+            window.DD_RUM.init({
+                applicationId: 'ef98ba92-2942-4c3c-bccf-a0473752a05d',
+                clientToken: 'pub36d6cdb75f01bb02ab01e805a1d01d0b',
+                site: 'datadoghq.com',
+                service: 'robertkubis.pl',
+                env: 'production',
+                sessionSampleRate: 100,
+                sessionReplaySampleRate: 0,
+                defaultPrivacyLevel: 'mask-user-input',
+                trackUserInteractions: true,
+                trackResources: true,
+                trackLongTasks: true,
+                trackFrustrations: true,
+                enableDebug: false
             });
-        } catch (error) {
-            console.error('Failed to initialize Datadog RUM:', error);
-        }
-    });
+
+            const visitorClassification = classifyVisitor();
+            if (typeof window.DD_RUM.setGlobalContextProperty === 'function') {
+                window.DD_RUM.setGlobalContextProperty('portfolio_page_type', getPageType());
+                window.DD_RUM.setGlobalContextProperty('likely_bot_or_ai', visitorClassification.likely_bot_or_ai);
+                window.DD_RUM.setGlobalContextProperty('bot_family', visitorClassification.bot_family);
+            }
+
+            window.DD_RUM.isInitialized = true;
+            registerPortfolioActions();
+        });
+    } catch (error) {
+        console.error('Failed to initialize Datadog RUM:', error);
+    }
 })();
