@@ -172,11 +172,18 @@
 
         .card-link i {
             transition: transform 220ms var(--ease-out);
+            animation: cardLinkArrowNudge 2.6s ease-in-out infinite;
         }
 
         .work-card-linkable:hover .card-link i,
         .work-card-linkable:focus-visible .card-link i {
+            animation-play-state: paused;
             transform: translateX(0.18rem);
+        }
+
+        @keyframes cardLinkArrowNudge {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(0.14rem); }
         }
 
         .click-orbit {
@@ -280,7 +287,8 @@
             .terminal-text,
             .work-card-linkable::after,
             .card-cta-pulse,
-            .click-orbit {
+            .click-orbit,
+            .card-link i {
                 animation: none !important;
                 clip-path: none;
             }
@@ -328,8 +336,6 @@
                     </div>
 
                     <div class="hero-proof-strip" aria-label="Portfolio proof points" data-reveal>
-                        <a href="https://github.com/h3x89" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i>github.com/h3x89</a>
-                        <span class="hero-proof-separator" aria-hidden="true"></span>
                         <span><i class="fas fa-layer-group" aria-hidden="true"></i>~70 services managed</span>
                         <span class="hero-proof-separator" aria-hidden="true"></span>
                         <a href="/RobertKubisResume.pdf" target="_blank" rel="noopener noreferrer"><i class="fas fa-check" aria-hidden="true"></i>CV last updated Jun 2026</a>
