@@ -17,6 +17,198 @@
   `;
   document.head.appendChild(heroSpacing);
 
+  const motionPolish = document.createElement("style");
+  motionPolish.textContent = `
+    .motion-ready .hero-backdrop::before,
+    .motion-ready .hero-backdrop::after {
+      animation: case-rail-drift 9s ease-in-out infinite alternate;
+      will-change: transform, opacity;
+    }
+
+    .motion-ready .hero-backdrop::after {
+      animation-duration: 11s;
+      animation-direction: alternate-reverse;
+    }
+
+    .impact-ribbon p,
+    .hero-stats article,
+    .graph-node,
+    .detail-card,
+    .layer-card,
+    .rail-card,
+    .workflow-panel,
+    .tower-card,
+    .matrix-card,
+    .governance-grid article,
+    .outcome-grid article,
+    .architecture-strip article {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .impact-ribbon p::after,
+    .hero-stats article::after,
+    .detail-card::after,
+    .layer-card::after,
+    .rail-card::after,
+    .workflow-panel::after,
+    .tower-card::after,
+    .matrix-card::after,
+    .governance-grid article::after,
+    .outcome-grid article::after,
+    .architecture-strip article::after {
+      content: "";
+      position: absolute;
+      inset: auto -20% -42% 18%;
+      height: 8rem;
+      background: radial-gradient(circle, rgba(249, 115, 22, 0.12), transparent 70%);
+      opacity: 0;
+      transform: scale(0.92);
+      transition: opacity 240ms ease, transform 240ms var(--ease-out);
+      pointer-events: none;
+    }
+
+    .impact-ribbon p:hover::after,
+    .hero-stats article:hover::after,
+    .detail-card:hover::after,
+    .layer-card:hover::after,
+    .rail-card:hover::after,
+    .workflow-panel:hover::after,
+    .tower-card:hover::after,
+    .matrix-card:hover::after,
+    .governance-grid article:hover::after,
+    .outcome-grid article:hover::after,
+    .architecture-strip article:hover::after {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .motion-ready .hero-stats article.is-visible span,
+    .motion-ready .architecture-strip article.is-visible span,
+    .motion-ready .outcome-grid article.is-visible span,
+    .motion-ready .tower-card.is-visible h3 span {
+      animation: case-icon-breathe 4.4s ease-in-out infinite;
+    }
+
+    .mode-button.is-active {
+      background-size: 180% 180%;
+      animation: case-gradient-shift 4.2s ease-in-out infinite;
+    }
+
+    .graph-node b,
+    .flow-icon,
+    .rail-symbol,
+    .architecture-strip span,
+    .outcome-grid span,
+    .tower-card h3 span {
+      transition: transform 220ms var(--ease-out), box-shadow 220ms ease, border-color 220ms ease;
+    }
+
+    .graph-node:hover b,
+    .graph-node:focus-visible b,
+    .flow-step:hover .flow-icon,
+    .rail-card:hover .rail-symbol,
+    .architecture-strip article:hover span,
+    .outcome-grid article:hover span,
+    .tower-card:hover h3 span {
+      transform: translateY(-0.12rem) scale(1.04);
+    }
+
+    .motion-ready .graph-node.is-path-active b,
+    .motion-ready .graph-node.is-selected b,
+    .motion-ready .flow-step.is-current .flow-icon,
+    .motion-ready .flow-step.is-observed .flow-icon {
+      animation: case-node-glow 3.2s ease-in-out infinite;
+    }
+
+    .motion-ready .verified-flow.is-visible .flow-step::before {
+      animation: case-flow-scan 900ms var(--ease-out) both;
+      animation-delay: calc(var(--reveal-delay, 0ms) + 80ms);
+    }
+
+    .flow-step::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      border: 1px solid transparent;
+      background: linear-gradient(135deg, rgba(249, 115, 22, 0.22), transparent 46%, rgba(96, 165, 250, 0.18)) border-box;
+      mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
+      mask-composite: exclude;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .fallback-strip span:hover {
+      transform: translateY(-0.12rem);
+      border-color: rgba(249, 115, 22, 0.52);
+    }
+
+    @keyframes case-rail-drift {
+      from { transform: translate3d(-0.6rem, 0, 0) skewY(-5deg); opacity: 0.38; }
+      to { transform: translate3d(0.8rem, -0.35rem, 0) skewY(-3deg); opacity: 0.58; }
+    }
+
+    @keyframes case-icon-breathe {
+      0%, 100% { box-shadow: 0 0 0 rgba(249, 115, 22, 0); }
+      50% { box-shadow: 0 0 0 0.35rem rgba(249, 115, 22, 0.08); }
+    }
+
+    @keyframes case-gradient-shift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    @keyframes case-node-glow {
+      0%, 100% { filter: drop-shadow(0 0 0 rgba(249, 115, 22, 0)); }
+      50% { filter: drop-shadow(0 0 12px rgba(249, 115, 22, 0.38)); }
+    }
+
+    @keyframes case-flow-scan {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 0.9; transform: scale(1); }
+    }
+
+    @media (max-width: 680px) {
+      .motion-ready .hero-backdrop::before,
+      .motion-ready .hero-backdrop::after {
+        animation-duration: 14s;
+      }
+
+      .impact-ribbon p::after,
+      .hero-stats article::after,
+      .detail-card::after,
+      .layer-card::after,
+      .rail-card::after,
+      .workflow-panel::after,
+      .tower-card::after,
+      .matrix-card::after,
+      .governance-grid article::after,
+      .outcome-grid article::after,
+      .architecture-strip article::after {
+        display: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .motion-ready .hero-backdrop::before,
+      .motion-ready .hero-backdrop::after,
+      .motion-ready .hero-stats article.is-visible span,
+      .motion-ready .architecture-strip article.is-visible span,
+      .motion-ready .outcome-grid article.is-visible span,
+      .motion-ready .tower-card.is-visible h3 span,
+      .mode-button.is-active,
+      .motion-ready .graph-node.is-path-active b,
+      .motion-ready .graph-node.is-selected b,
+      .motion-ready .flow-step.is-current .flow-icon,
+      .motion-ready .flow-step.is-observed .flow-icon,
+      .motion-ready .verified-flow.is-visible .flow-step::before {
+        animation: none !important;
+      }
+    }
+  `;
+  document.head.appendChild(motionPolish);
+
   const normalizeMainOnePagerNav = () => {
     const nav = document.querySelector('.site-header nav[aria-label="Page sections"]');
     const isMainOnePager = Boolean(
