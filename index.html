@@ -14,6 +14,138 @@
     <link rel="manifest" href="/site.webmanifest">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="css/main.css">
+    <style>
+        .button i,
+        .card-link i {
+            font-size: 0.95em;
+        }
+
+        .work-card-linkable {
+            color: inherit;
+            text-decoration: none;
+            cursor: pointer;
+            isolation: isolate;
+        }
+
+        .work-card-linkable::before {
+            content: "";
+            position: absolute;
+            inset: 1rem;
+            border-radius: calc(var(--radius) - 0.45rem);
+            border: 1px solid rgba(249, 115, 22, 0.28);
+            opacity: 0;
+            transform: scale(0.985);
+            transition: opacity 220ms var(--ease-out), transform 220ms var(--ease-out), border-color 220ms ease;
+            pointer-events: none;
+        }
+
+        .work-card-linkable:hover::before,
+        .work-card-linkable:focus-visible::before {
+            opacity: 1;
+            transform: scale(1);
+            border-color: rgba(249, 115, 22, 0.76);
+        }
+
+        .work-card-linkable::after {
+            animation: cardPulse 3.6s ease-in-out infinite;
+        }
+
+        .card-cta-pulse {
+            position: absolute;
+            right: 1.15rem;
+            bottom: 1.15rem;
+            width: 2.7rem;
+            height: 2.7rem;
+            display: grid;
+            place-items: center;
+            border-radius: 999px;
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.95), rgba(251, 146, 60, 0.62));
+            color: #111827;
+            box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.44), 0 18px 36px rgba(249, 115, 22, 0.24);
+            animation: clickPulse 2.4s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        .work-card-linkable:hover .card-cta-pulse,
+        .work-card-linkable:focus-visible .card-cta-pulse {
+            animation-duration: 1.2s;
+        }
+
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding-right: 3.25rem;
+        }
+
+        .card-link i {
+            transition: transform 220ms var(--ease-out);
+        }
+
+        .work-card-linkable:hover .card-link i,
+        .work-card-linkable:focus-visible .card-link i {
+            transform: translateX(0.18rem);
+        }
+
+        .click-orbit {
+            position: absolute;
+            right: 1.4rem;
+            top: 1.35rem;
+            width: 5.5rem;
+            height: 5.5rem;
+            border-radius: 50%;
+            border: 1px dashed rgba(249, 115, 22, 0.34);
+            opacity: 0.72;
+            animation: clickOrbit 9s linear infinite;
+            pointer-events: none;
+        }
+
+        .click-orbit::before,
+        .click-orbit::after {
+            content: "";
+            position: absolute;
+            width: 0.48rem;
+            height: 0.48rem;
+            border-radius: 999px;
+            background: var(--brand-2);
+            box-shadow: 0 0 18px rgba(249, 115, 22, 0.9);
+        }
+
+        .click-orbit::before {
+            top: -0.25rem;
+            left: 50%;
+        }
+
+        .click-orbit::after {
+            right: 0.45rem;
+            bottom: 0.45rem;
+            background: var(--blue);
+            box-shadow: 0 0 18px rgba(96, 165, 250, 0.9);
+        }
+
+        @keyframes cardPulse {
+            0%, 100% { opacity: 0.72; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.04); }
+        }
+
+        @keyframes clickPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.42), 0 18px 36px rgba(249, 115, 22, 0.24); }
+            50% { box-shadow: 0 0 0 0.65rem rgba(249, 115, 22, 0), 0 18px 36px rgba(249, 115, 22, 0.38); }
+        }
+
+        @keyframes clickOrbit {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .work-card-linkable::after,
+            .card-cta-pulse,
+            .click-orbit {
+                animation: none !important;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -52,7 +184,7 @@
 
                     <div class="hero-actions" aria-label="Primary actions">
                         <a class="button button-primary" href="#work">View selected work</a>
-                        <a class="button button-secondary" href="/RobertKubisResume.pdf" target="_blank" rel="noopener noreferrer">Download CV</a>
+                        <a class="button button-secondary" href="/RobertKubisResume.pdf" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-pdf" aria-hidden="true"></i>Download CV</a>
                     </div>
 
                     <div class="terminal-info" title="Double-click for a small terminal easter egg" data-reveal>
@@ -94,7 +226,8 @@
             </div>
 
             <div class="work-grid" data-reveal-group>
-                <article class="work-card work-card-featured" data-reveal>
+                <a class="work-card work-card-featured work-card-linkable" href="/case-studies/agentic-sre/" aria-label="Explore Agentic SRE case study" data-reveal>
+                    <span class="click-orbit" aria-hidden="true"></span>
                     <div>
                         <p class="card-kicker">Case study</p>
                         <h3>Agentic SRE</h3>
@@ -105,8 +238,9 @@
                             <span>Governance</span>
                         </div>
                     </div>
-                    <a class="card-link" href="/case-studies/agentic-sre/">Explore case study <span aria-hidden="true">→</span></a>
-                </article>
+                    <span class="card-link">Explore case study <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                    <span class="card-cta-pulse" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
+                </a>
 
                 <article class="work-card" data-reveal>
                     <p class="card-kicker">Observability</p>
@@ -189,9 +323,9 @@
                     <p>Useful signals should lead to clear ownership and better decisions.</p>
                 </div>
                 <div class="contact-actions" aria-label="Contact links">
-                    <a class="button button-primary" href="mailto:contact@robertkubis.pl">Mail</a>
-                    <a class="button button-secondary" href="https://github.com/h3x89" target="_blank" rel="noopener noreferrer">GitHub</a>
-                    <a class="button button-secondary" href="https://www.linkedin.com/in/robertkubis89/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                    <a class="button button-primary" href="mailto:contact@robertkubis.pl"><i class="fas fa-envelope" aria-hidden="true"></i>Mail</a>
+                    <a class="button button-secondary" href="https://github.com/h3x89" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i>GitHub</a>
+                    <a class="button button-secondary" href="https://www.linkedin.com/in/robertkubis89/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin" aria-hidden="true"></i>LinkedIn</a>
                 </div>
             </div>
         </section>
