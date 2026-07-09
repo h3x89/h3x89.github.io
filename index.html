@@ -23,12 +23,15 @@
         .terminal-info {
             width: max-content;
             max-width: 100%;
+            flex-wrap: wrap;
+            row-gap: 0.15rem;
         }
 
         .terminal-text {
             width: auto;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            overflow: visible;
+            white-space: normal;
+            word-break: break-word;
             animation: revealCommand 1.35s steps(58, end) 0.2s both;
             clip-path: inset(0 100% 0 0);
         }
