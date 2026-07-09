@@ -20,6 +20,22 @@
             font-size: 0.95em;
         }
 
+        .terminal-info {
+            width: max-content;
+            max-width: 100%;
+        }
+
+        .terminal-text {
+            width: auto;
+            overflow: visible;
+            animation: revealCommand 1.35s steps(58, end) 0.2s both;
+            clip-path: inset(0 100% 0 0);
+        }
+
+        @keyframes revealCommand {
+            to { clip-path: inset(0 0 0 0); }
+        }
+
         .work-card-linkable {
             color: inherit;
             text-decoration: none;
@@ -138,11 +154,25 @@
             to { transform: rotate(360deg); }
         }
 
+        @media (max-width: 768px) {
+            .terminal-info {
+                width: 100%;
+            }
+
+            .terminal-text {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                clip-path: none;
+            }
+        }
+
         @media (prefers-reduced-motion: reduce) {
+            .terminal-text,
             .work-card-linkable::after,
             .card-cta-pulse,
             .click-orbit {
                 animation: none !important;
+                clip-path: none;
             }
         }
     </style>
