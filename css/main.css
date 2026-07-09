@@ -1014,10 +1014,28 @@ h3 {
     .site-header {
         align-items: flex-start;
         flex-direction: column;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
     }
 
     .site-header nav {
         justify-content: flex-start;
+        width: 100%;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 0.1rem;
+        scrollbar-width: none;
+    }
+
+    .site-header nav::-webkit-scrollbar {
+        display: none;
+    }
+
+    .site-header nav a {
+        flex: 0 0 auto;
+        padding: 0.45rem 0.65rem;
+        font-size: 0.84rem;
+        white-space: nowrap;
     }
 
     .hero {
@@ -1029,7 +1047,18 @@ h3 {
     }
 
     .hero-orbit-card {
-        min-height: 19rem;
+        min-height: 14rem;
+    }
+
+    .orbit-shell {
+        inset: 18%;
+        opacity: 0.66;
+    }
+
+    .terminal-window {
+        width: 100%;
+        padding: 1rem;
+        font-size: 0.82rem;
     }
 
     .hero-actions,

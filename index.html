@@ -27,7 +27,8 @@
 
         .terminal-text {
             width: auto;
-            overflow: visible;
+            overflow: hidden;
+            text-overflow: ellipsis;
             animation: revealCommand 1.35s steps(58, end) 0.2s both;
             clip-path: inset(0 100% 0 0);
         }
@@ -163,6 +164,21 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
                 clip-path: none;
+            }
+
+            .click-orbit {
+                display: none;
+            }
+
+            .card-cta-pulse {
+                width: 2.3rem;
+                height: 2.3rem;
+                right: 0.9rem;
+                bottom: 0.9rem;
+            }
+
+            .card-link {
+                padding-right: 2.75rem;
             }
         }
 
