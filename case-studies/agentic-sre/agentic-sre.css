@@ -1567,7 +1567,7 @@ blockquote {
 }
 
 
-/* Merged from agentic-sre.css */
+/* Agentic SRE graph split additions */
 :root {
   color-scheme: dark;
   --bg: #03070d;
@@ -2436,7 +2436,7 @@ h3 {
 }
 
 
-/* Merged from agentic-sre.css */
+/* Agentic SRE graph split additions */
 .layers-section {
   padding-top: clamp(2rem, 5vw, 3.5rem);
   padding-bottom: clamp(1.25rem, 3vw, 2.25rem);

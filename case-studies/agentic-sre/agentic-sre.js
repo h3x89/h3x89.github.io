@@ -314,7 +314,7 @@
   const mobileTitle = graphSection.querySelector("[data-mobile-title]");
   const selectedPanel = document.querySelector("#selected-layer .selected-panel");
 
-  const providerNode = nodes.find((node) => node.dataset.title === "Top Free chain");
+  const providerNode = nodes.find((node) => node.dataset.title === "Provider fallback chain");
   if (providerNode) {
     providerNode.dataset.title = "Provider fallback chain";
     providerNode.dataset.kicker = "Fallback · Provider routing";
@@ -327,7 +327,7 @@
   }
 
   mobileSteps
-    .filter((step) => step.dataset.nodeTarget === "Top Free chain")
+    .filter((step) => step.dataset.nodeTarget === "Provider fallback chain")
     .forEach((step) => {
       step.dataset.nodeTarget = "Provider fallback chain";
       setField(step.querySelector("strong"), "Provider fallback chain");
