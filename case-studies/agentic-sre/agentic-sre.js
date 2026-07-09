@@ -208,7 +208,7 @@
       title: "Scheduled Feedback Loops",
       kicker: "Self-improvement · recurring jobs",
       role: "Recurring jobs convert repository friction, stale work and agent-session signals into reports, dashboard issues and follow-up tasks.",
-      how: "Scheduled audits and post-merge analysis surface repeated failures, missing documentation and improvement opportunities without exposing private runtime details.",
+      how: "Scheduled audits and post-merge analysis surface repeated failures, missing documentation gaps and improvement opportunities as trackable engineering work.",
       why: "This shows the system improving the way agents work, not just using agents once.",
       evidence: "Scheduled audits · session reports · dashboard updates",
       html: `<span>02</span><h3>Scheduled Feedback Loops</h3><p>Recurring jobs turn agent friction into improvement work.</p><ul><li><strong>Audit loop:</strong> repository health and dashboard updates.</li><li><strong>Session insights:</strong> merged PR and session-report analysis.</li><li><strong>Other loops:</strong> health, reminders and cost checks.</li></ul><div class="layer-note">Outcome: recurring operations generate a backlog of concrete improvements instead of repeating the same failures.</div>`
@@ -251,7 +251,7 @@
       how: "Technical, critical, business and documentation-focused reviewers produce comments, verdicts and follow-up recommendations without replacing deterministic CI or human approval.",
       why: "The system does not trust one agent blindly; other agents challenge the work.",
       evidence: "AI review workflows · review actor docs",
-      html: `<span>06</span><h3>AI Review Matrix</h3><p>Specialist reviewers critique agent output before merge.</p><ul><li><strong>Roles:</strong> technical, critical and business reviewers.</li><li><strong>Docs:</strong> documentation review and summaries.</li><li><strong>Output:</strong> comments, verdicts, follow-up work.</li></ul><div class="layer-note">Outcome: changes are challenged from multiple perspectives before they reach production.</div>`
+      html: `<span>06</span><h3>AI Review Matrix</h3><p>Specialist reviewers critique agent output before merge.</p><ul><li><strong>Roles:</strong> technical, critical and business reviewers.</li><li><strong>Docs:</strong> documentation review and summaries.</li><li><strong>Output:</strong> comments, verdicts, follow-up work.</li></ul><div class="layer-note">Outcome: changes are challenged from multiple perspectives before merge or deployment.</div>`
     },
     {
       id: "provider",
