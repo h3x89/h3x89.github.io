@@ -6,6 +6,7 @@ class Clippy {
     init() {
         this.container = document.querySelector('.clippy-container');
         this.clippy = document.querySelector('.clippy');
+        this.bubbleClose = document.querySelector('.clippy-bubble-close');
 
         if (!this.container || !this.clippy) {
             console.error('Clippy elements not found');
@@ -16,10 +17,21 @@ class Clippy {
         this.initializeEventListeners();
     }
 
-    /** Production GitHub Pages + custom domain; localhost for local testing. */
+    /** LAN IPs / mDNS hostnames used for local phone testing (e.g. `python3 -m http.server --bind 0.0.0.0`). */
+    static isPrivateNetworkHost(hostname) {
+        return (
+            /^192\.168\.\d{1,3}\.\d{1,3}$/.test(hostname) ||
+            /^10\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(hostname) ||
+            /^172\.(1[6-9]|2\d|3[0-1])\.\d{1,3}\.\d{1,3}$/.test(hostname) ||
+            hostname.endsWith('.local')
+        );
+    }
+
+    /** Production GitHub Pages + custom domain; localhost/LAN for local testing. */
     static isAllowedPageOrigin() {
         const h = window.location.hostname;
         if (h === 'localhost' || h === '127.0.0.1') return true;
+        if (Clippy.isPrivateNetworkHost(h)) return true;
         return (
             h === 'h3x89.github.io' || h === 'robertkubis.pl' || h === 'www.robertkubis.pl'
         );
@@ -48,6 +60,20 @@ class Clippy {
             }
             this.hide();
         });
+
+        // Explicit close button on the bubble itself
+        if (this.bubbleClose) {
+            this.bubbleClose.addEventListener('click', (event) => {
+                event.stopPropagation();
+                if (!Clippy.isAllowedPageOrigin()) {
+                    throw new Error('invalid origin');
+                }
+                if (!event.isTrusted) {
+                    throw new Error('untrusted event');
+                }
+                this.hide();
+            });
+        }
     }
 
     show() {

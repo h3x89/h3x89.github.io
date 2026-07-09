@@ -23,11 +23,15 @@
         .terminal-info {
             width: max-content;
             max-width: 100%;
+            flex-wrap: wrap;
+            row-gap: 0.15rem;
         }
 
         .terminal-text {
             width: auto;
             overflow: visible;
+            white-space: normal;
+            word-break: break-word;
             animation: revealCommand 1.35s steps(58, end) 0.2s both;
             clip-path: inset(0 100% 0 0);
         }
@@ -157,12 +161,30 @@
         @media (max-width: 768px) {
             .terminal-info {
                 width: 100%;
+                flex-wrap: nowrap;
             }
 
             .terminal-text {
                 overflow: hidden;
+                white-space: nowrap;
+                word-break: normal;
                 text-overflow: ellipsis;
                 clip-path: none;
+            }
+
+            .click-orbit {
+                display: none;
+            }
+
+            .card-cta-pulse {
+                width: 2.3rem;
+                height: 2.3rem;
+                right: 0.9rem;
+                bottom: 0.9rem;
+            }
+
+            .card-link {
+                padding-right: 2.75rem;
             }
         }
 
@@ -365,6 +387,7 @@
 
     <div class="clippy-container">
         <div class="clippy-bubble">
+            <button type="button" class="clippy-bubble-close" aria-label="Dismiss message"><i class="fas fa-xmark" aria-hidden="true"></i></button>
             Still scrolling? Classic rubber-duck energy. Say hi at <a href="mailto:contact@robertkubis.pl">contact@robertkubis.pl</a> — or double-click the hero terminal for a bonus scene.
         </div>
         <div class="clippy-mascot" aria-hidden="true">

@@ -901,13 +901,40 @@ h3 {
     );
     border: 1px solid rgba(148, 163, 184, 0.45);
     border-radius: 1.15rem;
-    padding: 1rem 1.2rem;
+    padding: 1.1rem 1.9rem 1rem 1.2rem;
     position: relative;
     max-width: min(300px, calc(100vw - 7.5rem));
     font-size: 0.92rem;
     line-height: 1.55;
     color: var(--text);
     box-shadow: var(--shadow), 0 0 0 1px rgba(249, 115, 22, 0.07);
+}
+
+.clippy-bubble-close {
+    position: absolute;
+    top: 0.55rem;
+    right: 0.6rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(148, 163, 184, 0.32);
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.65);
+    color: var(--muted);
+    font-size: 0.7rem;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 1;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.clippy-bubble-close:hover,
+.clippy-bubble-close:focus-visible {
+    background: var(--brand);
+    border-color: var(--brand);
+    color: #111827;
+    outline: none;
 }
 
 .clippy-bubble::after {
@@ -984,7 +1011,7 @@ h3 {
 @media (max-width: 1100px) {
     .hero-layout,
     .about-panel {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
     }
 
     .hero-orbit-card {
@@ -1014,10 +1041,28 @@ h3 {
     .site-header {
         align-items: flex-start;
         flex-direction: column;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
     }
 
     .site-header nav {
         justify-content: flex-start;
+        width: 100%;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 0.1rem;
+        scrollbar-width: none;
+    }
+
+    .site-header nav::-webkit-scrollbar {
+        display: none;
+    }
+
+    .site-header nav a {
+        flex: 0 0 auto;
+        padding: 0.45rem 0.65rem;
+        font-size: 0.84rem;
+        white-space: nowrap;
     }
 
     .hero {
@@ -1029,7 +1074,18 @@ h3 {
     }
 
     .hero-orbit-card {
-        min-height: 19rem;
+        min-height: 14rem;
+    }
+
+    .orbit-shell {
+        inset: 18%;
+        opacity: 0.66;
+    }
+
+    .terminal-window {
+        width: 100%;
+        padding: 1rem;
+        font-size: 0.82rem;
     }
 
     .hero-actions,
@@ -1098,7 +1154,7 @@ h3 {
 
     .clippy-bubble {
         max-width: min(240px, calc(100vw - 2rem - var(--clippy-mobile-size) - var(--clippy-mobile-gap)));
-        padding: 0.75rem 0.85rem;
+        padding: 0.85rem 1.5rem 0.75rem 0.85rem;
         border-radius: 0.9rem;
         font-size: clamp(0.72rem, 2.7vw, 0.82rem);
         line-height: 1.4;
@@ -1106,6 +1162,14 @@ h3 {
 
     .clippy-bubble::after {
         bottom: 1rem;
+    }
+
+    .clippy-bubble-close {
+        top: 0.4rem;
+        right: 0.42rem;
+        width: 1.3rem;
+        height: 1.3rem;
+        font-size: 0.62rem;
     }
 }
 

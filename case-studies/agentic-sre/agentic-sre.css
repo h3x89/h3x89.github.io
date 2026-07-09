@@ -2373,15 +2373,27 @@ h3 {
   }
 
   .graph-section {
-    overflow-x: visible;
+    overflow: hidden;
   }
 
-  .graph-card-desktop {
-    display: none;
+  .graph-card-desktop[data-reveal] {
+    display: block;
+    position: relative;
+    left: 50%;
+    /* translateX(-50%) recenters the 1120px-wide box on its own axis before
+       scaling, so the shrunk graph sits centered instead of flush against
+       the left edge. Overrides the scroll-reveal system's own transform
+       (translateY/none), which otherwise wins via
+       .motion-ready [data-reveal].is-visible at higher specificity once
+       the element is revealed. */
+    transform: translateX(-50%) scale(0.3) !important;
+    transform-origin: top center;
+    margin-bottom: -504px;
   }
 
   .mobile-journey {
     display: block;
+    margin-top: 1rem;
   }
 
   .layer-grid,
