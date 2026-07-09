@@ -1,0 +1,182 @@
+name: Generate OG previews
+
+on:
+  push:
+    branches:
+      - fix/social-preview-og
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate-og:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: fix/social-preview-og
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Generate PNG previews and patch metadata
+        run: |
+          python -m pip install --quiet pillow
+          python <<'PY'
+          from pathlib import Path
+          from PIL import Image, ImageDraw, ImageFont, ImageFilter
+          import re
+
+          ROOT = Path('.')
+          OUT_DIR = ROOT / 'assets' / 'images' / 'og'
+          OUT_DIR.mkdir(parents=True, exist_ok=True)
+
+          def font(size, bold=False):
+              candidates = [
+                  '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf' if bold else '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf',
+                  '/usr/share/fonts/truetype/liberation2/LiberationSans-Bold.ttf' if bold else '/usr/share/fonts/truetype/liberation2/LiberationSans-Regular.ttf',
+              ]
+              for candidate in candidates:
+                  try:
+                      return ImageFont.truetype(candidate, size=size)
+                  except Exception:
+                      pass
+              return ImageFont.load_default()
+
+          def draw_card(path, eyebrow, title, subtitle, chips, accent=(249, 115, 22), blue=(96, 165, 250)):
+              w, h = 1200, 630
+              img = Image.new('RGB', (w, h), (7, 17, 31))
+              draw = ImageDraw.Draw(img, 'RGBA')
+
+              # Soft platform-like background.
+              for radius, xy, color in [
+                  (460, (780, -170), (*accent, 46)),
+                  (360, (-130, 310), (*blue, 34)),
+                  (270, (875, 390), (*accent, 28)),
+              ]:
+                  layer = Image.new('RGBA', (w, h), (0, 0, 0, 0))
+                  ld = ImageDraw.Draw(layer, 'RGBA')
+                  x, y = xy
+                  ld.ellipse((x, y, x + radius, y + radius), fill=color)
+                  layer = layer.filter(ImageFilter.GaussianBlur(58))
+                  img.paste(Image.alpha_composite(img.convert('RGBA'), layer).convert('RGB'))
+
+              draw = ImageDraw.Draw(img, 'RGBA')
+              for i in range(0, w, 80):
+                  draw.line((i, 0, i - 260, h), fill=(148, 163, 184, 18), width=1)
+              draw.rounded_rectangle((72, 70, 1128, 560), radius=38, fill=(15, 23, 42, 178), outline=(148, 163, 184, 70), width=2)
+              draw.rounded_rectangle((96, 96, 210, 140), radius=22, fill=(*accent, 230))
+              draw.text((122, 105), 'rk', font=font(26, True), fill=(17, 24, 39))
+
+              draw.text((96, 176), eyebrow.upper(), font=font(26, True), fill=(*accent, 255))
+              draw.text((96, 225), title, font=font(74, True), fill=(248, 250, 252))
+              draw.text((100, 322), subtitle, font=font(34), fill=(203, 213, 225))
+
+              x = 96
+              y = 405
+              for chip in chips:
+                  bbox = draw.textbbox((0, 0), chip, font=font(24, True))
+                  cw = bbox[2] - bbox[0] + 38
+                  draw.rounded_rectangle((x, y, x + cw, y + 48), radius=24, fill=(30, 41, 59, 235), outline=(*accent, 92), width=1)
+                  draw.text((x + 19, y + 10), chip, font=font(24, True), fill=(226, 232, 240))
+                  x += cw + 16
+
+              draw.text((96, 505), 'robertkubis.pl', font=font(24), fill=(148, 163, 184))
+              draw.text((845, 505), 'Observability  •  Automation  •  AI Ops', font=font(22), fill=(148, 163, 184))
+              img.save(path, format='PNG', optimize=True)
+
+          draw_card(
+              OUT_DIR / 'robertkubis-platform-tools-leader.png',
+              'Portfolio',
+              'Robert Kubiś',
+              'Platform & Tools Leader',
+              ['Observability', 'Automation', 'AI-enabled ops'],
+          )
+
+          draw_card(
+              OUT_DIR / 'agentic-sre-case-study.png',
+              'Case study',
+              'Agentic SRE',
+              'Governed AI delivery loop for reliable platforms.',
+              ['Signals', 'Agents', 'CI gates', 'Human approval'],
+          )
+
+          def social_block(indent, *, url, title, description, image, alt):
+              i = indent
+              return '\n'.join([
+                  f'{i}<!-- Social preview -->',
+                  f'{i}<meta property="og:type" content="website">',
+                  f'{i}<meta property="og:site_name" content="Robert Kubiś Portfolio">',
+                  f'{i}<meta property="og:url" content="{url}">',
+                  f'{i}<meta property="og:title" content="{title}">',
+                  f'{i}<meta property="og:description" content="{description}">',
+                  f'{i}<meta property="og:image" content="{image}">',
+                  f'{i}<meta property="og:image:secure_url" content="{image}">',
+                  f'{i}<meta property="og:image:type" content="image/png">',
+                  f'{i}<meta property="og:image:width" content="1200">',
+                  f'{i}<meta property="og:image:height" content="630">',
+                  f'{i}<meta property="og:image:alt" content="{alt}">',
+                  f'{i}<meta name="twitter:card" content="summary_large_image">',
+                  f'{i}<meta name="twitter:title" content="{title}">',
+                  f'{i}<meta name="twitter:description" content="{description}">',
+                  f'{i}<meta name="twitter:image" content="{image}">',
+                  f'{i}<!-- /Social preview -->',
+              ])
+
+          def patch_html(path, marker_line, block):
+              html = path.read_text(encoding='utf-8')
+              pattern = re.compile(r'\n[ \t]*<!-- Social preview -->.*?\n[ \t]*<!-- /Social preview -->', re.S)
+              if pattern.search(html):
+                  html = pattern.sub('\n' + block, html)
+              else:
+                  html = html.replace(marker_line, marker_line + '\n' + block)
+              path.write_text(html, encoding='utf-8')
+
+          patch_html(
+              ROOT / 'index.html',
+              '    <meta name="theme-color" content="#07111f">',
+              social_block(
+                  '    ',
+                  url='https://robertkubis.pl/',
+                  title='Robert Kubiś - Platform & Tools Leader',
+                  description='Observability, automation and AI-enabled operations for reliable engineering platforms.',
+                  image='https://robertkubis.pl/assets/images/og/robertkubis-platform-tools-leader.png',
+                  alt='Robert Kubiś - Platform & Tools Leader social preview card',
+              ),
+          )
+
+          patch_html(
+              ROOT / 'case-studies' / 'agentic-sre' / 'index.html',
+              '  <meta name="theme-color" content="#0a192f">',
+              social_block(
+                  '  ',
+                  url='https://robertkubis.pl/case-studies/agentic-sre/',
+                  title='Agentic SRE | Robert Kubiś',
+                  description='Governed AI delivery loop connecting observability, coding agents, CI gates, human approval and runtime feedback.',
+                  image='https://robertkubis.pl/assets/images/og/agentic-sre-case-study.png',
+                  alt='Agentic SRE case study social preview card',
+              ),
+          )
+
+          workflow = ROOT / '.github' / 'workflows' / 'generate-og-preview.yml'
+          if workflow.exists():
+              workflow.unlink()
+          PY
+
+      - name: Commit generated social preview update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "feat: add social preview metadata"
+          git push origin HEAD:fix/social-preview-og
