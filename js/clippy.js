@@ -6,6 +6,7 @@ class Clippy {
     init() {
         this.container = document.querySelector('.clippy-container');
         this.clippy = document.querySelector('.clippy');
+        this.bubbleClose = document.querySelector('.clippy-bubble-close');
 
         if (!this.container || !this.clippy) {
             console.error('Clippy elements not found');
@@ -48,6 +49,19 @@ class Clippy {
             }
             this.hide();
         });
+
+        // Explicit close button on the bubble itself
+        if (this.bubbleClose) {
+            this.bubbleClose.addEventListener('click', (event) => {
+                if (!Clippy.isAllowedPageOrigin()) {
+                    throw new Error('invalid origin');
+                }
+                if (!event.isTrusted) {
+                    throw new Error('untrusted event');
+                }
+                this.hide();
+            });
+        }
     }
 
     show() {
