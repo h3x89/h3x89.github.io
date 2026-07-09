@@ -2373,15 +2373,19 @@ h3 {
   }
 
   .graph-section {
-    overflow-x: visible;
+    overflow: hidden;
   }
 
   .graph-card-desktop {
-    display: none;
+    display: block;
+    transform: scale(0.3);
+    transform-origin: top left;
+    margin-bottom: -504px;
   }
 
   .mobile-journey {
     display: block;
+    margin-top: 1rem;
   }
 
   .layer-grid,
