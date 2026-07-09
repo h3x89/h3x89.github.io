@@ -2378,11 +2378,16 @@ h3 {
 
   .graph-card-desktop[data-reveal] {
     display: block;
-    /* Overrides the scroll-reveal system's own transform (translateY/none),
-       which otherwise wins via .motion-ready [data-reveal].is-visible at
-       higher specificity once the element is revealed. */
-    transform: scale(0.3) !important;
-    transform-origin: top left;
+    position: relative;
+    left: 50%;
+    /* translateX(-50%) recenters the 1120px-wide box on its own axis before
+       scaling, so the shrunk graph sits centered instead of flush against
+       the left edge. Overrides the scroll-reveal system's own transform
+       (translateY/none), which otherwise wins via
+       .motion-ready [data-reveal].is-visible at higher specificity once
+       the element is revealed. */
+    transform: translateX(-50%) scale(0.3) !important;
+    transform-origin: top center;
     margin-bottom: -504px;
   }
 
