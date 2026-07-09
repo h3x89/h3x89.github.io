@@ -2376,9 +2376,12 @@ h3 {
     overflow: hidden;
   }
 
-  .graph-card-desktop {
+  .graph-card-desktop[data-reveal] {
     display: block;
-    transform: scale(0.3);
+    /* Overrides the scroll-reveal system's own transform (translateY/none),
+       which otherwise wins via .motion-ready [data-reveal].is-visible at
+       higher specificity once the element is revealed. */
+    transform: scale(0.3) !important;
     transform-origin: top left;
     margin-bottom: -504px;
   }
