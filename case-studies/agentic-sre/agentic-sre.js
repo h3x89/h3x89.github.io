@@ -38,11 +38,6 @@
       <a href="#control-plane">Control Plane</a>
       <a href="#outcomes">Outcomes</a>
     `;
-
-    const footerCopy = document.querySelector('.case-footer p');
-    if (footerCopy) {
-      footerCopy.textContent = 'This one-pager includes the System Graph directly and is ready as the final public Agentic SRE case study.';
-    }
   };
 
   normalizeMainOnePagerNav();
@@ -187,7 +182,7 @@
       kicker: "Scale · Managed operations",
       role: "The Agentic SRE loop maintains and monitors roughly 70 services or containers across the managed runtime.",
       how: "The runtime is presented through grouped operating domains such as ingress, observability, automation, AI tooling, storage, backup, developer tooling and runtime applications.",
-      why: "The scale makes the portfolio story concrete: this is not a toy PR bot, but an operating model for a real multi-service platform.",
+      why: "The scale makes the portfolio story concrete: this is an operating model for a real multi-service platform.",
       evidence: "Repository stack overview · service docs · compose and runtime docs",
       html: `<div><h3>Runtime Scale</h3><span class="scale-number">~70 services / containers</span><p>Maintained and monitored across the managed runtime.</p></div><div><ul><li><strong>Service groups:</strong> ingress, observability, automation, AI tooling and runtime applications.</li><li><strong>Operational scope:</strong> a shared delivery model applied across the platform, not a single workflow.</li></ul><div class="layer-note">Outcome: the delivery loop is grounded in a runtime large enough to require repeatable operational discipline.</div></div>`,
       scale: true,
