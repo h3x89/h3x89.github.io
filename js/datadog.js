@@ -20,37 +20,6 @@
         return 'unknown';
     };
 
-    const applyHomepageHeroSpacingFix = () => {
-        if (getPageType() !== 'home' || document.getElementById('homepage-hero-spacing-fix')) {
-            return;
-        }
-
-        const style = document.createElement('style');
-        style.id = 'homepage-hero-spacing-fix';
-        style.textContent = `
-            h1 {
-                line-height: 0.98;
-                letter-spacing: -0.066em;
-            }
-
-            @media (max-width: 768px) {
-                h1 {
-                    line-height: 1.02;
-                    letter-spacing: -0.058em;
-                }
-            }
-
-            @media (max-width: 520px) {
-                h1 {
-                    font-size: clamp(3.05rem, 16.5vw, 5.25rem);
-                    line-height: 1.06;
-                    letter-spacing: -0.048em;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    };
-
     const getCanonicalUrl = () => {
         const canonical = document.querySelector('link[rel="canonical"]');
         return canonical && canonical.href ? canonical.href : window.location.href;
@@ -199,8 +168,6 @@
             }
         });
     };
-
-    applyHomepageHeroSpacingFix();
 
     try {
         (function loadRUM(config) {
