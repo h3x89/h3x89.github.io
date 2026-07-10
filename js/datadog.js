@@ -20,6 +20,58 @@
         return 'unknown';
     };
 
+    const textReplacements = [
+        {
+            from: 'Compact, public-safe previews of the platform work I want the portfolio to communicate first.',
+            to: 'Compact previews of platform work, focused on operating model, proof and outcomes.'
+        },
+        {
+            from: 'Public-safe note: examples are sanitized and representative. Workflow views use conceptual states, not private production metrics or internal infrastructure details.',
+            to: 'Representative architecture view: examples focus on patterns, control loops and engineering outcomes rather than customer-specific infrastructure.'
+        },
+        {
+            from: 'This one-pager includes the System Graph directly and is ready as the final public Agentic SRE case study.',
+            to: 'A practical view of the operating model: system graph, delivery loop, control plane and measurable outcomes.'
+        },
+        {
+            from: 'this is not a toy PR bot, but an operating model for a real multi-service platform',
+            to: 'this is an operating model for a real multi-service platform'
+        },
+        {
+            from: 'Agentic SRE exists to keep a real multi-service runtime maintainable, not just to generate PRs.',
+            to: 'Agentic SRE keeps a real multi-service runtime maintainable by tying generated work back to observable outcomes.'
+        }
+    ];
+
+    const replaceTextNodes = (rootNode) => {
+        if (!rootNode || !document.body) {
+            return;
+        }
+
+        const walker = document.createTreeWalker(rootNode, NodeFilter.SHOW_TEXT);
+        const nodesToUpdate = [];
+
+        while (walker.nextNode()) {
+            const node = walker.currentNode;
+            if (!node.nodeValue || !node.nodeValue.trim()) {
+                continue;
+            }
+
+            let nextValue = node.nodeValue;
+            textReplacements.forEach(({ from, to }) => {
+                nextValue = nextValue.replace(from, to);
+            });
+
+            if (nextValue !== node.nodeValue) {
+                nodesToUpdate.push([node, nextValue]);
+            }
+        }
+
+        nodesToUpdate.forEach(([node, value]) => {
+            node.nodeValue = value;
+        });
+    };
+
     const normalizeCaseStudyBrandLink = () => {
         if (getPageType() !== 'case_study') {
             return;
@@ -32,6 +84,40 @@
 
         brandLink.setAttribute('href', '/');
         brandLink.setAttribute('aria-label', 'Back to homepage');
+    };
+
+    const normalizePublicPortfolioCopy = () => {
+        normalizeCaseStudyBrandLink();
+        replaceTextNodes(document.body);
+    };
+
+    const schedulePublicCopyNormalization = () => {
+        if (!document.body) {
+            return;
+        }
+
+        normalizePublicPortfolioCopy();
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', normalizePublicPortfolioCopy, { once: true });
+        }
+
+        window.addEventListener('load', normalizePublicPortfolioCopy, { once: true });
+
+        if (getPageType() === 'case_study' && 'MutationObserver' in window) {
+            const observer = new MutationObserver((mutations) => {
+                const shouldNormalize = mutations.some((mutation) => mutation.addedNodes.length > 0 || mutation.type === 'characterData');
+                if (shouldNormalize) {
+                    normalizePublicPortfolioCopy();
+                }
+            });
+
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true,
+                characterData: true
+            });
+        }
     };
 
     const getCanonicalUrl = () => {
@@ -183,7 +269,7 @@
         });
     };
 
-    normalizeCaseStudyBrandLink();
+    schedulePublicCopyNormalization();
 
     try {
         (function loadRUM(config) {
