@@ -271,8 +271,8 @@ p {
 h1 {
     margin-bottom: 1rem;
     font-size: clamp(3.2rem, 9vw, 7.5rem);
-    line-height: 0.9;
-    letter-spacing: -0.08em;
+    line-height: 0.98;
+    letter-spacing: -0.066em;
 }
 
 h1 span {
@@ -1157,6 +1157,11 @@ h3 {
         min-height: auto;
     }
 
+    h1 {
+        line-height: 1.02;
+        letter-spacing: -0.058em;
+    }
+
     .hero-layout {
         gap: 1.5rem;
     }
@@ -1258,6 +1263,14 @@ h3 {
         width: 1.3rem;
         height: 1.3rem;
         font-size: 0.62rem;
+    }
+}
+
+@media (max-width: 520px) {
+    h1 {
+        font-size: clamp(3.05rem, 16.5vw, 5.25rem);
+        line-height: 1.06;
+        letter-spacing: -0.048em;
     }
 }
 
