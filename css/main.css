@@ -196,28 +196,31 @@ button:focus-visible {
 
 .orb {
     border-radius: 999px;
-    filter: blur(1px);
+    filter: blur(1px) saturate(1.1);
+    mix-blend-mode: screen;
 }
 
 .orb-one {
-    width: 22rem;
-    height: 22rem;
-    right: 5%;
-    top: 10%;
-    border: 1px solid rgba(249, 115, 22, 0.34);
+    width: 25rem;
+    height: 25rem;
+    right: 3%;
+    top: 8%;
+    border: 1px solid rgba(249, 115, 22, 0.52);
     box-shadow:
-        inset 0 0 72px rgba(249, 115, 22, 0.08),
-        0 0 80px rgba(249, 115, 22, 0.14);
-    animation: floatOrb 8s var(--ease-out) infinite alternate;
+        inset 0 0 120px rgba(249, 115, 22, 0.18),
+        0 0 180px rgba(249, 115, 22, 0.32),
+        0 0 0 1.2rem rgba(249, 115, 22, 0.02);
+    animation: floatOrb 4.8s var(--ease-out) infinite alternate, orbGlow 5.6s ease-in-out infinite alternate;
 }
 
 .orb-two {
-    width: 11rem;
-    height: 11rem;
-    left: 8%;
-    bottom: 10%;
-    background: radial-gradient(circle, rgba(96, 165, 250, 0.16), transparent 70%);
-    animation: floatOrb 10s var(--ease-out) infinite alternate-reverse;
+    width: 14rem;
+    height: 14rem;
+    left: 6%;
+    bottom: 8%;
+    background: radial-gradient(circle, rgba(96, 165, 250, 0.34), transparent 68%);
+    box-shadow: 0 0 140px rgba(96, 165, 250, 0.28), 0 0 0 0.8rem rgba(96, 165, 250, 0.02);
+    animation: floatOrb 5.4s var(--ease-out) infinite alternate-reverse, orbGlow 6.4s ease-in-out infinite alternate-reverse;
 }
 
 .motion-rail {
@@ -401,12 +404,12 @@ h3 {
 .orbit-shell {
     position: absolute;
     inset: 8%;
-    border: 1px solid rgba(249, 115, 22, 0.3);
+    border: 1px solid rgba(249, 115, 22, 0.46);
     border-radius: 50%;
     box-shadow:
-        inset 0 0 70px rgba(249, 115, 22, 0.08),
-        0 0 60px rgba(249, 115, 22, 0.16);
-    animation: orbitPulse 6s ease-in-out infinite alternate;
+        inset 0 0 92px rgba(249, 115, 22, 0.12),
+        0 0 96px rgba(249, 115, 22, 0.26);
+    animation: orbitPulse 4.2s ease-in-out infinite alternate;
 }
 
 .orbit-shell::before,
@@ -415,14 +418,16 @@ h3 {
     position: absolute;
     inset: 12%;
     border-radius: 50%;
-    border: 1px dashed rgba(96, 165, 250, 0.24);
+    border: 1px dashed rgba(96, 165, 250, 0.42);
     transform: rotate(28deg);
+    animation: orbitRingSpin 13s linear infinite;
 }
 
 .orbit-shell::after {
     inset: 22%;
-    border-color: rgba(74, 222, 128, 0.18);
+    border-color: rgba(74, 222, 128, 0.34);
     transform: rotate(-18deg);
+    animation: orbitRingSpinReverse 16s linear infinite;
 }
 
 .orbit-dot {
@@ -433,11 +438,12 @@ h3 {
     border-radius: 999px;
     background: var(--brand-2);
     box-shadow: 0 0 28px rgba(251, 146, 60, 0.9);
+    animation: orbitDotSpark 2.2s ease-in-out infinite;
 }
 
 .dot-one { top: 14%; right: 24%; }
-.dot-two { bottom: 18%; left: 20%; background: var(--blue); }
-.dot-three { top: 48%; left: 5%; background: var(--green); }
+.dot-two { bottom: 18%; left: 20%; background: var(--blue); animation-delay: 260ms; }
+.dot-three { top: 48%; left: 5%; background: var(--green); animation-delay: 520ms; }
 
 .terminal-window {
     position: relative;
@@ -649,28 +655,43 @@ h3 {
     left: 2rem;
     right: 2rem;
     top: 50%;
-    height: 1px;
-    background: linear-gradient(90deg, rgba(249, 115, 22, 0.24), rgba(96, 165, 250, 0.44), rgba(74, 222, 128, 0.24));
+    height: 2px;
+    background: linear-gradient(90deg, rgba(249, 115, 22, 0.36), rgba(96, 165, 250, 0.68), rgba(74, 222, 128, 0.36));
+    box-shadow: 0 0 24px rgba(96, 165, 250, 0.28);
+    animation: flowLineGlow 2.8s ease-in-out infinite alternate;
 }
 
 .flow-dots span {
+    --dot-glow: rgba(249, 115, 22, 0.76);
+    color: var(--brand-2);
     position: relative;
     z-index: 1;
-    width: 1.1rem;
-    height: 1.1rem;
+    width: 1.26rem;
+    height: 1.26rem;
     border-radius: 999px;
     background: var(--panel-strong);
     border: 2px solid var(--brand-2);
-    box-shadow: 0 0 22px rgba(249, 115, 22, 0.22);
+    box-shadow: 0 0 26px rgba(249, 115, 22, 0.36);
+    animation: flowDotPulse 1.75s ease-in-out infinite;
 }
 
 .flow-dots span:nth-child(2),
 .flow-dots span:nth-child(3) {
+    --dot-glow: rgba(96, 165, 250, 0.78);
+    color: var(--blue);
     border-color: var(--blue);
+    animation-delay: 180ms;
 }
 
 .flow-dots span:nth-child(4) {
+    --dot-glow: rgba(74, 222, 128, 0.74);
+    color: var(--green);
     border-color: var(--green);
+    animation-delay: 540ms;
+}
+
+.flow-dots span:nth-child(3) {
+    animation-delay: 360ms;
 }
 
 .capability-grid {
@@ -683,28 +704,39 @@ h3 {
 }
 
 .capability-icon {
+    --capability-glow: rgba(249, 115, 22, 0.18);
     display: grid;
     place-items: center;
-    width: 3rem;
-    height: 3rem;
+    width: 3.35rem;
+    height: 3.35rem;
     margin-bottom: 1rem;
     border-radius: 1rem;
     color: var(--brand-2);
-    background: rgba(249, 115, 22, 0.11);
-    border: 1px solid rgba(249, 115, 22, 0.3);
-    font-size: 1.15rem;
+    background: radial-gradient(circle at 35% 30%, rgba(249, 115, 22, 0.28), rgba(249, 115, 22, 0.1) 58%, rgba(15, 23, 42, 0.74));
+    border: 1px solid rgba(249, 115, 22, 0.48);
+    font-size: 1.24rem;
+    box-shadow: 0 0 0 0 rgba(249, 115, 22, 0);
+    animation: capabilityIconGlow 2.8s ease-in-out infinite;
 }
 
 .capability-card:nth-child(2) .capability-icon {
+    --capability-glow: rgba(96, 165, 250, 0.2);
     color: var(--blue);
-    background: rgba(96, 165, 250, 0.11);
-    border-color: rgba(96, 165, 250, 0.3);
+    background: radial-gradient(circle at 35% 30%, rgba(96, 165, 250, 0.32), rgba(96, 165, 250, 0.11) 58%, rgba(15, 23, 42, 0.74));
+    border-color: rgba(96, 165, 250, 0.48);
+    animation-delay: 220ms;
 }
 
 .capability-card:nth-child(3) .capability-icon {
+    --capability-glow: rgba(74, 222, 128, 0.18);
     color: var(--green);
-    background: rgba(74, 222, 128, 0.1);
-    border-color: rgba(74, 222, 128, 0.24);
+    background: radial-gradient(circle at 35% 30%, rgba(74, 222, 128, 0.3), rgba(74, 222, 128, 0.1) 58%, rgba(15, 23, 42, 0.74));
+    border-color: rgba(74, 222, 128, 0.42);
+    animation-delay: 440ms;
+}
+
+.capability-card:nth-child(4) .capability-icon {
+    animation-delay: 660ms;
 }
 
 .about-panel,
@@ -994,18 +1026,74 @@ h3 {
 }
 
 @keyframes floatOrb {
-    from { transform: translate3d(-0.4rem, 0.2rem, 0) scale(0.98); }
-    to { transform: translate3d(0.6rem, -0.5rem, 0) scale(1.02); }
+    from { transform: translate3d(-1.2rem, 0.7rem, 0) scale(0.94) rotate(-2deg); }
+    to { transform: translate3d(1.7rem, -1.35rem, 0) scale(1.08) rotate(4deg); }
 }
 
 @keyframes orbitPulse {
-    from { transform: rotate(-4deg) scale(0.98); opacity: 0.76; }
-    to { transform: rotate(6deg) scale(1.02); opacity: 1; }
+    from { transform: rotate(-7deg) scale(0.96); opacity: 0.72; }
+    to { transform: rotate(9deg) scale(1.05); opacity: 1; }
+}
+
+@keyframes orbitRingSpin {
+    from { transform: rotate(28deg); }
+    to { transform: rotate(388deg); }
+}
+
+@keyframes orbitRingSpinReverse {
+    from { transform: rotate(-18deg); }
+    to { transform: rotate(-378deg); }
+}
+
+@keyframes orbitDotSpark {
+    0%, 100% {
+        transform: scale(1);
+        filter: saturate(1);
+    }
+    50% {
+        transform: scale(1.42);
+        filter: saturate(1.8);
+        box-shadow: 0 0 0 0.38rem rgba(249, 115, 22, 0), 0 0 42px currentColor;
+    }
+}
+
+@keyframes orbGlow {
+    from { opacity: 0.68; filter: blur(1px) saturate(1); }
+    to { opacity: 1; filter: blur(1px) saturate(1.45); }
 }
 
 @keyframes barLift {
     from { transform: scaleY(0.72); opacity: 0.58; }
     to { transform: scaleY(1); opacity: 1; }
+}
+
+@keyframes flowDotPulse {
+    0%, 100% {
+        transform: scale(1);
+        background: var(--panel-strong);
+        box-shadow: 0 0 18px rgba(249, 115, 22, 0.2);
+    }
+    45% {
+        transform: scale(1.42);
+        background: currentColor;
+        box-shadow: 0 0 0 0.55rem rgba(249, 115, 22, 0), 0 0 44px var(--dot-glow);
+    }
+}
+
+@keyframes capabilityIconGlow {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+        box-shadow: 0 0 0 rgba(249, 115, 22, 0), 0 0 0 0 rgba(249, 115, 22, 0);
+    }
+    50% {
+        transform: translateY(-0.28rem) scale(1.12);
+        box-shadow: 0 0 0 0.62rem var(--capability-glow), 0 22px 48px rgba(0, 0, 0, 0.24), 0 0 34px var(--capability-glow);
+    }
+}
+
+@keyframes flowLineGlow {
+    from { opacity: 0.62; filter: saturate(1); }
+    to { opacity: 1; filter: saturate(1.6); }
 }
 
 @media (max-width: 1100px) {
