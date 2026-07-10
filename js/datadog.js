@@ -20,6 +20,20 @@
         return 'unknown';
     };
 
+    const normalizeCaseStudyBrandLink = () => {
+        if (getPageType() !== 'case_study') {
+            return;
+        }
+
+        const brandLink = document.querySelector('.site-header .brand[href="#top"]');
+        if (!brandLink) {
+            return;
+        }
+
+        brandLink.setAttribute('href', '/');
+        brandLink.setAttribute('aria-label', 'Back to homepage');
+    };
+
     const getCanonicalUrl = () => {
         const canonical = document.querySelector('link[rel="canonical"]');
         return canonical && canonical.href ? canonical.href : window.location.href;
@@ -168,6 +182,8 @@
             }
         });
     };
+
+    normalizeCaseStudyBrandLink();
 
     try {
         (function loadRUM(config) {
