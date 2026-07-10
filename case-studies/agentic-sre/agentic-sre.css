@@ -2568,3 +2568,503 @@ h3 {
     padding-top: 0.5rem;
   }
 }
+
+/* Agentic SRE motion polish */
+.motion-ready .hero-backdrop {
+      background-size: 128% 128%, 170% 170%, 100% 100%;
+      animation: case-hero-haze 8.4s ease-in-out infinite alternate, case-hero-glow 6.8s ease-in-out infinite alternate;
+      will-change: background-position, filter;
+    }
+
+    .motion-ready .orb-one,
+    .motion-ready .orb-two {
+      filter: blur(1px) saturate(1.16);
+      mix-blend-mode: screen;
+      will-change: transform, opacity, filter;
+    }
+
+    .motion-ready .orb-one {
+      box-shadow: 0 0 150px rgba(249, 115, 22, 0.38), 0 0 0 1rem rgba(249, 115, 22, 0.035);
+      animation: case-orb-one-wow 5.8s var(--ease-out) infinite alternate, case-orb-glow 5.2s ease-in-out infinite alternate;
+    }
+
+    .motion-ready .orb-two {
+      box-shadow: 0 0 140px rgba(96, 165, 250, 0.34), 0 0 0 0.8rem rgba(96, 165, 250, 0.035);
+      animation: case-orb-two-wow 6.4s var(--ease-out) infinite alternate-reverse, case-orb-glow 5.8s ease-in-out infinite alternate-reverse;
+    }
+
+    .motion-ready .motion-rail {
+      background-size: 180% 100%;
+      animation: case-motion-rail-wow 4.8s ease-in-out infinite alternate;
+      box-shadow: 0 0 30px rgba(249, 115, 22, 0.22), 0 0 48px rgba(96, 165, 250, 0.12);
+    }
+
+    .motion-ready .hero-backdrop::before,
+    .motion-ready .hero-backdrop::after {
+      border-top-color: rgba(249, 115, 22, 0.36);
+      animation: case-rail-drift 5.8s ease-in-out infinite alternate, case-rail-spark 4.2s ease-in-out infinite alternate;
+      box-shadow: 0 -1px 42px rgba(249, 115, 22, 0.3), 0 0 72px rgba(249, 115, 22, 0.12);
+      will-change: transform, opacity;
+    }
+
+    .motion-ready .hero-backdrop::after {
+      animation-duration: 6.8s, 5.2s;
+      animation-name: case-rail-drift-reverse, case-rail-spark-blue;
+      animation-direction: alternate-reverse;
+      border-top-color: rgba(96, 165, 250, 0.32);
+      box-shadow: 0 -1px 42px rgba(96, 165, 250, 0.26), 0 0 72px rgba(96, 165, 250, 0.1);
+    }
+
+    .impact-ribbon p,
+    .hero-stats article,
+    .detail-card,
+    .layer-card,
+    .rail-card,
+    .workflow-panel,
+    .tower-card,
+    .matrix-card,
+    .governance-grid article,
+    .outcome-grid article,
+    .architecture-strip article {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .impact-ribbon p::after,
+    .hero-stats article::after,
+    .detail-card::after,
+    .layer-card::after,
+    .rail-card::after,
+    .workflow-panel::after,
+    .tower-card::after,
+    .matrix-card::after,
+    .governance-grid article::after,
+    .outcome-grid article::after,
+    .architecture-strip article::after {
+      content: "";
+      position: absolute;
+      inset: auto -20% -42% 18%;
+      height: 8rem;
+      background: radial-gradient(circle, rgba(249, 115, 22, 0.12), transparent 70%);
+      opacity: 0;
+      transform: scale(0.92);
+      transition: opacity 240ms ease, transform 240ms var(--ease-out);
+      pointer-events: none;
+    }
+
+    .motion-ready .hero-stats article.is-visible::after,
+    .motion-ready .architecture-strip article.is-visible::after,
+    .motion-ready .outcome-grid article.is-visible::after {
+      animation: case-card-ambient 4.4s ease-in-out infinite alternate;
+    }
+
+    .impact-ribbon p:hover::after,
+    .hero-stats article:hover::after,
+    .detail-card:hover::after,
+    .layer-card:hover::after,
+    .rail-card:hover::after,
+    .workflow-panel:hover::after,
+    .tower-card:hover::after,
+    .matrix-card:hover::after,
+    .governance-grid article:hover::after,
+    .outcome-grid article:hover::after,
+    .architecture-strip article:hover::after {
+      opacity: 0.72;
+      transform: scale(1.04);
+    }
+
+    .hero-stats article:hover,
+    .detail-card:hover,
+    .layer-card:hover,
+    .rail-card:hover,
+    .workflow-panel:hover,
+    .tower-card:hover,
+    .matrix-card:hover,
+    .governance-grid article:hover,
+    .outcome-grid article:hover,
+    .architecture-strip article:hover {
+      border-color: rgba(249, 115, 22, 0.58);
+      box-shadow: var(--shadow), 0 22px 60px rgba(249, 115, 22, 0.2), 0 0 36px rgba(249, 115, 22, 0.1);
+    }
+
+    .motion-ready .hero-stats article.is-visible span,
+    .motion-ready .architecture-strip article.is-visible span,
+    .motion-ready .outcome-grid article.is-visible span,
+    .motion-ready .tower-card.is-visible h3 span {
+      animation: case-icon-breathe 2.7s ease-in-out infinite;
+    }
+
+    .mode-button.is-active {
+      position: relative;
+      overflow: hidden;
+      background-size: 180% 180%;
+      animation: case-gradient-shift 2.8s ease-in-out infinite, case-button-pop 2.9s ease-in-out infinite alternate;
+    }
+
+    .mode-button.is-active::after {
+      content: "";
+      position: absolute;
+      inset: -45% auto -45% -55%;
+      width: 48%;
+      transform: rotate(18deg);
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.58), transparent);
+      animation: case-button-sheen 3.2s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .motion-ready .verified-flow {
+      overflow: hidden;
+    }
+
+    .motion-ready .verified-flow .flow-step {
+      z-index: 1;
+    }
+
+    .motion-ready .verified-flow::after {
+      content: "";
+      position: absolute;
+      left: -22%;
+      right: auto;
+      top: 0.95rem;
+      bottom: 0.95rem;
+      width: 24%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, transparent, rgba(96, 165, 250, 0.16), rgba(249, 115, 22, 0.22), transparent);
+      filter: blur(0.5px);
+      opacity: 0.72;
+      animation: case-flow-line-sweep 4.8s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .motion-ready .graph-card::before {
+      background-image: linear-gradient(90deg, rgba(148, 163, 184, 0.06) 1px, transparent 1px), linear-gradient(90deg, transparent, rgba(249, 115, 22, 0.08), rgba(96, 165, 250, 0.08), transparent);
+      background-size: 16.66% 100%, 220% 100%;
+      animation: case-graph-grid-sweep 6.5s ease-in-out infinite alternate;
+      opacity: 0.86;
+    }
+
+    .motion-ready .is-mode-event .event-path,
+    .motion-ready .is-mode-scheduled .scheduled-path,
+    .motion-ready .is-mode-provider .provider-path {
+      animation-duration: 0.86s;
+      filter: drop-shadow(0 0 16px rgba(249, 115, 22, 0.52));
+    }
+
+    .motion-ready .is-mode-scheduled .scheduled-path {
+      filter: drop-shadow(0 0 16px rgba(251, 191, 36, 0.42));
+    }
+
+    .motion-ready .is-mode-provider .provider-path {
+      filter: drop-shadow(0 0 16px rgba(96, 165, 250, 0.52));
+    }
+
+    .graph-node.is-path-active::before,
+    .graph-node.is-selected::before {
+      content: "";
+      position: absolute;
+      inset: -0.18rem;
+      border-radius: 1.12rem;
+      border: 1px solid rgba(249, 115, 22, 0.24);
+      background: radial-gradient(circle at 22% 10%, rgba(249, 115, 22, 0.2), transparent 55%);
+      box-shadow: 0 0 34px rgba(249, 115, 22, 0.16);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .graph-node b,
+    .graph-node strong,
+    .graph-node span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .motion-ready .graph-node.is-path-active::before,
+    .motion-ready .graph-node.is-selected::before {
+      animation: case-graph-node-aura 2.9s ease-in-out infinite;
+    }
+
+    .graph-node b,
+    .flow-icon,
+    .rail-symbol,
+    .architecture-strip span,
+    .outcome-grid span,
+    .tower-card h3 span {
+      transition: transform 220ms var(--ease-out), box-shadow 220ms ease, border-color 220ms ease;
+    }
+
+    .graph-node:hover b,
+    .graph-node:focus-visible b,
+    .flow-step:hover .flow-icon,
+    .rail-card:hover .rail-symbol,
+    .architecture-strip article:hover span,
+    .outcome-grid article:hover span,
+    .tower-card:hover h3 span {
+      transform: translateY(-0.12rem) scale(1.04);
+    }
+
+    .motion-ready .graph-node.is-path-active b,
+    .motion-ready .graph-node.is-selected b,
+    .motion-ready .flow-step.is-current .flow-icon,
+    .motion-ready .flow-step.is-observed .flow-icon {
+      animation: case-node-glow 2.4s ease-in-out infinite;
+    }
+
+    .motion-ready .verified-flow.is-visible .flow-step::before {
+      animation: case-flow-scan 760ms var(--ease-out) both;
+      animation-delay: calc(var(--reveal-delay, 0ms) + 80ms);
+    }
+
+    .flow-step::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      border: 1px solid transparent;
+      background: linear-gradient(135deg, rgba(249, 115, 22, 0.22), transparent 46%, rgba(96, 165, 250, 0.18)) border-box;
+      mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
+      mask-composite: exclude;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .fallback-strip span:hover {
+      transform: translateY(-0.12rem);
+      border-color: rgba(249, 115, 22, 0.52);
+    }
+
+    @keyframes case-hero-haze {
+      from { background-position: 44% 26%, 34% 52%, 50% 100%; }
+      to { background-position: 58% 22%, 66% 40%, 50% 100%; }
+    }
+
+    @keyframes case-hero-glow {
+      from { filter: saturate(1) brightness(1); }
+      to { filter: saturate(1.38) brightness(1.08); }
+    }
+
+    @keyframes case-orb-one-wow {
+      from { transform: translate3d(-1.4rem, 0.5rem, 0) scale(0.96); opacity: 0.24; }
+      to { transform: translate3d(2.35rem, -1.45rem, 0) scale(1.14); opacity: 0.56; }
+    }
+
+    @keyframes case-orb-two-wow {
+      from { transform: translate3d(1rem, 0.7rem, 0) scale(0.94); opacity: 0.2; }
+      to { transform: translate3d(-1.8rem, -1.2rem, 0) scale(1.12); opacity: 0.48; }
+    }
+
+    @keyframes case-orb-glow {
+      from { filter: blur(1px) saturate(1); }
+      to { filter: blur(1px) saturate(1.55); }
+    }
+
+    @keyframes case-motion-rail-wow {
+      from {
+        background-position: 0% 50%;
+        opacity: 0.34;
+        filter: saturate(1);
+      }
+      to {
+        background-position: 100% 50%;
+        opacity: 0.78;
+        filter: saturate(1.65);
+      }
+    }
+
+    @keyframes case-rail-drift {
+      from { transform: translate3d(-1.8rem, 0.25rem, 0) skewY(-6deg); opacity: 0.36; }
+      to { transform: translate3d(2.25rem, -0.72rem, 0) skewY(-2deg); opacity: 0.95; }
+    }
+
+    @keyframes case-rail-drift-reverse {
+      from { transform: translate3d(1.45rem, 0.28rem, 0) skewY(5deg); opacity: 0.32; }
+      to { transform: translate3d(-2rem, -0.58rem, 0) skewY(1deg); opacity: 0.82; }
+    }
+
+    @keyframes case-rail-spark {
+      from { box-shadow: 0 -1px 34px rgba(249, 115, 22, 0.22), 0 0 64px rgba(249, 115, 22, 0.08); }
+      to { box-shadow: 0 -1px 58px rgba(249, 115, 22, 0.42), 0 0 100px rgba(249, 115, 22, 0.18); }
+    }
+
+    @keyframes case-rail-spark-blue {
+      from { box-shadow: 0 -1px 34px rgba(96, 165, 250, 0.18), 0 0 64px rgba(96, 165, 250, 0.08); }
+      to { box-shadow: 0 -1px 58px rgba(96, 165, 250, 0.38), 0 0 100px rgba(96, 165, 250, 0.16); }
+    }
+
+    @keyframes case-card-ambient {
+      from { opacity: 0.18; transform: translate3d(-0.2rem, 0, 0) scale(0.96); }
+      to { opacity: 0.58; transform: translate3d(0.55rem, -0.25rem, 0) scale(1.08); }
+    }
+
+    @keyframes case-icon-breathe {
+      0%, 100% {
+        box-shadow: 0 0 0 rgba(249, 115, 22, 0);
+        filter: drop-shadow(0 0 0 rgba(249, 115, 22, 0));
+        text-shadow: 0 0 0 rgba(249, 115, 22, 0);
+      }
+      48% {
+        box-shadow: 0 0 0 0.62rem rgba(249, 115, 22, 0.16), 0 0 34px rgba(249, 115, 22, 0.22);
+        filter: drop-shadow(0 0 14px rgba(249, 115, 22, 0.42));
+        text-shadow: 0 0 18px rgba(249, 115, 22, 0.6);
+      }
+    }
+
+    @keyframes case-gradient-shift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    @keyframes case-button-sheen {
+      0%, 38% { transform: translateX(0) rotate(18deg); opacity: 0; }
+      48% { opacity: 0.9; }
+      72%, 100% { transform: translateX(340%) rotate(18deg); opacity: 0; }
+    }
+
+    @keyframes case-button-pop {
+      from { box-shadow: 0 0 0 rgba(249, 115, 22, 0), 0 12px 28px rgba(249, 115, 22, 0.08); }
+      to { box-shadow: 0 0 0 0.28rem rgba(249, 115, 22, 0.08), 0 18px 42px rgba(249, 115, 22, 0.24); }
+    }
+
+    @keyframes case-node-glow {
+      0%, 100% {
+        filter: drop-shadow(0 0 0 rgba(249, 115, 22, 0));
+        text-shadow: 0 0 0 rgba(249, 115, 22, 0);
+      }
+      45% {
+        filter: drop-shadow(0 0 16px rgba(249, 115, 22, 0.66));
+        text-shadow: 0 0 18px rgba(249, 115, 22, 0.72);
+      }
+    }
+
+    @keyframes case-flow-scan {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 0.9; transform: scale(1); }
+    }
+
+    @keyframes case-flow-line-sweep {
+      0%, 18% { transform: translateX(0); opacity: 0; }
+      32% { opacity: 0.82; }
+      78%, 100% { transform: translateX(520%); opacity: 0; }
+    }
+
+    @keyframes case-graph-grid-sweep {
+      from { background-position: 0 0, 0% 50%; opacity: 0.58; }
+      to { background-position: 0 0, 100% 50%; opacity: 0.96; }
+    }
+
+    @keyframes case-graph-node-aura {
+      0%, 100% {
+        opacity: 0.18;
+        box-shadow: 0 0 20px rgba(249, 115, 22, 0.12);
+      }
+      46% {
+        opacity: 0.82;
+        box-shadow: 0 0 0 0.36rem rgba(249, 115, 22, 0.08), 0 0 42px rgba(249, 115, 22, 0.28);
+      }
+    }
+
+    @media (max-width: 820px) {
+      .motion-ready .graph-card::before {
+        animation-duration: 9s;
+        opacity: 0.56;
+      }
+
+      .motion-ready .is-mode-event .event-path,
+      .motion-ready .is-mode-scheduled .scheduled-path,
+      .motion-ready .is-mode-provider .provider-path {
+        animation-duration: 1.4s;
+        filter: drop-shadow(0 0 11px rgba(249, 115, 22, 0.32));
+      }
+
+      .motion-ready .graph-node.is-path-active::before,
+      .motion-ready .graph-node.is-selected::before {
+        animation-duration: 4.2s;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .hero-backdrop {
+        left: 0;
+        right: 0;
+      }
+
+      .motion-ready .hero-backdrop {
+        animation-duration: 11s, 9s;
+      }
+
+      .motion-ready .hero-backdrop::before,
+      .motion-ready .hero-backdrop::after {
+        animation-duration: 7.8s, 6.2s;
+      }
+
+      .motion-ready .orb-one,
+      .motion-ready .orb-two {
+        animation-duration: 8s, 7.4s;
+      }
+
+      .motion-ready .motion-rail {
+        animation-duration: 6.8s;
+      }
+
+      .impact-ribbon p::after,
+      .hero-stats article::after,
+      .detail-card::after,
+      .layer-card::after,
+      .rail-card::after,
+      .workflow-panel::after,
+      .tower-card::after,
+      .matrix-card::after,
+      .governance-grid article::after,
+      .outcome-grid article::after,
+      .architecture-strip article::after {
+        display: none;
+      }
+
+      .motion-ready .verified-flow::after {
+        display: none;
+      }
+
+      .motion-ready .graph-node.is-path-active b,
+      .motion-ready .graph-node.is-selected b,
+      .motion-ready .flow-step.is-current .flow-icon,
+      .motion-ready .flow-step.is-observed .flow-icon {
+        animation-duration: 2.9s;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .motion-ready .hero-backdrop,
+      .motion-ready .hero-backdrop::before,
+      .motion-ready .hero-backdrop::after,
+      .motion-ready .orb-one,
+      .motion-ready .orb-two,
+      .motion-ready .motion-rail,
+      .motion-ready .hero-stats article.is-visible span,
+      .motion-ready .architecture-strip article.is-visible span,
+      .motion-ready .outcome-grid article.is-visible span,
+      .motion-ready .tower-card.is-visible h3 span,
+      .mode-button.is-active,
+      .mode-button.is-active::after,
+      .motion-ready .verified-flow::after,
+      .motion-ready .graph-card::before,
+      .motion-ready .is-mode-event .event-path,
+      .motion-ready .is-mode-scheduled .scheduled-path,
+      .motion-ready .is-mode-provider .provider-path,
+      .motion-ready .graph-node.is-path-active::before,
+      .motion-ready .graph-node.is-selected::before,
+      .motion-ready .graph-node.is-path-active b,
+      .motion-ready .graph-node.is-selected b,
+      .motion-ready .flow-step.is-current .flow-icon,
+      .motion-ready .flow-step.is-observed .flow-icon,
+      .motion-ready .verified-flow.is-visible .flow-step::before {
+        animation: none !important;
+      }
+
+      .mode-button.is-active::after {
+        display: none;
+      }
+
+      .motion-ready .verified-flow::after {
+        display: none;
+      }
+    }
