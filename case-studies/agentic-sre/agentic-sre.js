@@ -2,46 +2,6 @@
   const root = document.documentElement;
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  const heroSpacing = document.createElement("style");
-  heroSpacing.textContent = `
-    .hero .subtitle {
-      display: block;
-      max-width: 52rem;
-      margin: 1rem auto 0;
-      line-height: 1.3;
-    }
-
-    .hero .subtitle + .hero-summary {
-      margin-top: 1rem;
-    }
-  `;
-  document.head.appendChild(heroSpacing);
-
-  const normalizeMainOnePagerNav = () => {
-    const nav = document.querySelector('.site-header nav[aria-label="Page sections"]');
-    const isMainOnePager = Boolean(
-      nav &&
-      document.querySelector('#system-graph') &&
-      document.querySelector('#delivery-loop') &&
-      document.querySelector('#control-plane') &&
-      document.querySelector('#outcomes')
-    );
-
-    if (!isMainOnePager) {
-      return;
-    }
-
-    nav.innerHTML = `
-      <a href="#top">Overview</a>
-      <a href="#system-graph">System Graph</a>
-      <a href="#delivery-loop">Delivery Loop</a>
-      <a href="#control-plane">Control Plane</a>
-      <a href="#outcomes">Outcomes</a>
-    `;
-  };
-
-  normalizeMainOnePagerNav();
-
   root.classList.add("motion-ready");
 
   const revealItems = Array.from(document.querySelectorAll("[data-reveal]"));
@@ -177,96 +137,96 @@
 
   const layersModel = [
     {
-      id: "runtime",
-      title: "Runtime Scale",
-      kicker: "Scale · Managed operations",
-      role: "The Agentic SRE loop maintains and monitors roughly 70 services or containers across the managed runtime.",
-      how: "The runtime is presented through grouped operating domains such as ingress, observability, automation, AI tooling, storage, backup, developer tooling and runtime applications.",
-      why: "The scale makes the portfolio story concrete: this is an operating model for a real multi-service platform.",
-      evidence: "Repository stack overview · service docs · compose and runtime docs",
-      html: `<div><h3>Runtime Scale</h3><span class="scale-number">~70 services / containers</span><p>Maintained and monitored across the managed runtime.</p></div><div><ul><li><strong>Service groups:</strong> ingress, observability, automation, AI tooling and runtime applications.</li><li><strong>Operational scope:</strong> a shared delivery model applied across the platform, not a single workflow.</li></ul><div class="layer-note">Outcome: the delivery loop is grounded in a runtime large enough to require repeatable operational discipline.</div></div>`,
+      id: "scale",
+      title: "Operational Scale",
+      kicker: "The reference environment",
+      role: "A multi-service reference environment of approximately 70 services, spanning ingress, observability, automation, AI tooling, storage, backup, developer tooling and runtime applications.",
+      how: "Services are grouped by operational responsibility rather than by team. The observability stack covers the environment, and engineering changes to its configuration and automation are governed through the auditable delivery workflow described on this page.",
+      why: "It shows the operating model applied across a heterogeneous, multi-service platform rather than to a single agent workflow or an isolated automation script.",
+      evidence: "Stack overview, per-service documentation, runtime configuration and monitoring coverage.",
+      html: `<div><h3>Operational Scale</h3><span class="scale-number">~70 services</span><p>The multi-service reference environment this operating model is exercised against.</p></div><div><ul><li><strong>Domains:</strong> ingress, observability, automation, AI tooling, storage, backup, developer tooling and runtime applications.</li><li><strong>Scope:</strong> engineering changes are governed through one auditable delivery workflow, rather than a single scripted automation.</li></ul><div class="layer-note">Enough variety that a single-purpose automation would not hold — which is the condition the operating model is designed for.</div></div>`,
       scale: true,
       selected: true
+    },
+    {
+      id: "boundary",
+      title: "Scoped Tool Access",
+      kicker: "Boundary · least privilege",
+      role: "An explicit MCP boundary defines which tools an agent may call, and with which arguments.",
+      how: "Tool contracts, allowlists and read-only toolsets are declared rather than assumed. Scheduled actors run with narrower scopes than interactive ones.",
+      why: "Agents receive bounded capabilities instead of broad, implicit access to infrastructure, so what an agent can reach is reviewable before it runs.",
+      evidence: "Tool contracts, allowlists and scoped toolset configuration.",
+      html: `<span>01</span><h3>Scoped Tool Access</h3><p>An explicit boundary between agents and infrastructure.</p><ul><li><strong>Contracts:</strong> tools and arguments are declared, not implicit.</li><li><strong>Least privilege:</strong> read-only and guarded toolsets by default.</li><li><strong>Auditable:</strong> the reachable surface is reviewable up front.</li></ul><div class="layer-note">What an agent can touch is a design decision, not a side effect of its credentials.</div>`
+    },
+    {
+      id: "knowledge",
+      title: "Repository Knowledge Base",
+      kicker: "Context · operating memory",
+      role: "The repository doubles as a Markdown knowledge corpus that agents must read before proposing a change.",
+      how: "Agent instructions point to knowledge indexes by host, service and task. CI validates knowledge structure and index coverage.",
+      why: "Agents read the same documentation the engineers do, so proposed changes reflect how the environment actually works rather than a generic assumption.",
+      evidence: "Knowledge indexes, repository instructions and structure checks in CI.",
+      html: `<span>02</span><h3>Repository Knowledge Base</h3><p>The repository is the operating memory.</p><ul><li><strong>Indexes:</strong> knowledge routed by host, service and task.</li><li><strong>Rule:</strong> read existing knowledge before changing anything.</li><li><strong>Checks:</strong> structure and index coverage validated in CI.</li></ul><div class="layer-note">Context is a controlled input, not whatever the model happened to remember.</div>`
+    },
+    {
+      id: "agents",
+      title: "Coding Agents",
+      kicker: "Delivery · repository work",
+      role: "Coding agents open branches and pull requests directly, alongside the scheduled-automation path.",
+      how: "Every agent follows the same route: branch, draft PR, local validation, CI, AI review, then a human merge decision. Each run closes with a session report.",
+      why: "Day-to-day agent delivery passes through the same gates as scheduled automation. There is no fast path.",
+      evidence: "Repository instructions, local validation scripts and CI feedback.",
+      html: `<span>03</span><h3>Coding Agents</h3><p>Agents open pull requests; they do not change services directly.</p><ul><li><strong>Route:</strong> branch → draft PR → local checks → CI.</li><li><strong>Same gates:</strong> no shortcut around review.</li><li><strong>Closeout:</strong> a session report per run.</li></ul><div class="layer-note">Agent output enters the system as a proposal, in the same shape as a human change.</div>`
     },
     {
       id: "ci",
       title: "CI Control Plane",
       kicker: "Quality gates · deterministic rail",
-      role: "Required checks and local parity around every PR, separating deterministic gates from advisory AI review.",
-      how: "PR work is expected to pass title/body quality, GitHub Actions lint, Markdown and knowledge validation, fast lint, cost policy, review-thread state, CI/local parity and Agent Session Report. Local scripts such as check-pr.sh and wait-for-pr-ci.sh make agents verify the same flow before handoff.",
-      why: "This is the strongest control surface around probabilistic agent output: generated work becomes acceptable only when repo policy, CI, session evidence and review state line up.",
-      evidence: "Required checks · local parity scripts · AI review outputs",
-      html: `<span>01</span><h3>CI Control Plane</h3><p>Required checks and local parity around every PR.</p><ul><li><strong>Required:</strong> PR quality, lint, knowledge checks, review threads, session report.</li><li><strong>Local parity:</strong> agents verify the same checks before handoff.</li><li><strong>Advisory:</strong> AI actors add critique without replacing CI.</li></ul><div class="layer-note">Outcome: PRs reach human review with deterministic checks and supporting evidence already in place.</div>`
-    },
-    {
-      id: "orchestration",
-      title: "Scheduled Feedback Loops",
-      kicker: "Self-improvement · recurring jobs",
-      role: "Recurring jobs convert repository friction, stale work and agent-session signals into reports, dashboard issues and follow-up tasks.",
-      how: "Scheduled audits and post-merge analysis surface repeated failures, missing documentation gaps and improvement opportunities as trackable engineering work.",
-      why: "This shows the system improving the way agents work, not just using agents once.",
-      evidence: "Scheduled audits · session reports · dashboard updates",
-      html: `<span>02</span><h3>Scheduled Feedback Loops</h3><p>Recurring jobs turn agent friction into improvement work.</p><ul><li><strong>Audit loop:</strong> repository health and dashboard updates.</li><li><strong>Session insights:</strong> merged PR and session-report analysis.</li><li><strong>Other loops:</strong> health, reminders and cost checks.</li></ul><div class="layer-note">Outcome: recurring operations generate a backlog of concrete improvements instead of repeating the same failures.</div>`
-    },
-    {
-      id: "knowledge",
-      title: "Repository Knowledge Base",
-      kicker: "Context · Markdown operating memory",
-      role: "The repository works as a Markdown knowledge corpus and operating memory for agents.",
-      how: "Agent instructions point to knowledge indexes by host, service and task before changes. CI validates knowledge structure and index coverage.",
-      why: "This explains why agent output can be repo-grounded.",
-      evidence: "Knowledge index · repository instructions · knowledge structure checks",
-      html: `<span>03</span><h3>Repository Knowledge Base</h3><p>The repo is an operating memory for agents.</p><ul><li><strong>Indexes:</strong> host, service and task knowledge.</li><li><strong>Rule:</strong> read existing knowledge before changing.</li><li><strong>Checks:</strong> structure and index coverage in CI.</li></ul><div class="layer-note">Outcome: agent decisions stay grounded in repository context instead of generic assumptions.</div>`
-    },
-    {
-      id: "platform",
-      title: "Runtime Platform",
-      kicker: "Runtime · Managed platform",
-      role: "The concrete operating environment that Agentic SRE helps keep maintainable.",
-      how: "Repository docs describe containerized services, ingress, automation, monitoring and AI-stack components. The public story is framed around roughly 70 services or containers being maintained and observed across the runtime.",
-      why: "This anchors the portfolio story in real operations.",
-      evidence: "Stack overview · compose/runtime docs · monitoring docs",
-      html: `<span>04</span><h3>Runtime Platform</h3><p>The system maintains a real multi-service runtime.</p><ul><li><strong>Host class:</strong> managed runtime environment.</li><li><strong>Runtime:</strong> containerized services and automation.</li><li><strong>Scale:</strong> around 70 services / containers.</li></ul><div class="layer-note">Outcome: the operating model is tied to a live platform with measurable responsibilities.</div>`
-    },
-    {
-      id: "agents",
-      title: "Coding Agents",
-      kicker: "Delivery · direct repo work",
-      role: "Direct coding agents work on repository PRs outside the scheduled-automation-only path.",
-      how: "Coding agents operate through branch, draft PR, local checks, CI, AI review and human merge decision. They must follow repo rules, use local validation scripts and close the loop with an agent session report.",
-      why: "This makes clear that Agentic SRE includes normal coding-agent delivery.",
-      evidence: "Repository instructions · local validation · CI feedback",
-      html: `<span>05</span><h3>Coding Agents</h3><p>Not only scheduled jobs: coding agents work directly on repo PRs.</p><ul><li><strong>Agents:</strong> coding and implementation assistants.</li><li><strong>Path:</strong> branch → draft PR → local checks → CI.</li><li><strong>Closeout:</strong> agent session report.</li></ul><div class="layer-note">Outcome: direct implementation work stays inside the same governed delivery loop as scheduled automation.</div>`
+      role: "Required checks and local/CI parity around every pull request, separating deterministic gates from advisory AI review.",
+      how: "A change must pass PR quality, lint, knowledge validation, cost policy, review-thread state, CI/local parity and a session report. Local scripts run the same checks before handoff, so an agent cannot discover in CI what it could have caught locally.",
+      why: "This is the deterministic rail around probabilistic output: generated work becomes acceptable only when policy, CI, evidence and review state all line up.",
+      evidence: "Required checks, local parity scripts and AI review output.",
+      html: `<span>04</span><h3>CI Control Plane</h3><p>Deterministic checks around every pull request.</p><ul><li><strong>Required:</strong> PR quality, lint, knowledge checks, review threads, session report.</li><li><strong>Parity:</strong> the local gate covers the same ground as CI.</li><li><strong>Cost policy:</strong> model spend is a merge-blocking concern.</li></ul><div class="layer-note">The strongest control surface in the model: probabilistic work has to satisfy deterministic gates.</div>`
     },
     {
       id: "review",
       title: "AI Review Matrix",
       kicker: "Review · specialist critique",
-      role: "A set of advisory AI reviewer roles critique PRs from different angles.",
-      how: "Technical, critical, business and documentation-focused reviewers produce comments, verdicts and follow-up recommendations without replacing deterministic CI or human approval.",
-      why: "The system does not trust one agent blindly; other agents challenge the work.",
-      evidence: "AI review workflows · review actor docs",
-      html: `<span>06</span><h3>AI Review Matrix</h3><p>Specialist reviewers critique agent output before merge.</p><ul><li><strong>Roles:</strong> technical, critical and business reviewers.</li><li><strong>Docs:</strong> documentation review and summaries.</li><li><strong>Output:</strong> comments, verdicts, follow-up work.</li></ul><div class="layer-note">Outcome: changes are challenged from multiple perspectives before merge or deployment.</div>`
+      role: "Advisory AI reviewers critique a pull request from technical, risk, business and documentation angles.",
+      how: "Each reviewer produces comments, a verdict and follow-up recommendations. None of them can replace a deterministic check or a human approval.",
+      why: "One agent's output is challenged by others before a human spends attention on it — but the reviewers advise, they do not decide.",
+      evidence: "AI review workflows and reviewer role definitions.",
+      html: `<span>05</span><h3>AI Review Matrix</h3><p>Specialist reviewers challenge the work before a human reads it.</p><ul><li><strong>Roles:</strong> technical, critical, business, documentation.</li><li><strong>Output:</strong> comments, verdicts, follow-up work.</li><li><strong>Advisory:</strong> never a substitute for CI or approval.</li></ul><div class="layer-note">Review is layered, so a single model's blind spot is not the last word.</div>`
+    },
+    {
+      id: "governance",
+      title: "Human Accountability",
+      kicker: "Governance · decision rights",
+      role: "A person reviews the change, the checks and the evidence, and owns the merge decision.",
+      how: "Before merge, a human sees the pull request, CI results, review threads, the agent's session report and the blast radius of the change.",
+      why: "Agents assist; accountability for risk stays with a named person. That boundary is what makes the rest of the model adoptable in an organization with on-call and a change process.",
+      evidence: "Review threads, approval history and merge decisions in the delivery system.",
+      html: `<span>06</span><h3>Human Accountability</h3><p>A person owns the merge decision.</p><ul><li><strong>Sees:</strong> diff, checks, review threads, session report.</li><li><strong>Owns:</strong> the risk and the call to merge.</li><li><strong>Boundary:</strong> agents propose; humans decide.</li></ul><div class="layer-note">Automation extends the engineer's reach; it does not inherit their authority.</div>`
     },
     {
       id: "provider",
       title: "Provider Routing & Fallback",
       kicker: "Resilience · model routing",
-      role: "A model-provider routing layer keeps AI review and agent workflows available when a provider is slow, unavailable or rate-limited.",
-      how: "Agent workflows use shared execution profiles with explicit primary and fallback provider paths. Routing status stays visible in workflow evidence, so failures are explainable instead of silent.",
-      why: "AI delivery is treated as an operational dependency: provider instability degrades gracefully instead of blocking the engineering loop.",
-      evidence: "LiteLLM profiles · fallback chain · provider status evidence · review workflow logs",
-      html: `<span>07</span><h3>Provider Routing & Fallback</h3><p>Resilient model-provider routing for agent execution.</p><ul><li><strong>Profiles:</strong> shared execution profiles define the primary path.</li><li><strong>Fallback chain:</strong> alternate providers keep workflows moving when capacity shifts.</li><li><strong>Status:</strong> provider and model state remain visible in workflow evidence.</li></ul><div class="layer-note">Outcome: provider instability degrades gracefully instead of blocking review and delivery.</div>`
+      role: "A routing layer keeps review and agent workflows running when a model provider is slow, unavailable or rate-limited.",
+      how: "Shared execution profiles declare a primary provider and an explicit fallback chain. Workflow evidence records which provider and model served each run.",
+      why: "When a provider degrades, review and delivery continue on the next provider in the chain, and the logs say which one ran — so failures are explainable rather than silent.",
+      evidence: "Routing profiles, fallback chain and per-run provider status in workflow logs.",
+      html: `<span>07</span><h3>Provider Routing & Fallback</h3><p>Model providers are treated as an operational dependency.</p><ul><li><strong>Profiles:</strong> a declared primary path per workflow.</li><li><strong>Fallback:</strong> alternates keep the loop moving.</li><li><strong>Evidence:</strong> the run records which provider served it.</li></ul><div class="layer-note">Provider instability degrades gracefully instead of blocking the engineering loop.</div>`
     },
     {
-      id: "human",
-      title: "Service Landscape",
-      kicker: "Runtime · service groups",
-      role: "A grouped view of the managed runtime behind the Agentic SRE operating model.",
-      how: "The runtime is organized into service groups such as ingress, observability, automation, AI tooling, storage, backup, developer tooling and runtime applications.",
-      why: "It shows that the workflow supports a real multi-service platform with operational complexity, not an isolated demo.",
-      evidence: "Stack overview · service documentation · compose/runtime docs · monitoring docs",
-      html: `<span>08</span><h3>Service Landscape</h3><p>A grouped view of the managed runtime behind the operating model.</p><ul><li><strong>Service groups:</strong> ingress, observability, automation, AI tooling, storage and backup.</li><li><strong>Runtime categories:</strong> developer tooling and runtime applications complete the platform view.</li><li><strong>Operational scale:</strong> roughly 70 services / containers under management.</li></ul><div class="layer-note">Outcome: the case study is anchored in a real platform with enough complexity to justify governed AI operations.</div>`
+      id: "orchestration",
+      title: "Scheduled Feedback Loops",
+      kicker: "Improvement · recurring jobs",
+      role: "Recurring jobs turn repository friction, stale work and session signals into tracked engineering work.",
+      how: "Scheduled audits and post-merge analysis surface repeated failures, documentation gaps and improvement opportunities as issues rather than as folklore.",
+      why: "Repeated problems become a backlog instead of recurring the same way twice, so the loop improves the way agents work rather than just using agents once.",
+      evidence: "Scheduled audits, session reports and dashboard updates.",
+      html: `<span>08</span><h3>Scheduled Feedback Loops</h3><p>The loop improves itself on a schedule.</p><ul><li><strong>Audits:</strong> repository health and coverage checks.</li><li><strong>Insights:</strong> merged-PR and session-report analysis.</li><li><strong>Output:</strong> tracked issues, not tribal knowledge.</li></ul><div class="layer-note">Friction observed once becomes work that stops it recurring.</div>`
     }
   ];
 
@@ -309,25 +269,6 @@
   const mobileTitle = graphSection.querySelector("[data-mobile-title]");
   const selectedPanel = document.querySelector("#selected-layer .selected-panel");
 
-  const providerNode = nodes.find((node) => node.dataset.title === "Provider fallback chain");
-  if (providerNode) {
-    providerNode.dataset.title = "Provider fallback chain";
-    providerNode.dataset.kicker = "Fallback · Provider routing";
-    providerNode.dataset.role = "The provider fallback path for shared agent execution profiles.";
-    providerNode.dataset.how = "Shared execution profiles define primary and fallback provider paths, and workflow evidence shows which provider and model served the run.";
-    const label = providerNode.querySelector("strong");
-    const sublabel = providerNode.querySelector("span");
-    setField(label, "Provider fallback chain");
-    setField(sublabel, "primary → fallback");
-  }
-
-  mobileSteps
-    .filter((step) => step.dataset.nodeTarget === "Provider fallback chain")
-    .forEach((step) => {
-      step.dataset.nodeTarget = "Provider fallback chain";
-      setField(step.querySelector("strong"), "Provider fallback chain");
-    });
-
   const nodeFields = {
     kicker: graphSection.querySelector("[data-node-kicker]"),
     title: graphSection.querySelector("[data-node-title]"),
@@ -347,15 +288,15 @@
   };
 
   const nodeToLayer = {
-    runtime: "runtime",
+    runtime: "scale",
     orchestration: "orchestration",
-    mcp: "runtime",
+    mcp: "boundary",
     knowledge: "knowledge",
     agents: "agents",
     provider: "provider",
     delivery: "ci",
     ci: "ci",
-    human: "human"
+    human: "governance"
   };
 
   const modeTitles = {
@@ -388,7 +329,7 @@
     if (mobileTitle) mobileTitle.textContent = modeTitles[mode] || "Selected path";
   };
 
-  const setLayer = (layerId, source) => {
+  const setLayer = (layerId, source, sourceLabel) => {
     const layer = layers.find((candidate) => candidate.dataset.layerId === layerId) || layers[0];
     if (!layer) return;
 
@@ -404,7 +345,7 @@
     setField(layerFields.how, layer.dataset.layerHow || "");
     setField(layerFields.why, layer.dataset.layerWhy || "");
     setField(layerFields.evidence, layer.dataset.layerEvidence || "");
-    setField(layerFields.syncChip, source === "node" ? "graph-linked" : "layer-selected");
+    setField(layerFields.syncChip, source === "node" && sourceLabel ? `Selected from graph: ${sourceLabel}` : "Selected layer");
   };
 
   const setNode = (node) => {
@@ -415,7 +356,7 @@
     setField(nodeFields.role, node.dataset.role || "");
     setField(nodeFields.how, node.dataset.how || "");
     setField(nodeFields.why, node.dataset.why || "");
-    setLayer(nodeToLayer[node.dataset.layer] || node.dataset.layer, "node");
+    setLayer(nodeToLayer[node.dataset.layer] || node.dataset.layer, "node", node.dataset.title);
   };
 
   modeButtons.forEach((button) => button.addEventListener("click", () => setMode(button.dataset.mode)));

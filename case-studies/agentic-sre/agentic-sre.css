@@ -3068,3 +3068,140 @@ h3 {
         display: none;
       }
     }
+
+/* Hero spacing (previously injected from JavaScript) */
+.hero .subtitle {
+  display: block;
+  max-width: 52rem;
+  margin: 1rem auto 0;
+  line-height: 1.3;
+}
+
+.hero .subtitle + .hero-summary {
+  margin-top: 1rem;
+}
+
+/* Header contact CTA */
+.site-header nav a.nav-cta {
+  color: var(--text);
+  border: 1px solid rgba(249, 115, 22, 0.5);
+  background: rgba(249, 115, 22, 0.1);
+}
+
+.site-header nav a.nav-cta:hover,
+.site-header nav a.nav-cta:focus-visible {
+  background: rgba(249, 115, 22, 0.2);
+  border-color: rgba(249, 115, 22, 0.8);
+}
+
+/* Adoption path: the phase name leads, the description supports it */
+.glance-grid article {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.glance-grid span {
+  margin-bottom: 0.15rem;
+  font-size: 1.12rem;
+  font-weight: 900;
+  letter-spacing: 0.01em;
+  text-transform: none;
+}
+
+.glance-grid strong {
+  font-size: 0.98rem;
+  color: var(--text);
+}
+
+.glance-grid p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+/* "Where the effort used to go" list mirrors the modern panel's ordered list */
+.workflow-panel.traditional ul {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.workflow-panel.traditional li {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.workflow-panel.traditional li strong {
+  font-size: 0.98rem;
+}
+
+.workflow-panel.traditional li span {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+/* Contact section */
+.contact-section {
+  padding-bottom: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.contact-panel {
+  display: grid;
+  grid-template-columns: 1.35fr auto;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.6rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background:
+    radial-gradient(circle at 12% 0, rgba(249, 115, 22, 0.1), transparent 18rem),
+    linear-gradient(180deg, rgba(17, 24, 39, 0.86), rgba(15, 23, 42, 0.6));
+  box-shadow: var(--shadow);
+}
+
+.contact-panel h2 {
+  margin: 0.35rem 0 0.6rem;
+  font-size: clamp(1.4rem, 3vw, 1.95rem);
+}
+
+.contact-panel p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.selected-section .fine-print {
+  margin-top: 0.9rem;
+}
+
+@media (max-width: 1020px) {
+  .contact-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-actions {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 720px) {
+  .glance-grid span {
+    font-size: 1.05rem;
+  }
+
+  .contact-actions .button {
+    width: 100%;
+    justify-content: center;
+  }
+}
