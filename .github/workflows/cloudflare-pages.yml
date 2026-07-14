@@ -1,0 +1,46 @@
+name: Deploy Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cloudflare-pages-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    if: >-
+      github.event_name == 'push' ||
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      - name: Prepare static Pages output
+        shell: bash
+        run: |
+          set -euo pipefail
+          stage="${RUNNER_TEMP}/pages-output"
+          rm -rf "$stage"
+          mkdir -p "$stage"
+          cp index.html RobertKubisResume.pdf site.webmanifest "$stage/"
+          cp favicon.ico favicon-16x16.png favicon-32x32.png favicon-48x48.png "$stage/"
+          cp apple-touch-icon.png android-chrome-192x192.png android-chrome-512x512.png "$stage/"
+          cp -R assets css js agentic-sre case-studies sreagent "$stage/"
+
+      - name: Deploy with Wrangler Direct Upload
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: >-
+          npx --yes wrangler@4.110.0 pages deploy "$RUNNER_TEMP/pages-output"
+          --project-name=robertkubis
+          --branch="${{ github.event_name == 'push' && 'main' || github.head_ref }}"
