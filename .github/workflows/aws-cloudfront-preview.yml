@@ -39,6 +39,10 @@ jobs:
         shell: bash
         run: tests/test_stage_static_site.sh
 
+      - name: Run workflow static assertions
+        shell: bash
+        run: tests/test_workflow_aws_cloudfront_preview.sh
+
       - name: Stage the allowlisted package
         id: stage
         shell: bash
@@ -160,12 +164,17 @@ jobs:
           retention-days: 1
           if-no-files-found: error
 
-  # workflow_dispatch only. Authenticates via GitHub OIDC and runs read-only
-  # checks against the confirmed AWS preview stack. Never mutates anything.
+  # workflow_dispatch from main only. Authenticates via GitHub OIDC and runs
+  # read-only checks against the confirmed AWS preview stack. Never mutates
+  # anything. Restricting to refs/heads/main here is a fail-fast convenience
+  # only — the IAM role's trust policy independently rejects any OIDC
+  # exchange from a non-main ref regardless of this condition.
   aws-readonly-check:
     name: AWS read-only validation
     needs: package-validate
-    if: github.event_name == 'workflow_dispatch'
+    if: >-
+      github.event_name == 'workflow_dispatch' &&
+      github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
@@ -191,6 +200,7 @@ jobs:
         with:
           role-to-assume: ${{ vars.AWS_PREVIEW_ROLE_ARN }}
           aws-region: ${{ vars.AWS_PREVIEW_REGION }}
+          mask-aws-account-id: true
 
       - name: Run read-only AWS preflight checks
         shell: bash
@@ -250,6 +260,7 @@ jobs:
         with:
           role-to-assume: ${{ vars.AWS_PREVIEW_ROLE_ARN }}
           aws-region: ${{ vars.AWS_PREVIEW_REGION }}
+          mask-aws-account-id: true
 
       - name: Repeat read-only AWS preflight checks
         shell: bash
@@ -278,13 +289,38 @@ jobs:
           {
             echo "file_count=${file_count}"
             echo "total_bytes=${total_bytes}"
-            echo "status=success"
           } >> "${GITHUB_OUTPUT}"
 
       - name: Write step summary
         if: always()
+        env:
+          # deploy-to-aws.sh only exits 0 after S3 sync succeeds, required
+          # entry files are confirmed present, the CloudFront invalidation
+          # was accepted, AND the distribution was reconfirmed disabled —
+          # so the deploy step's outcome alone is a truthful proxy for
+          # "was the invalidation accepted", without needing (or exposing)
+          # the invalidation ID itself.
+          DEPLOY_OUTCOME: ${{ steps.deploy.outcome }}
         shell: bash
         run: |
+          set -euo pipefail
+          case "${DEPLOY_OUTCOME}" in
+            success)
+              upload_status="success"
+              invalidation_status="accepted"
+              distribution_status="no (confirmed still disabled)"
+              ;;
+            failure)
+              upload_status="failed"
+              invalidation_status="failed"
+              distribution_status="not confirmed (deploy step did not complete)"
+              ;;
+            *)
+              upload_status="not completed"
+              invalidation_status="not completed"
+              distribution_status="not confirmed (deploy step did not complete)"
+              ;;
+          esac
           {
             echo "### AWS CloudFront Preview — guarded deploy"
             echo ""
@@ -292,9 +328,9 @@ jobs:
             echo "|---|---|"
             echo "| Mode | deploy |"
             echo "| Source commit | ${GITHUB_SHA} |"
-            echo "| Staged files | ${{ steps.stage.outputs.stage_dir && steps.deploy.outputs.file_count || 'n/a' }} |"
+            echo "| Staged files | ${{ steps.deploy.outputs.file_count || 'n/a' }} |"
             echo "| Staged bytes | ${{ steps.deploy.outputs.total_bytes || 'n/a' }} |"
-            echo "| Upload status | ${{ steps.deploy.outputs.status || 'failed' }} |"
-            echo "| Invalidation | requested |"
-            echo "| Distribution enabled | no (confirmed still disabled) |"
+            echo "| Upload status | ${upload_status} |"
+            echo "| Invalidation | ${invalidation_status} |"
+            echo "| Distribution enabled | ${distribution_status} |"
           } >> "${GITHUB_STEP_SUMMARY}"

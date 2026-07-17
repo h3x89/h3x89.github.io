@@ -54,8 +54,23 @@ repo:h3x89/h3x89.github.io:ref:refs/heads/main
 with OIDC audience `sts.amazonaws.com`. A workflow run triggered from a
 pull request branch, a fork, or any ref other than `refs/heads/main` cannot
 assume the role — `aws-actions/configure-aws-credentials` will fail the
-OIDC exchange. This workflow additionally gates its own `aws-deploy` job on
-`github.ref == 'refs/heads/main'` as defense in depth.
+OIDC exchange. This workflow additionally gates both `aws-readonly-check`
+and `aws-deploy` on `github.ref == 'refs/heads/main'` as a fail-fast
+convenience, so a manual dispatch from a non-`main` ref never even attempts
+an OIDC exchange: those two jobs are skipped outright by workflow logic,
+before the IAM trust policy would independently reject them anyway. The
+trust policy remains the final, independent protection regardless of this
+workflow's own conditions.
+
+A `workflow_dispatch` from any ref other than `main` therefore only ever
+runs `package-validate` (offline). Both `aws-readonly-check` and
+`aws-deploy` are skipped — no OIDC token is requested, no repository
+variable is read, and no AWS call occurs.
+
+Every `aws-actions/configure-aws-credentials` step also sets
+`mask-aws-account-id: true`, so the resolved AWS account ID is masked in
+Actions logs in addition to never being explicitly printed by this
+workflow's own scripts.
 
 ## 4. PR runs are offline only
 
@@ -116,6 +131,18 @@ The `aws-deploy` job carries a dedicated `concurrency` group
 (`aws-cloudfront-preview-deploy`, `cancel-in-progress: false`) so two
 deployments can never run concurrently, and an in-flight deployment is
 never cancelled by a newer trigger.
+
+The job's step summary reports `Invalidation | accepted` **only** when the
+sync-and-invalidate step exits successfully — since `deploy-to-aws.sh` only
+exits `0` after the S3 sync succeeds, required entry files are confirmed
+present in the bucket, the invalidation was accepted, and the distribution
+was reconfirmed disabled. If that step does not complete successfully, the
+summary instead reports `failed` (the step ran and errored) or
+`not completed` (the step never ran, e.g. an earlier preflight failed) —
+never a hardcoded, unconditional "requested". The same outcome-derived
+status governs the `Distribution enabled` summary line, so it is never
+reported as confirmed disabled unless the deploy step actually reached and
+passed that check.
 
 ## 7. CloudFront remains disabled after deployment
 
