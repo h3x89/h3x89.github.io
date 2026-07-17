@@ -1,0 +1,336 @@
+name: AWS CloudFront Preview
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "validate: read-only AWS checks only. deploy: sync content + invalidate (requires confirm_deploy=DEPLOY, main only)."
+        type: choice
+        options:
+          - validate
+          - deploy
+        default: validate
+      confirm_deploy:
+        description: "Required exact string 'DEPLOY' to allow content deployment when mode=deploy. Ignored otherwise."
+        type: string
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  # Runs on every trigger. Never requests an AWS token. Stages the exact
+  # allowlisted package, validates it, and runs the staging-script test
+  # suite and workflow static checks — all offline.
+  package-validate:
+    name: Stage and validate package (offline)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        # actions/checkout v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      - name: Run staging script test suite
+        shell: bash
+        run: tests/test_stage_static_site.sh
+
+      - name: Run workflow static assertions
+        shell: bash
+        run: tests/test_workflow_aws_cloudfront_preview.sh
+
+      - name: Stage the allowlisted package
+        id: stage
+        shell: bash
+        run: |
+          set -euo pipefail
+          stage_dir="${RUNNER_TEMP}/aws-preview-package"
+          rm -rf "${stage_dir}"
+          mkdir -p "${stage_dir}"
+          scripts/stage-static-site.sh "${stage_dir}" > "${RUNNER_TEMP}/manifest.tsv"
+
+          file_count="$(wc -l < "${RUNNER_TEMP}/manifest.tsv" | tr -d '[:space:]')"
+          total_bytes="$(awk -F'\t' '{sum+=$1} END {print sum+0}' "${RUNNER_TEMP}/manifest.tsv")"
+
+          {
+            echo "file_count=${file_count}"
+            echo "total_bytes=${total_bytes}"
+            echo "stage_dir=${stage_dir}"
+          } >> "${GITHUB_OUTPUT}"
+
+      - name: Run internal HTML link check (dependency-free, staged package only)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - "${{ steps.stage.outputs.stage_dir }}" <<'PYEOF'
+          import sys, os
+          from html.parser import HTMLParser
+          from urllib.parse import urlsplit
+
+          stage_dir = sys.argv[1]
+          errors = []
+
+          class LinkExtractor(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.links = []
+
+              def handle_starttag(self, tag, attrs):
+                  attr_map = dict(attrs)
+                  for key in ("href", "src"):
+                      if key in attr_map and attr_map[key]:
+                          self.links.append(attr_map[key])
+
+          for root, _dirs, files in os.walk(stage_dir):
+              for name in files:
+                  if not name.endswith(".html"):
+                      continue
+                  path = os.path.join(root, name)
+                  with open(path, "r", encoding="utf-8", errors="replace") as fh:
+                      parser = LinkExtractor()
+                      parser.feed(fh.read())
+                  for link in parser.links:
+                      parts = urlsplit(link)
+                      if parts.scheme or link.startswith("//") or link.startswith("#") or link.startswith("mailto:") or link.startswith("tel:"):
+                          continue
+                      target = parts.path
+                      if not target:
+                          continue
+                      if target.startswith("/"):
+                          candidate = os.path.join(stage_dir, target.lstrip("/"))
+                      else:
+                          candidate = os.path.normpath(os.path.join(root, target))
+                      if not os.path.exists(candidate):
+                          rel_source = os.path.relpath(path, stage_dir)
+                          errors.append(f"{rel_source}: broken internal link '{link}'")
+
+          if errors:
+              print("Broken internal links found in staged package:")
+              for e in sorted(set(errors)):
+                  print(f"  - {e}")
+              sys.exit(1)
+          print("No broken internal links found in staged package.")
+          PYEOF
+
+      - name: Reject static AWS credential references in workflows
+        shell: bash
+        run: |
+          set -euo pipefail
+          # The next line's own text matches its own pattern by construction;
+          # tag it so the guard scan below excludes only this definition line.
+          pattern='secrets\.AWS_ACCESS_KEY_ID|secrets\.AWS_SECRET_ACCESS_KEY|secrets\.AWS_SESSION_TOKEN' # guard-pattern-definition
+          if grep -RIEn "${pattern}" .github/workflows/ | grep -v 'guard-pattern-definition'; then
+            echo "::error::Static AWS credential secret references found in workflows; only GitHub OIDC is allowed." >&2
+            exit 1
+          fi
+          echo "OK: no static AWS credential secret references found in workflows."
+
+      - name: Validate workflow YAML syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          for f in .github/workflows/*.yml .github/workflows/*.yaml; do
+            [[ -e "$f" ]] || continue
+            ruby -ryaml -e "YAML.load_file('$f')" || { echo "::error::Invalid YAML: $f" >&2; exit 1; }
+            echo "OK: valid YAML syntax: $f"
+          done
+
+      - name: Write step summary
+        shell: bash
+        run: |
+          {
+            echo "### AWS CloudFront Preview — package validation"
+            echo ""
+            echo "| Field | Value |"
+            echo "|---|---|"
+            echo "| Mode | offline package validation |"
+            echo "| Source commit | ${GITHUB_SHA} |"
+            echo "| Staged files | ${{ steps.stage.outputs.file_count }} |"
+            echo "| Staged bytes | ${{ steps.stage.outputs.total_bytes }} |"
+            echo "| AWS upload occurred | no |"
+          } >> "${GITHUB_STEP_SUMMARY}"
+
+      - name: Upload staged package artifact (short-lived, PR runs only)
+        if: github.event_name == 'pull_request'
+        # actions/upload-artifact v7.0.1
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: aws-preview-package-${{ github.event.pull_request.number }}
+          path: ${{ steps.stage.outputs.stage_dir }}
+          retention-days: 1
+          if-no-files-found: error
+
+  # workflow_dispatch from main only. Authenticates via GitHub OIDC and runs
+  # read-only checks against the confirmed AWS preview stack. Never mutates
+  # anything. Restricting to refs/heads/main here is a fail-fast convenience
+  # only — the IAM role's trust policy independently rejects any OIDC
+  # exchange from a non-main ref regardless of this condition.
+  aws-readonly-check:
+    name: AWS read-only validation
+    needs: package-validate
+    if: >-
+      github.event_name == 'workflow_dispatch' &&
+      github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      AWS_PREVIEW_ROLE_ARN: ${{ vars.AWS_PREVIEW_ROLE_ARN }}
+      AWS_PREVIEW_REGION: ${{ vars.AWS_PREVIEW_REGION }}
+      AWS_PREVIEW_CONTENT_BUCKET: ${{ vars.AWS_PREVIEW_CONTENT_BUCKET }}
+      AWS_PREVIEW_DISTRIBUTION_ID: ${{ vars.AWS_PREVIEW_DISTRIBUTION_ID }}
+    steps:
+      - name: Checkout
+        # actions/checkout v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      - name: Validate required repository variables
+        shell: bash
+        run: scripts/validate-aws-vars.sh
+
+      - name: Configure AWS credentials via GitHub OIDC
+        # aws-actions/configure-aws-credentials v4.3.1
+        uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a
+        with:
+          role-to-assume: ${{ vars.AWS_PREVIEW_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_PREVIEW_REGION }}
+          mask-aws-account-id: true
+
+      - name: Run read-only AWS preflight checks
+        shell: bash
+        run: scripts/aws-readonly-preflight.sh
+
+      - name: Write step summary
+        shell: bash
+        run: |
+          {
+            echo "### AWS CloudFront Preview — read-only validation"
+            echo ""
+            echo "| Field | Value |"
+            echo "|---|---|"
+            echo "| Mode | validate |"
+            echo "| Source commit | ${GITHUB_SHA} |"
+            echo "| AWS upload occurred | no |"
+            echo "| Distribution enabled | no (confirmed disabled) |"
+          } >> "${GITHUB_STEP_SUMMARY}"
+
+  # workflow_dispatch, mode=deploy, confirm_deploy=DEPLOY, ref=refs/heads/main
+  # only. Repeats every read-only preflight, then syncs content and creates
+  # one CloudFront invalidation. Concurrency-guarded against overlapping
+  # deployments; an in-flight deployment is never cancelled.
+  aws-deploy:
+    name: AWS guarded content deploy
+    needs: aws-readonly-check
+    if: >-
+      github.event_name == 'workflow_dispatch' &&
+      github.ref == 'refs/heads/main' &&
+      inputs.mode == 'deploy' &&
+      inputs.confirm_deploy == 'DEPLOY'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    concurrency:
+      group: aws-cloudfront-preview-deploy
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      AWS_PREVIEW_ROLE_ARN: ${{ vars.AWS_PREVIEW_ROLE_ARN }}
+      AWS_PREVIEW_REGION: ${{ vars.AWS_PREVIEW_REGION }}
+      AWS_PREVIEW_CONTENT_BUCKET: ${{ vars.AWS_PREVIEW_CONTENT_BUCKET }}
+      AWS_PREVIEW_DISTRIBUTION_ID: ${{ vars.AWS_PREVIEW_DISTRIBUTION_ID }}
+    steps:
+      - name: Checkout
+        # actions/checkout v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      - name: Validate required repository variables
+        shell: bash
+        run: scripts/validate-aws-vars.sh
+
+      - name: Configure AWS credentials via GitHub OIDC
+        # aws-actions/configure-aws-credentials v4.3.1
+        uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a
+        with:
+          role-to-assume: ${{ vars.AWS_PREVIEW_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_PREVIEW_REGION }}
+          mask-aws-account-id: true
+
+      - name: Repeat read-only AWS preflight checks
+        shell: bash
+        run: scripts/aws-readonly-preflight.sh
+
+      - name: Stage the allowlisted package
+        id: stage
+        shell: bash
+        run: |
+          set -euo pipefail
+          stage_dir="${RUNNER_TEMP}/aws-preview-package-deploy"
+          rm -rf "${stage_dir}"
+          mkdir -p "${stage_dir}"
+          scripts/stage-static-site.sh "${stage_dir}" > "${RUNNER_TEMP}/manifest.tsv"
+          echo "stage_dir=${stage_dir}" >> "${GITHUB_OUTPUT}"
+
+      - name: Sync content and invalidate CloudFront
+        id: deploy
+        shell: bash
+        run: |
+          set -euo pipefail
+          output="$(scripts/deploy-to-aws.sh "${{ steps.stage.outputs.stage_dir }}")"
+          echo "${output}"
+          file_count="$(echo "${output}" | sed -n 's/^DEPLOY_STAGED_FILE_COUNT=//p')"
+          total_bytes="$(echo "${output}" | sed -n 's/^DEPLOY_STAGED_BYTES=//p')"
+          {
+            echo "file_count=${file_count}"
+            echo "total_bytes=${total_bytes}"
+          } >> "${GITHUB_OUTPUT}"
+
+      - name: Write step summary
+        if: always()
+        env:
+          # deploy-to-aws.sh only exits 0 after S3 sync succeeds, required
+          # entry files are confirmed present, the CloudFront invalidation
+          # was accepted, AND the distribution was reconfirmed disabled —
+          # so the deploy step's outcome alone is a truthful proxy for
+          # "was the invalidation accepted", without needing (or exposing)
+          # the invalidation ID itself.
+          DEPLOY_OUTCOME: ${{ steps.deploy.outcome }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          case "${DEPLOY_OUTCOME}" in
+            success)
+              upload_status="success"
+              invalidation_status="accepted"
+              distribution_status="no (confirmed still disabled)"
+              ;;
+            failure)
+              upload_status="failed"
+              invalidation_status="failed"
+              distribution_status="not confirmed (deploy step did not complete)"
+              ;;
+            *)
+              upload_status="not completed"
+              invalidation_status="not completed"
+              distribution_status="not confirmed (deploy step did not complete)"
+              ;;
+          esac
+          {
+            echo "### AWS CloudFront Preview — guarded deploy"
+            echo ""
+            echo "| Field | Value |"
+            echo "|---|---|"
+            echo "| Mode | deploy |"
+            echo "| Source commit | ${GITHUB_SHA} |"
+            echo "| Staged files | ${{ steps.deploy.outputs.file_count || 'n/a' }} |"
+            echo "| Staged bytes | ${{ steps.deploy.outputs.total_bytes || 'n/a' }} |"
+            echo "| Upload status | ${upload_status} |"
+            echo "| Invalidation | ${invalidation_status} |"
+            echo "| Distribution enabled | ${distribution_status} |"
+          } >> "${GITHUB_STEP_SUMMARY}"
