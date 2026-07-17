@@ -31,10 +31,7 @@ jobs:
           stage="${RUNNER_TEMP}/pages-output"
           rm -rf "$stage"
           mkdir -p "$stage"
-          cp index.html RobertKubisResume.pdf site.webmanifest "$stage/"
-          cp favicon.ico favicon-16x16.png favicon-32x32.png favicon-48x48.png "$stage/"
-          cp apple-touch-icon.png android-chrome-192x192.png android-chrome-512x512.png "$stage/"
-          cp -R assets css js agentic-sre case-studies sreagent "$stage/"
+          scripts/stage-static-site.sh "$stage" >/dev/null
 
       - name: Deploy with Wrangler Direct Upload
         env:
