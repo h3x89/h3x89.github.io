@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 # Guarded content deployment: sync the staged package to the private S3
-# bucket and invalidate the CloudFront distribution. Never enables the
-# distribution, never touches DNS, never changes the bucket policy or
-# encryption settings. Never prints account IDs, ARNs, bucket names,
-# distribution IDs, or raw AWS API JSON.
+# bucket and invalidate the CloudFront distribution serving production
+# robertkubis.pl / www.robertkubis.pl. Never changes the distribution's
+# Enabled/Status/aliases, never touches DNS, never changes the bucket
+# policy or encryption settings. Never prints account IDs, ARNs, bucket
+# names, distribution IDs, or raw AWS API JSON.
 #
 # Usage:
 #   scripts/deploy-to-aws.sh <staged-dir>
@@ -94,17 +95,34 @@ case "${invalidation_status}" in
 esac
 unset invalidation_status
 
-# Confirm the distribution is still disabled after deployment.
-dist_enabled="$(aws cloudfront get-distribution \
-  --id "${AWS_PREVIEW_DISTRIBUTION_ID}" \
-  --query 'Distribution.DistributionConfig.Enabled' \
-  --output text)"
+# Confirm the distribution is still enabled, deployed, and serving the
+# same production aliases after deployment — this content sync must never
+# leave the live distribution in a different infrastructure state.
+post_dist_json="$(aws cloudfront get-distribution --id "${AWS_PREVIEW_DISTRIBUTION_ID}")"
+dist_enabled="$(echo "${post_dist_json}" | jq -r '.Distribution.DistributionConfig.Enabled')"
+dist_status="$(echo "${post_dist_json}" | jq -r '.Distribution.Status')"
+dist_aliases="$(echo "${post_dist_json}" | jq -r '[.Distribution.DistributionConfig.Aliases.Items // [] | .[]] | sort | join(",")')"
+unset post_dist_json
 
-if [[ "${dist_enabled}" != "False" && "${dist_enabled}" != "false" ]]; then
-  echo "::error::CloudFront distribution is no longer disabled after deployment." >&2
+if [[ "${dist_enabled}" != "true" ]]; then
+  echo "::error::CloudFront distribution is no longer enabled after deployment." >&2
   exit 1
 fi
-echo "OK: CloudFront distribution remains disabled after deployment."
+echo "OK: CloudFront distribution remains enabled after deployment."
+
+if [[ "${dist_status}" != "Deployed" ]]; then
+  echo "::error::CloudFront distribution status is not Deployed after deployment." >&2
+  exit 1
+fi
+echo "OK: CloudFront distribution status is Deployed after deployment."
+
+expected_aliases="robertkubis.pl,www.robertkubis.pl"
+if [[ "${dist_aliases}" != "${expected_aliases}" ]]; then
+  echo "::error::CloudFront distribution aliases changed after deployment." >&2
+  exit 1
+fi
+echo "OK: CloudFront distribution aliases are unchanged after deployment."
+unset dist_enabled dist_status dist_aliases expected_aliases
 
 echo "DEPLOY_STAGED_FILE_COUNT=${local_count}"
 echo "DEPLOY_STAGED_BYTES=$(find "${STAGE_DIR}" -type f -exec wc -c {} + | tail -n1 | awk '{print $1}')"

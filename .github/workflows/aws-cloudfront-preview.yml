@@ -217,7 +217,7 @@ jobs:
             echo "| Mode | validate |"
             echo "| Source commit | ${GITHUB_SHA} |"
             echo "| AWS upload occurred | no |"
-            echo "| Distribution enabled | no (confirmed disabled) |"
+            echo "| Distribution enabled and deployed | yes (confirmed) |"
           } >> "${GITHUB_STEP_SUMMARY}"
 
   # workflow_dispatch, mode=deploy, confirm_deploy=DEPLOY, ref=refs/heads/main
@@ -296,10 +296,11 @@ jobs:
         env:
           # deploy-to-aws.sh only exits 0 after S3 sync succeeds, required
           # entry files are confirmed present, the CloudFront invalidation
-          # was accepted, AND the distribution was reconfirmed disabled —
-          # so the deploy step's outcome alone is a truthful proxy for
-          # "was the invalidation accepted", without needing (or exposing)
-          # the invalidation ID itself.
+          # was accepted, AND the distribution was reconfirmed enabled,
+          # Deployed, and serving the same production aliases — so the
+          # deploy step's outcome alone is a truthful proxy for "was the
+          # invalidation accepted", without needing (or exposing) the
+          # invalidation ID itself.
           DEPLOY_OUTCOME: ${{ steps.deploy.outcome }}
         shell: bash
         run: |
@@ -308,7 +309,7 @@ jobs:
             success)
               upload_status="success"
               invalidation_status="accepted"
-              distribution_status="no (confirmed still disabled)"
+              distribution_status="yes (confirmed still enabled and deployed)"
               ;;
             failure)
               upload_status="failed"
@@ -332,5 +333,5 @@ jobs:
             echo "| Staged bytes | ${{ steps.deploy.outputs.total_bytes || 'n/a' }} |"
             echo "| Upload status | ${upload_status} |"
             echo "| Invalidation | ${invalidation_status} |"
-            echo "| Distribution enabled | ${distribution_status} |"
+            echo "| Distribution enabled and deployed | ${distribution_status} |"
           } >> "${GITHUB_STEP_SUMMARY}"
