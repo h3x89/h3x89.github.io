@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Read-only AWS preflight checks for the CloudFront preview stack.
+# Read-only AWS preflight checks for the production CloudFront stack
+# serving robertkubis.pl / www.robertkubis.pl.
 #
 # Confirms the assumed OIDC role, target bucket, and target CloudFront
 # distribution are in the expected state. Never mutates any AWS resource.
@@ -59,24 +60,43 @@ object_count="$(aws s3api list-objects-v2 \
   --output text)"
 echo "INFO: content bucket currently holds ${object_count} object(s)."
 
-# 5. Confirm the CloudFront distribution exists, is disabled, and has a
-#    domain name — without printing the distribution ID or domain itself.
+# 5. Confirm the CloudFront distribution exists, is enabled, deployed, has
+#    a domain name, and serves exactly the expected production aliases —
+#    without printing the distribution ID or domain itself. This is the
+#    live production distribution for robertkubis.pl / www.robertkubis.pl,
+#    not a not-yet-launched preview, so it is expected to already be
+#    enabled and deployed before any content sync runs.
 dist_json="$(aws cloudfront get-distribution --id "${AWS_PREVIEW_DISTRIBUTION_ID}")"
 dist_enabled="$(echo "${dist_json}" | jq -r '.Distribution.DistributionConfig.Enabled')"
+dist_status="$(echo "${dist_json}" | jq -r '.Distribution.Status')"
 dist_domain="$(echo "${dist_json}" | jq -r '.Distribution.DomainName')"
+dist_aliases="$(echo "${dist_json}" | jq -r '[.Distribution.DistributionConfig.Aliases.Items // [] | .[]] | sort | join(",")')"
 unset dist_json
 
-if [[ "${dist_enabled}" != "false" ]]; then
-  echo "::error::CloudFront distribution is not disabled." >&2
+if [[ "${dist_enabled}" != "true" ]]; then
+  echo "::error::CloudFront distribution is not enabled." >&2
   exit 1
 fi
-echo "OK: CloudFront distribution exists and remains disabled."
+echo "OK: CloudFront distribution exists and is enabled."
+
+if [[ "${dist_status}" != "Deployed" ]]; then
+  echo "::error::CloudFront distribution status is not Deployed." >&2
+  exit 1
+fi
+echo "OK: CloudFront distribution status is Deployed."
 
 if [[ -z "${dist_domain}" || "${dist_domain}" == "null" ]]; then
   echo "::error::CloudFront distribution has no domain name." >&2
   exit 1
 fi
 echo "OK: CloudFront distribution domain name is available."
-unset dist_enabled dist_domain
+
+expected_aliases="robertkubis.pl,www.robertkubis.pl"
+if [[ "${dist_aliases}" != "${expected_aliases}" ]]; then
+  echo "::error::CloudFront distribution aliases do not match the expected production domains." >&2
+  exit 1
+fi
+echo "OK: CloudFront distribution aliases match the expected production domains."
+unset dist_enabled dist_status dist_domain dist_aliases expected_aliases
 
 echo "All read-only AWS preflight checks passed."

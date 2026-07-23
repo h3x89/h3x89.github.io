@@ -95,12 +95,14 @@ the **first** manual run (`workflow_dispatch`) must use `mode: validate`
 
 - confirms the assumed OIDC role matches the expected role;
 - confirms the target bucket is reachable;
-- confirms the CloudFront distribution exists, is disabled, and has a
-  domain name;
+- confirms the CloudFront distribution exists, is enabled, has status
+  `Deployed`, has a domain name, and serves exactly the expected
+  production aliases (`robertkubis.pl`, `www.robertkubis.pl`);
 - reports the bucket's current object count (informational).
 
-No object is uploaded, deleted, or invalidated, and the distribution is
-never enabled, during a `validate` run.
+No object is uploaded, deleted, or invalidated during a `validate` run, and
+the distribution's configuration (`Enabled`, aliases, or anything else) is
+never changed.
 
 ## 6. Deploy requires the exact `DEPLOY` confirmation
 
@@ -125,7 +127,8 @@ read-only preflight check before syncing content, then:
    `sreagent/index.html`) are present in the bucket;
 4. creates a single CloudFront invalidation for `/*` and confirms it was
    accepted;
-5. confirms the distribution is still disabled after deployment.
+5. confirms the distribution is still enabled, still `Deployed`, and still
+   serving the same production aliases after deployment.
 
 The `aws-deploy` job carries a dedicated `concurrency` group
 (`aws-cloudfront-preview-deploy`, `cancel-in-progress: false`) so two
@@ -136,21 +139,33 @@ The job's step summary reports `Invalidation | accepted` **only** when the
 sync-and-invalidate step exits successfully — since `deploy-to-aws.sh` only
 exits `0` after the S3 sync succeeds, required entry files are confirmed
 present in the bucket, the invalidation was accepted, and the distribution
-was reconfirmed disabled. If that step does not complete successfully, the
-summary instead reports `failed` (the step ran and errored) or
-`not completed` (the step never ran, e.g. an earlier preflight failed) —
-never a hardcoded, unconditional "requested". The same outcome-derived
-status governs the `Distribution enabled` summary line, so it is never
-reported as confirmed disabled unless the deploy step actually reached and
-passed that check.
+was reconfirmed enabled, `Deployed`, and serving the same production
+aliases. If that step does not complete successfully, the summary instead
+reports `failed` (the step ran and errored) or `not completed` (the step
+never ran, e.g. an earlier preflight failed) — never a hardcoded,
+unconditional "requested". The same outcome-derived status governs the
+`Distribution enabled and deployed` summary line, so it is never reported
+as confirmed unless the deploy step actually reached and passed that
+check.
 
-## 7. CloudFront remains disabled after deployment
+## 7. CloudFront remains enabled and deployed after deployment
 
-Every `deploy` run ends by re-checking the distribution's `Enabled` flag and
-fails loudly if it is anything other than `false`. Enabling the
-distribution is intentionally not something this workflow can do — there is
-no code path that sets `Enabled: true`. Flipping it on is a separate, later
-gate performed manually (or by a future, explicitly scoped change).
+`robertkubis.pl` / `www.robertkubis.pl` are served by this distribution in
+production, so it is expected to already be enabled and `Deployed` before
+any run starts, and to remain that way afterward. Every `validate` and
+`deploy` run re-checks the distribution's `Enabled` flag, `Status`, and
+alias list, and fails loudly if `Enabled` is anything other than `true`,
+`Status` is anything other than `Deployed`, or the aliases don't exactly
+match `robertkubis.pl` / `www.robertkubis.pl`. This workflow only ever
+reads that state — there is no code path in `scripts/aws-readonly-
+preflight.sh` or `scripts/deploy-to-aws.sh` that changes the distribution's
+`Enabled` flag, aliases, or any other infrastructure configuration; content
+sync (`aws s3 sync`) and cache invalidation (`aws cloudfront
+create-invalidation`) are the only mutating AWS calls either script makes.
+Any change to the distribution's own configuration (enabling/disabling it,
+changing aliases, origins, or the attached CloudFront Function) stays in
+`home_lab`'s OpenTofu `sites/robertkubis-preview` root, not in this
+workflow.
 
 ## 8. Cloudflare Pages and GitHub Pages remain fallbacks
 
